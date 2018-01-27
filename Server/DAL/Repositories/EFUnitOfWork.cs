@@ -11,7 +11,7 @@ namespace DAL.Repositories
     {
         private ClinicContext db;
         private RoleRepository roleRepository;
-        private UserRepository userRepository;
+        private UserRepository<User> userRepository;
         private ClinicRepository clinicRepository;
 
         public EFUnitOfWork(ClinicContext context)
@@ -28,12 +28,12 @@ namespace DAL.Repositories
             }
         }
 
-        public IUserRepository<User> Users
+        public UserRepository<User> Users
         {
             get
             {
                 if (userRepository == null)
-                    userRepository = new UserRepository(db);
+                    userRepository = new UserRepository<User>(db);
                 return userRepository;
             }
         }

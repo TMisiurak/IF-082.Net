@@ -48,7 +48,7 @@ namespace BLL.Services
 
         public IEnumerable<UserDTO> GetUsers()
         {
-            Task<List<User>> users = DataBase.Users.GetAll();
+            List<User> users = DataBase.Users.GetAll();
             var result = _mapper.Map<List<UserDTO>>(users);
             return result;
         }

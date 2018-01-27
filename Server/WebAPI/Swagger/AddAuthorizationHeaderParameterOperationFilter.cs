@@ -6,39 +6,39 @@ namespace WebAPI.Swagger
 {
     public class CustomTokenFilter : IOperationFilter
     {
-            public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(Operation operation, OperationFilterContext context)
+        {
+            if (operation.OperationId == "AuthPost")
             {
-                if (operation.OperationId == "AuthPost")
+                operation.Consumes.Add("application/x-www-form-urlencoded");
+
+                operation.Parameters = new List<IParameter>();
+
+                operation.Parameters.Add(new Parameter
                 {
-                    operation.Consumes.Add("application/x-www-form-urlencoded");
+                    Name = "grant_type",
+                    @In = "formData",
+                    Type = "string",
+                    Required = true
+                });
 
-                    operation.Parameters = new List<IParameter>();
+                operation.Parameters.Add(new Parameter
+                {
+                    Name = "username",
+                    @In = "formData",
+                    Type = "string",
+                    Required = true
+                });
 
-                    operation.Parameters.Add(new Parameter
-                    {
-                        Name = "grant_type",
-                        @In = "formData",
-                        Type = "string",
-                        Required = true
-                    });
-
-                    operation.Parameters.Add(new Parameter
-                    {
-                        Name = "username",
-                        @In = "formData",
-                        Type = "string",
-                        Required = true
-                    });
-
-                    operation.Parameters.Add(new Parameter
-                    {
-                        Name = "password",
-                        @In = "formData",
-                        Type = "string",
-                        Required = true
-                    });
-                }
+                operation.Parameters.Add(new Parameter
+                {
+                    Name = "password",
+                    @In = "formData",
+                    Type = "string",
+                    Required = true
+                });
             }
+        }
     }
 
     public class Parameter : IParameter

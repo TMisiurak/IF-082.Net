@@ -11,18 +11,21 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository<T> where T : class
     {
         private readonly ClinicContext db;
+        private readonly DbSet<T> dbSet;
 
         public UserRepository(ClinicContext context)
         {
-            this.db = context;
+            db = context;
+            dbSet = context.Set<T>();
         }
 
-        public async Task<List<User>> GetAll()
+        public List<T> GetAll()
         {
-            return await db.Users.FromSql("sp_GetAllUsers").ToListAsync();
+            string x = $"sp_GetAll{typeof(T).Name}s";
+            return dbSet.FromSql(x).ToList();
         }
 
         public async Task<User> Get(int id)
@@ -41,14 +44,17 @@ namespace DAL.Repositories
             return  db.Users.Where(x => x.Email == email).FirstOrDefault();
         }
 
-        public void Create(User user)
+        public void Create(T user)
         {
             //var sql = string.Format("dbo.sp_CreateUser @Address = {0}, @BirthDay = {1}, @Email = {2}, @FullName = {3}, @Image = {4}," +
             //" @Password = {5}, @PhoneNumber = {6}, @Sex = {7}, @RoleId = {8}",
             //user.Address, user.BirthDay, user.Email, user.FullName, user.Image, user.Password, user.PhoneNumber, user.Sex, user.RoleId);
             //var userType = db.Database.ExecuteSqlCommand(sql);
-
-            db.Users.Add(user);
+            //System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@name", "Samsung");
+            //var phones = db.Set<T>().FromSql("sp_CreateUser @Address = {0}, @BirthDay = {1}, @Email = {2}, @FullName = {3}, @Image = {4}," +
+            //" @Password = {5}, @PhoneNumber = {6}, @Sex = {7}, @RoleId = {8}",
+            //user.Address, user.BirthDay, user.Email, user.FullName, user.Image, user.Password, user.PhoneNumber, user.Sex, user.RoleId);
+            dbSet.Add(user);
         }
 
         public void Update(User user)

@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("identity")]
     [Authorize]
-    public class IdentityController : ControllerBase
+    public class IdentityController : Controller
     {
         [HttpGet]
         public IActionResult Get()

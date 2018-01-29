@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -18,39 +16,32 @@ namespace DAL.Repositories
 
         public ClinicRepository(ClinicContext context)
         {
-            this.db = context;
+            db = context;
         }
 
-        public async Task<List<Clinic>> GetAll()
+        public Task<int> Create(Clinic item)
         {
-            return await db.Clinics.FromSql("sp_GetAllClinics").ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<Clinic> Get(int id)
+        public Task<int> Delete(int id)
         {
-            return await db.Clinics.FirstOrDefaultAsync(x => x.Id == id);
+            throw new NotImplementedException();
         }
 
-        public void Create(Clinic clinic)
+        public Task<List<Clinic>> GetAll()
         {
-            db.Clinics.Add(clinic);
+            throw new NotImplementedException();
         }
 
-        public void Update(Clinic clinic)
+        public Task<Clinic> GetById(int id)
         {
-            db.Entry(clinic).State = EntityState.Modified;
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Clinic>> Find(Expression<Func<Clinic, bool>> predicate)
+        public Task<int> Update(Clinic item)
         {
-            return await db.Clinics.Where(predicate).ToListAsync();
-        }
-
-        public void Delete(int id)
-        {
-            Clinic clinic = db.Clinics.Find(id);
-            if (clinic != null)
-                db.Clinics.Remove(clinic);
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DAL.Repositories
     {
         private ClinicContext db;
         private RoleRepository roleRepository;
-        private UserRepository<User> userRepository;
+        private UserRepository userRepository;
         private ClinicRepository clinicRepository;
 
         public EFUnitOfWork(ClinicContext context)
@@ -28,12 +28,12 @@ namespace DAL.Repositories
             }
         }
 
-        public UserRepository<User> Users
+        public IUserRepository Users
         {
             get
             {
                 if (userRepository == null)
-                    userRepository = new UserRepository<User>(db);
+                    userRepository = new UserRepository(db);
                 return userRepository;
             }
         }
@@ -57,13 +57,13 @@ namespace DAL.Repositories
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     db.Dispose();
                 }
-                this.disposed = true;
+                disposed = true;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
 using DAL.EF;
@@ -31,7 +32,8 @@ namespace WebAPI
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
-            
+            services.AddTransient<IService<RoleDTO>, RoleService>();
+
             services.AddAutoMapper();
 
             services.AddDbContext<ClinicContext>(options =>

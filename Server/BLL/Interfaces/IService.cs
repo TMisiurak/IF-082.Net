@@ -1,18 +1,19 @@
-﻿using System;
+﻿using BLL.DTO;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BLL.Interfaces
 {
-    public interface IRepository<T> where T: class
+    public interface IService<T> where T : class
     {
         Task<List<T>> GetAll();
         Task<T> GetById(int id);
         Task<int> Create(T item);
         Task<int> Update(T item);
-        Task<int> Delete(int id);
+        Task<int> DeleteById(int id);
+
+        void Dispose();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,7 +10,7 @@ using WebAPI.Helpers;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class RegisterController : ControllerBase
+    public class RegisterController : Controller
     {
         private readonly IUserService _userService;
 
@@ -21,11 +20,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register([FromBody] User userDTO)
+        public async Task<IActionResult> Register([FromBody]UserDTO userDTO)
         {
-            userDTO.Password = HashedLogic.HashPassword(userDTO.Password);
-            _userService.CreateUser(userDTO);
-            return Ok(userDTO);
+            userDTO.Password = HashService.HashPassword(userDTO.Password);
+            int result = await _userService.Create(userDTO);
+            return Ok(result);
         }
     }
 }

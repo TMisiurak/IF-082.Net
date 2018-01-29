@@ -14,33 +14,44 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _iMapper;
         private readonly IUserService _serv;
+
         public ValuesController(IUserService serv, IMapper iMapper)
         {
             _serv = serv;
             _iMapper = iMapper;
         }
-        [Authorize(Roles = "admin")]
+
         // GET api/values
+        [Authorize(Roles = "admin")]
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> GetUsers()
         {
-            var users = _serv.GetUsers();
-            return Json(users);
+            var users = await _serv.GetAll();
+            return Ok(users);
         }
 
         // GET api/values/5
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<IActionResult> GetUserById(int? id)
         {
-            var user = _serv.GetUserById(id);
-            return Json(user);
+            var user = await _serv.GetById(id.Value);
+            return Ok(user);
         }
 
-        //[HttpGet("{email}")]
-        //public JsonResult Get(string email)
-        //{
-        //    var user = _serv.GetUserByEmail(email);
-        //    return Json(user);
-        //}
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUserById(int? id)
+        {
+            int result = await _serv.DeleteById(id.Value);
+            return Ok(result);
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _serv.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

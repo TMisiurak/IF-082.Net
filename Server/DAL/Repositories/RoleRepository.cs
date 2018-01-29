@@ -4,6 +4,7 @@ using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,43 +14,38 @@ namespace DAL.Repositories
 {
     public class RoleRepository : IRepository<Role>
     {
-        private readonly ClinicContext db;
+        private readonly ClinicContext _db;
 
-        public RoleRepository(ClinicContext context)
+        public RoleRepository(ClinicContext db)
         {
-            this.db = context;
+            _db = db;
         }
 
-        public async Task<List<Role>> GetAll()
+        public Task<int> Create(Role item)
         {
-            return await db.Roles.FromSql("sp_GetAllRoles").ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<Role> Get(int id)
+        public Task<int> Delete(int id)
         {
-            return await db.Roles.FirstOrDefaultAsync(x => x.Id == id);
+            throw new NotImplementedException();
         }
 
-        public void Create(Role role)
+        public Task<List<Role>> GetAll()
         {
-            db.Roles.Add(role);
+            throw new NotImplementedException();
         }
 
-        public void Update(Role role)
+        public async Task<Role> GetById(int id)
         {
-            db.Entry(role).State = EntityState.Modified;
+            var param = new SqlParameter("@id", id);
+            Role user = await _db.Roles.FromSql($"sp_GetRoleById @id", param).FirstOrDefaultAsync();
+            return user;
         }
 
-        public async Task<List<Role>> Find(Expression<Func<Role, bool>> predicate)
+        public Task<int> Update(Role item)
         {
-            return await db.Roles.Where(predicate).ToListAsync();
-        }
-
-        public void Delete(int id)
-        {
-            Role role = db.Roles.Find(id);
-            if (role != null)
-                db.Roles.Remove(role);
+            throw new NotImplementedException();
         }
     }
 }

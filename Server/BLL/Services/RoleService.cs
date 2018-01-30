@@ -30,12 +30,15 @@ namespace BLL.Services
 
         public async Task<List<RoleDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            List<Role> roles = await DataBase.Roles.GetAll();
+            var result = _mapper.Map<List<RoleDTO>>(roles);
+            return result;
         }
 
-        public Task<int> Create(RoleDTO item)
+        public async Task<int> Create(RoleDTO roleDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Roles.Create(_mapper.Map<Role>(roleDTO));
+            return result;
         }
 
         public Task<int> Update(RoleDTO item)
@@ -43,14 +46,15 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteById(int id)
+        public async Task<int> DeleteById(int id)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Roles.Delete(id);
+            return result;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            DataBase.Dispose();
         }
     }
 }

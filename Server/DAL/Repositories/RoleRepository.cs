@@ -4,6 +4,7 @@ using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
@@ -21,19 +22,32 @@ namespace DAL.Repositories
             _db = db;
         }
 
-        public Task<int> Create(Role item)
+        public async Task<int> Create(Role role)
         {
-            throw new NotImplementedException();
+            string sql = $"sp_CreateRole @Name = '{role.Name}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+            return result;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @resid = dbo.sp_DeleteRole @id = {id}";
+
+            //string sql = $"sp_DeleteUser @id = {id}";
+            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
-        public Task<List<Role>> GetAll()
+        public async Task<List<Role>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Roles.FromSql("sp_GetAllRoles").ToListAsync();
         }
 
         public async Task<Role> GetById(int id)

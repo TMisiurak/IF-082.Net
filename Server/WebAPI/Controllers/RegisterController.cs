@@ -1,9 +1,6 @@
 ﻿using BLL.DTO;
 using BLL.Interfaces;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using WebAPI.Helpers;
 
@@ -24,6 +21,23 @@ namespace WebAPI.Controllers
         {
             userDTO.Password = HashService.HashPassword(userDTO.Password);
             int result = await _userService.Create(userDTO);
+            return Ok(result);
+        }
+
+        // UPDATE api/values/5
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUserById([FromBody]UserDTO userDTO)
+        {
+            userDTO.Password = HashService.HashPassword(userDTO.Password);
+            int result = await _userService.Update(userDTO);
+            return Ok(result);
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("delete_user/{id}")]
+        public async Task<IActionResult> DeleteUserById(int? id)
+        {
+            int result = await _userService.DeleteById(id.Value);
             return Ok(result);
         }
     }

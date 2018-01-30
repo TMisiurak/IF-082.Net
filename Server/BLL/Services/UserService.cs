@@ -46,9 +46,11 @@ namespace BLL.Services
             return result;
         }
 
-        public Task<int> Update(UserDTO item)
+        public async Task<int> Update(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Users.Update(_mapper.Map<User>(userDTO));
+            //DataBase.Save();
+            return result;
         }
 
         public async Task<int> DeleteById(int id)

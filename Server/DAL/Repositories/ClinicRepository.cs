@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -12,31 +14,46 @@ namespace DAL.Repositories
 {
     public class ClinicRepository : IRepository<Clinic>
     {
-        private readonly ClinicContext db;
+        private readonly ClinicContext _db;
 
         public ClinicRepository(ClinicContext context)
         {
-            db = context;
+            _db = context;
         }
 
-        public Task<int> Create(Clinic item)
+        public async Task<int> Create(Clinic clinic)
         {
-            throw new NotImplementedException();
+            string sql = $"sp_CreateClinic @Name = '{clinic.Name}', @Address = '{clinic.Address}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+            return result;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @resid = dbo.sp_DeleteClinic @id = {id}";
+
+            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
-        public Task<List<Clinic>> GetAll()
+        public async Task<List<Clinic>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Clinics.FromSql("sp_GetAllClinics").ToListAsync();
         }
 
-        public Task<Clinic> GetById(int id)
+        public async Task<Clinic> GetById(int id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter("@id", id);
+            Clinic clinic = await _db.Clinics.FromSql($"sp_GetClinicById @id", param).FirstOrDefaultAsync();
+
+            return clinic;
         }
 
         public Task<int> Update(Clinic item)

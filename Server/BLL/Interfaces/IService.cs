@@ -10,9 +10,9 @@ namespace BLL.Interfaces
     {
         Task<List<T>> GetAll();
         Task<T> GetById(int id);
-        Task<int> Create(T item);
+        Task<int> CreateAsync(T item);
         Task<int> Update(T item);
-        Task<int> DeleteById(int id);
+        Task<int> DeleteByIdAsync(int id);
 
         void Dispose();
     }

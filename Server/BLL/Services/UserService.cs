@@ -39,7 +39,7 @@ namespace BLL.Services
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<int> Create(UserDTO userDTO)
+        public async Task<int> CreateAsync(UserDTO userDTO)
         {
             int result = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
             //DataBase.Save();
@@ -53,7 +53,7 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<int> DeleteById(int id)
+        public async Task<int> DeleteByIdAsync(int id)
         {
             int result = await DataBase.Users.Delete(id);
             return result;

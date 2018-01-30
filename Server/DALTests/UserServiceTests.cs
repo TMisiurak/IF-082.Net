@@ -1,37 +1,53 @@
-﻿using DAL.EF;
+﻿using AutoMapper;
+using BLL.DTO;
+using BLL.Interfaces;
+using BLL.Services;
+using DAL.EF;
 using DAL.Entities;
-using DAL.Repositories;
+using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DALTests
 {
     public class UserServiceTests
     {
-        //[Fact]
-        //public void GetAll()
-        //{
-        //    var users = new List<User>
-        //    {
-        //        new User { Id=1, FullName="iPhone 7", Email="Apple1@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
-        //        Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495291"},
-        //        new User { Id=2, FullName="iPhone 8", Email="Apple2@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
-        //        Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495292"},
-        //        new User { Id=3, FullName="iPhone 9", Email="Apple3@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
-        //        Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495293"},
-        //        new User { Id=4, FullName="iPhone 10", Email="Apple4@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
-        //        Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495297"},
-        //    };
+        [Fact]
+        public void GetAll()
+        {
+            var userRepo = new Mock<IUserRepository>();
+            userRepo.Setup(m => m.GetAll()).Returns(GetAllUsers());
 
-        //    var mock = new Mock<ClinicContext>();
-        //    mock.Setup(x => users).Returns(users);
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            unitOfWorkMock.Setup(m => m.Users).Returns(userRepo.Object);
 
-        //    var userRepo = new UserRepository(mock.Object);
+            var mockMapper = new Mock<IMapper>();
+            mockMapper.Setup(x => x.Map<UserDTO>(It.IsAny<User>()))
+                .Returns(new UserDTO());
 
-        //    var usersGeted = userRepo.GetAll();
-  
-        //    Assert.Equal(users, usersGeted.Result);
-        //}
+            IUserService userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
+            var getAll = userService.GetAll();
+            Assert.NotNull(getAll);
+        }
+
+        private async Task<List<User>> GetAllUsers()
+        {
+            var users = new List<User>
+            {
+                new User { Id=1, FullName="iPhone 7", Email="Apple1@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
+                Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495291"},
+                new User { Id=2, FullName="iPhone 8", Email="Apple2@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
+                Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495292"},
+                new User { Id=3, FullName="iPhone 9", Email="Apple3@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
+                Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495293"},
+                new User { Id=4, FullName="iPhone 10", Email="Apple4@g.com", Address="street", BirthDay= new System.DateTime(2020-12-01),
+                Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495297"},
+            };
+            return users;
+        }
     }
 }

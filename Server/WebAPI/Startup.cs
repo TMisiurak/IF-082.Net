@@ -114,6 +114,7 @@ namespace WebAPI
                         RoleId = 4, FullName = "Full Name 4", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
                 };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
                 if (!context.Roles.Any())

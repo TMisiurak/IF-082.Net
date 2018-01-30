@@ -15,6 +15,7 @@ namespace WebAPI.Controllers
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
+        private readonly IService<RoomDTO> _servRoom;
 
         public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic)
         {
@@ -49,6 +50,20 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> DeleteClinicById(int? id)
         {
             int result = await _servClinic.DeleteByIdAsync(id.Value);
+            return Ok(result);
+        }
+
+        [HttpPost("create_room")]
+        public async Task<IActionResult> CreateRoom([FromBody]RoomDTO roomDTO)
+        {
+            int result = await _servRoom.CreateAsync(roomDTO);
+            return Ok(result);
+        }
+
+        [HttpPost("delete_room")]
+        public async Task<IActionResult> DeleteRoomById(int? id)
+        {
+            int result = await _servRoom.DeleteByIdAsync(id.Value);
             return Ok(result);
         }
     }

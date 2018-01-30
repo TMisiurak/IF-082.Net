@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> Register([FromBody]UserDTO userDTO)
         {
             userDTO.Password = HashService.HashPassword(userDTO.Password);
-            int result = await _userService.CreateAsync(userDTO);
+            int result = await _userService.Create(userDTO);
             return Ok(result);
         }
 
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete_user/{id}")]
         public async Task<IActionResult> DeleteUserById(int? id)
         {
-            int result = await _userService.DeleteByIdAsync(id.Value);
+            int result = await _userService.DeleteById(id.Value);
             return Ok(result);
         }
     }

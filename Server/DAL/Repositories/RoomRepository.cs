@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    class RoomRepository : IRepository<Room>
+    public class RoomRepository : IRepository<Room>
     {
         private readonly ClinicContext _db;
 

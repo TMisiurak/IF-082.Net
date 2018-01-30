@@ -21,13 +21,13 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<int> CreateAsync(RoomDTO roomDTO)
+        public async Task<int> Create(RoomDTO roomDTO)
         {
             int result = await DataBase.Rooms.Create(_mapper.Map<Room>(roomDTO));
             return result;
         }
 
-        public async Task<int> DeleteByIdAsync(int id)
+        public async Task<int> DeleteById(int id)
         {
             int result = await DataBase.Rooms.Delete(id);
             return result;

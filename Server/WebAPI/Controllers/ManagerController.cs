@@ -28,42 +28,42 @@ namespace WebAPI.Controllers
         [HttpPost("create_role")]
         public async Task<IActionResult> CreateRole([FromBody]RoleDTO roleDTO)
         {
-            int result = await _servRole.CreateAsync(roleDTO);
+            int result = await _servRole.Create(roleDTO);
             return Ok(result);
         }
 
         [HttpDelete("delete_role/{id}")]
         public async Task<IActionResult> DeleteRoleById(int? id)
         {
-            int result = await _servRole.DeleteByIdAsync(id.Value);
+            int result = await _servRole.DeleteById(id.Value);
             return Ok(result);
         }
 
         [HttpPost("create_clinic")]
         public async Task<IActionResult> CreateClinic([FromBody]ClinicDTO clinicDTO)
         {
-            int result = await _servClinic.CreateAsync(clinicDTO);
+            int result = await _servClinic.Create(clinicDTO);
             return Ok(result);
         }
 
         [HttpDelete("delete_clinic/{id}")]
         public async Task<IActionResult> DeleteClinicById(int? id)
         {
-            int result = await _servClinic.DeleteByIdAsync(id.Value);
+            int result = await _servClinic.DeleteById(id.Value);
             return Ok(result);
         }
 
         [HttpPost("create_room")]
         public async Task<IActionResult> CreateRoom([FromBody]RoomDTO roomDTO)
         {
-            int result = await _servRoom.CreateAsync(roomDTO);
+            int result = await _servRoom.Create(roomDTO);
             return Ok(result);
         }
 
         [HttpPost("delete_room")]
         public async Task<IActionResult> DeleteRoomById(int? id)
         {
-            int result = await _servRoom.DeleteByIdAsync(id.Value);
+            int result = await _servRoom.DeleteById(id.Value);
             return Ok(result);
         }
     }

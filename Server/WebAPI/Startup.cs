@@ -33,6 +33,7 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            services.AddTransient<IService<ClinicDTO>, ClinicService>();
 
             services.AddAutoMapper();
 
@@ -98,6 +99,13 @@ namespace WebAPI
                     new Role{ Name="doctor" },
                     new Role{ Name="accountant" },
                 };
+                List<Clinic> clinics = new List<Clinic>
+                {
+                    new Clinic{ Name="Clinic1" },
+                    new Clinic{ Name="Clinic2" },
+                    new Clinic{ Name="Clinic3" },
+                    new Clinic{ Name="Clinic4" },
+                };
                 List<User> users = new List<User>
                 {
                     // password is "pass"
@@ -126,6 +134,12 @@ namespace WebAPI
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(users);
+                    context.SaveChanges();
+                }
+
+                if (!context.Clinics.Any())
+                {
+                    context.Clinics.AddRange(clinics);
                     context.SaveChanges();
                 }
             }

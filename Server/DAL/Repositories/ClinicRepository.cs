@@ -23,9 +23,16 @@ namespace DAL.Repositories
 
         public async Task<int> Create(Clinic clinic)
         {
-            string sql = $"sp_CreateClinic @Name = '{clinic.Name}', @Address = '{clinic.Address}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
-            return result;
+            var param = new SqlParameter
+            {
+                ParameterName = "@CreatedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @CreatedId = sp_CreateClinic @Name = '{clinic.Name}', @Address = '{clinic.Address}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
         public async Task<int> Delete(int id)

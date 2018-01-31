@@ -14,13 +14,16 @@ namespace WebAPI.Controllers
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
         //private readonly IService<ClinicDTO> _servClinic;
+        private readonly IService<RoomDTO> _servRoom;
 
-        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole/*, IService<ClinicDTO> servClinic*/)
+        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole/*, IService<ClinicDTO> servClinic*/, 
+            IService<RoomDTO> servRoom)
         {
             _serv = serv;
             _iMapper = iMapper;
             _servRole = servRole;
             //_servClinic = servClinic;
+            _servRoom = servRoom;
         }
 
         // GET api/users
@@ -57,6 +60,22 @@ namespace WebAPI.Controllers
         {
             var user = await _serv.GetById(id.Value);
             return Ok(user);
+        }
+
+        [Authorize(Roles = "admin, doctor, accountant")]
+        [HttpGet("/get_all_rooms")]
+        public async Task<IActionResult> GetAllRooms()
+        {
+            var rooms = await _servRoom.GetAll();
+            return Ok(rooms);
+        }
+
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
+        [HttpGet("/room/{id}")]
+        public async Task<IActionResult> GetRoomById(int? id)
+        {
+            var room = await _servRoom.GetById(id.Value);
+            return Ok(room);
         }
 
         protected override void Dispose(bool disposing)

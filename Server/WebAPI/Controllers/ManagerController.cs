@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("delete_room")]
+        [HttpDelete("delete_room")]
         public async Task<IActionResult> DeleteRoomById(int? id)
         {
             int result = await _servRoom.DeleteById(id.Value);

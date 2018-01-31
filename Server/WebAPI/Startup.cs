@@ -33,6 +33,7 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            services.AddTransient<IService<RoomDTO>, RoomService>();
 
             services.AddAutoMapper();
 
@@ -115,6 +116,15 @@ namespace WebAPI
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
                 };
 
+                List<Room> rooms = new List<Room>
+                {
+                    new Room { Name = "Reception", Number = 1 },
+                    new Room { Name = "Doctor Name Here", Number = 10 },
+                    new Room { Name = "Intensy Therapy", Number = 15 },
+                    new Room { Name = "X-Ray", Number = 17 },
+                    new Room { Name = "Diagnostics Room", Number = 50 }
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
                 if (!context.Roles.Any())
@@ -126,6 +136,12 @@ namespace WebAPI
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(users);
+                    context.SaveChanges();
+                }
+
+                if (!context.Rooms.Any())
+                {
+                    context.Rooms.AddRange(rooms);
                     context.SaveChanges();
                 }
             }

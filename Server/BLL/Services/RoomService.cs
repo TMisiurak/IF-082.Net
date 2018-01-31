@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    class RoomService : IService<RoomDTO>
+    public class RoomService : IService<RoomDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

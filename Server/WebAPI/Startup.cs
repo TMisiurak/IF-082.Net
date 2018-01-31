@@ -102,10 +102,10 @@ namespace WebAPI
 
                 List<Department> departments = new List<Department>
                 {
-                    new Department {Name = "Diagnostic", ClinicId=3},
-                    new Department {Name = "Cardiac", ClinicId=3},
-                    new Department {Name = "Pediatric", ClinicId =4},
-                    new Department {Name = "Ophtalmology", ClinicId=3}
+                    new Department {Name = "Diagnostic", ClinicId=1},
+                    new Department {Name = "Cardiac", ClinicId=1},
+                    new Department {Name = "Pediatric", ClinicId =1},
+                    new Department {Name = "Ophtalmology", ClinicId=1}
 
                 };
 

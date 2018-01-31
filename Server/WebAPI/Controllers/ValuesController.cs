@@ -13,13 +13,17 @@ namespace WebAPI.Controllers
         private readonly IMapper _iMapper;
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
+        private readonly IService<DepartmentDTO> _servDepartment;
+
         //private readonly IService<ClinicDTO> _servClinic;
 
-        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole/*, IService<ClinicDTO> servClinic*/)
+        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole,  
+            IService<DepartmentDTO> servDepartment /*, IService<ClinicDTO> servClinic*/)
         {
             _serv = serv;
             _iMapper = iMapper;
             _servRole = servRole;
+            _servDepartment = servDepartment;
             //_servClinic = servClinic;
         }
 
@@ -39,6 +43,23 @@ namespace WebAPI.Controllers
         {
             var roles = await _servRole.GetAll();
             return Ok(roles);
+        }
+
+
+        //Get  api/departments
+        [HttpGet("/all_departments")]
+        public async Task<IActionResult> GetDepartments()
+        {
+            var departments = await _servDepartment.GetAll();
+            return Ok(departments);
+        }
+
+        //GET api/
+        [HttpGet("/department/{id}")]
+        public async Task<IActionResult> GetDepartmentById(int? id)
+        {
+            var department = await _servDepartment.GetById(id.Value);
+            return Ok(department);
         }
 
         //// GET api/roles
@@ -62,6 +83,7 @@ namespace WebAPI.Controllers
         protected override void Dispose(bool disposing)
         {
             _serv.Dispose();
+            _servDepartment.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -43,7 +43,7 @@ namespace BLL.Services
 
         public async  Task<int> DeleteById(int id)
         {
-            int result = await Database.Roles.Delete(id);
+            int result = await Database.Departments.Delete(id);
             return result;
         }
 
@@ -67,6 +67,16 @@ namespace BLL.Services
 
         public async Task<int> Update(DepartmentDTO departmentDTO)
         {
+            //int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
+            //return result;
+       
+            Task<Department> department = Database.Departments.GetById(departmentDTO.Id);
+
+            // валидация
+            if (department == null)
+                throw new ValidationException("the department does not exist ");
+            
+
             int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
             return result;
         }

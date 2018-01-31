@@ -2,7 +2,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-DROP PROCEDURE IF EXISTS [dbo].[sp_CreateClinic]
+DROP PROCEDURE [dbo].[sp_CreateClinic]
 GO
 CREATE PROCEDURE [dbo].[sp_CreateClinic]
 	@Name nvarchar(200),

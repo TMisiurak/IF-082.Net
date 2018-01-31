@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE IF EXISTS [dbo].[sp_CreateRole]
+DROP PROCEDURE  [dbo].[sp_CreateRole]
 GO
 
 CREATE PROCEDURE [dbo].[sp_CreateRole]

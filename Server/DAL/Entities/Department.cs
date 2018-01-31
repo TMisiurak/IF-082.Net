@@ -5,15 +5,14 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class Clinic
+    public class Department
     {
         [Key]
         public int Id { get; set; }
-        [Required, Range(2,200)]
+        [Required, Range(2, 100)]
         public string Name { get; set; }
-        [Required, Range(2, 300)]
-        public string Address { get; set; }
 
-        public List<Department> Departments { get; set; }
+        public int ClinicId { get; set; }
+        public Clinic Clinic { get; set; }
     }
 }

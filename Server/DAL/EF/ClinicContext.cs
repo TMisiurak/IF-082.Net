@@ -8,6 +8,7 @@ namespace DAL.EF
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         public ClinicContext(DbContextOptions<ClinicContext> options)
             : base(options)

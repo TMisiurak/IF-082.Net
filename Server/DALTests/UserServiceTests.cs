@@ -17,8 +17,7 @@ namespace DALTests
 {
     public class UserServiceTests
     {
-        [Fact]
-        public void GetAll()
+        private async Task<List<User>> GetTestUsers()
         {
             var users = new List<User>
             {
@@ -31,26 +30,28 @@ namespace DALTests
                 new User { Id=4, FullName="iPhone 10", Email="Apple4@g.com", Address="street", BirthDay= new DateTime(2020, 12, 01),
                 Image = "SRC", Password = "pass", RoleId= 1, PhoneNumber="0999495297"},
             };
-
+            await Task.Yield();
+            return users;
+        }
+        [Fact]
+        public void GetAll()
+        {
             var userRepo = new Mock<IUserRepository>();
-            userRepo.Setup(x => x.GetAll()).Returns(async () =>
-            {
-                //await Task.Yield();
-                return users;
-            });
+            userRepo.Setup(x => x.GetAll()).Returns(GetTestUsers());
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             unitOfWorkMock.Setup(m => m.Users).Returns(userRepo.Object);
-
+            
             var mockMapper = new Mock<IMapper>();
-            mockMapper.Setup(x => x.Map<UserDTO>(It.IsAny<User>()))
-                .Returns(new UserDTO());
+
+            //mockMapper.Object.Map<List<UserDTO>>(It.IsAny<List<User>>());
 
             IUserService userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = userService.GetAll();
 
             Assert.NotNull(getAll);
-            //Assert.Equal(4, getAll.Count);
+            var viewResult = Assert.IsType<Task<List<UserDTO>>>(getAll);
+            var model = Assert.IsAssignableFrom<Task<List<User>>>(mockMapper.Object.Map<Task<List<User>>>(getAll));
         }
 
         [Fact]

@@ -1,6 +1,6 @@
-﻿using BLL.Interfaces;
-using DAL.EF;
+﻿using DAL.EF;
 using DAL.Entities;
+using DAL.Interfaces;
 using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
@@ -8,19 +8,16 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using WebAPI.Helpers;
 
 namespace IdentityServer
 {
-    public class ResourceOwnerValidator : IResourceOwnerPasswordValidator
+    public class UserResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        private readonly ClinicContext _db;
-        private readonly IUserService _userService;
+        private readonly IUnitOfWork DataBase;
 
-        public ResourceOwnerValidator(ClinicContext db, IUserService userService)
+        public UserResourceOwnerPasswordValidator(IUnitOfWork uow)
         {
-            _db = db;
-            _userService = userService;
+            DataBase = uow;
         }
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
@@ -28,13 +25,12 @@ namespace IdentityServer
             try
             {
                 //get your user model from db (by username - in my case its email)
-                User user = _db.Users.Where(x => x.Email == context.UserName).FirstOrDefault();
-                string role = _db.Roles.Where(x => x.Id == user.RoleId).FirstOrDefault().Name;
-                var hashedLogic = new HashedLogic(_userService);
+                User user = await DataBase.Users.GetByEmail(context.UserName);
+                Role role = await DataBase.Roles.GetById(user.RoleId);
 
                 if (user != null)
                 {
-                    if (hashedLogic.CheckedHashedPassword(context.Password, context.UserName))
+                    if (ValidationService.ValidatePassword(user.Password, context.Password))
                     {
                         context.Result = new GrantValidationResult(
                             subject: user.Id.ToString(),
@@ -57,7 +53,7 @@ namespace IdentityServer
         }
 
         //build claims array from user data
-        public static Claim[] GetUserClaims(User user, string role)
+        public static Claim[] GetUserClaims(User user, Role role)
         {
             return new Claim[]
             {
@@ -66,7 +62,7 @@ namespace IdentityServer
             new Claim(JwtClaimTypes.Email, user.Email  ?? ""),
 
             //roles
-            new Claim(JwtClaimTypes.Role, role)
+            new Claim(JwtClaimTypes.Role, role.Name)
             };
         }
     }

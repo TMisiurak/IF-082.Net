@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IUserRepository<T> : IRepository<T> where T : class
+    public interface IUserRepository : IRepository<User>
     {
-        T Get(string email);
+        Task<User> GetByEmail(string email);
     }
 }

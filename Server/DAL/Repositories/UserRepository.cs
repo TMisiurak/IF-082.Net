@@ -2,70 +2,70 @@
 using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : IUserRepository
     {
-        private readonly ClinicContext db;
+        private readonly ClinicContext _db;
 
-        public UserRepository(ClinicContext context)
+        public UserRepository(ClinicContext db)
         {
-            this.db = context;
+            _db = db;
         }
 
         public async Task<List<User>> GetAll()
         {
-            return await db.Users.FromSql("sp_GetAllUsers").ToListAsync();
+            return await _db.Users.FromSql("sp_GetAllUsers").ToListAsync();
         }
 
-        public async Task<User> Get(int id)
+        public async Task<User> GetById(int id)
         {
-            //System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@id", id);
-           // return await db.Users.FromSql("sp_GetUserById @id", param).FirstOrDefaultAsync();
-
-            return await db.Users.FirstOrDefaultAsync(x => x.Id == id);
-            //return user;
+            var param = new SqlParameter("@id", id);
+            User user = await _db.Users.FromSql($"sp_GetUserById @id", param).FirstOrDefaultAsync();
+            return user;
         }
 
-        public User Get(string email)
+        public async Task<User> GetByEmail(string email)
         {
-            //System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@email", email);
-            //User user = db.Users.FromSql("sp_GetUserByEmail @email", param).FirstOrDefault();
-            return  db.Users.Where(x => x.Email == email).FirstOrDefault();
+            var param = new SqlParameter("@email", email);
+            User user = await _db.Users.FromSql($"sp_GetUserByEmail @email", param).FirstOrDefaultAsync();
+            return user;
         }
 
-        public void Create(User user)
+        public async Task<int> Create(User user)
         {
-            //var sql = string.Format("dbo.sp_CreateUser @Address = {0}, @BirthDay = {1}, @Email = {2}, @FullName = {3}, @Image = {4}," +
-            //" @Password = {5}, @PhoneNumber = {6}, @Sex = {7}, @RoleId = {8}",
-            //user.Address, user.BirthDay, user.Email, user.FullName, user.Image, user.Password, user.PhoneNumber, user.Sex, user.RoleId);
-            //var userType = db.Database.ExecuteSqlCommand(sql);
-
-            db.Users.Add(user);
+            string sql = $"sp_CreateUser @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+            return result;
         }
 
-        public void Update(User user)
+        public async Task<int> Update(User user)
         {
-            db.Entry(user).State = EntityState.Modified;
+            string sql = $"sp_UpdateUser @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+            //_db.Entry(user).State = EntityState.Modified;
+            return result;
         }
 
-        public async Task<List<User>> Find(Expression<Func<User, bool>> predicate)
+        public async Task<int> Delete(int id)
         {
-            return await db.Users.Where(predicate).ToListAsync();
-        }
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
 
-        public void Delete(int id)
-        {
-            User user = db.Users.Find(id);
-            if (user != null)
-                db.Users.Remove(user);
+            string sql = $"exec @resid = dbo.sp_DeleteUser @id = {id}";
+
+            //string sql = $"sp_DeleteUser @id = {id}";
+            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
     }
 }

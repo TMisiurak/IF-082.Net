@@ -31,11 +31,9 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleService, RoleService>();
 
             services.AddTransient<IProfileService, UserProfileService>();
-            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerValidator>();
+            services.AddTransient<IResourceOwnerPasswordValidator, UserResourceOwnerPasswordValidator>();
 
             services.AddAutoMapper();
 
@@ -49,31 +47,7 @@ namespace IdentityServer
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddProfileService<UserProfileService>()
-                ;
-
-            services.AddAuthentication()
-                .AddGoogle("Google", options =>
-                {
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                    options.ClientId = "434483408261-55tc8n0cs4ff1fe21ea8df2o443v2iuc.apps.googleusercontent.com";
-                    options.ClientSecret = "3gcoTrEDPPJ0ukn_aYYT6PWo";
-                })
-                .AddOpenIdConnect("oidc", "OpenID Connect", options =>
-                {
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
-
-                    options.Authority = "https://demo.identityserver.io/";
-                    options.ClientId = "implicit";
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = "name",
-                        RoleClaimType = "role"
-                    };
-                });
+                .AddProfileService<UserProfileService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -84,9 +58,8 @@ namespace IdentityServer
             }
 
             app.UseIdentityServer();
-
-            app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            
+            app.UseMvc();
         }
     }
 }

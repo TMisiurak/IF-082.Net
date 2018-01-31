@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using BLL.DTO;
-using BLL.Interfaces;
-using DAL.EF;
-using DAL.Entities;
+﻿using DAL.Entities;
+using DAL.Interfaces;
 using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
@@ -16,28 +13,27 @@ namespace IdentityServer
 {
     public class UserProfileService : IProfileService
     {
-        private ClinicContext _db;
+        private readonly IUnitOfWork DataBase;
 
-        public UserProfileService(ClinicContext db)
+        public UserProfileService(IUnitOfWork uow)
         {
-            _db = db;
+            DataBase = uow;
         }
 
         //Get user profile date in terms of claims when calling /connect/userinfo
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var userId = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub");
-
-            if (!string.IsNullOrEmpty(userId?.Value) && long.Parse(userId.Value) > 0)
+            bool result = Int32.TryParse(context.Subject.Claims.FirstOrDefault(x => x.Type == "sub").Value, out int userId);
+            if (result && userId > 0)
             {
                 //get user from db (find user by user id)
-                User user = _db.Users.Where(x => x.Id == long.Parse(userId.Value)).FirstOrDefault();
-                string role = _db.Roles.Where(x => x.Id == user.RoleId).FirstOrDefault().Name;
+                User user = await DataBase.Users.GetById(userId);
+                Role role = await DataBase.Roles.GetById(user.RoleId);
 
                 // issue the claims for the user
                 if (user != null)
                 {
-                    var claims = ResourceOwnerValidator.GetUserClaims(user, role);
+                    var claims = UserResourceOwnerPasswordValidator.GetUserClaims(user, role);
 
                     context.IssuedClaims = claims.Where(x => context.RequestedClaimTypes.Contains(x.Type)).ToList();
                 }
@@ -49,12 +45,11 @@ namespace IdentityServer
         {
             try
             {
-                //get subject from context (set in ResourceOwnerPasswordValidator.ValidateAsync),
-                var userId = context.Subject.Claims.FirstOrDefault(x => x.Type == "user_id");
-
-                if (!string.IsNullOrEmpty(userId?.Value) && long.Parse(userId.Value) > 0)
+                bool result = Int32.TryParse(context.Subject.Claims.FirstOrDefault(x => x.Type == "user_id").Value, out int userId);
+                
+                if (result && userId > 0)
                 {
-                    User user = _db.Users.Where(x => x.Id == long.Parse(userId.Value)).FirstOrDefault();
+                    User user = await DataBase.Users.GetById(userId);
 
                     if (user != null)
                     {

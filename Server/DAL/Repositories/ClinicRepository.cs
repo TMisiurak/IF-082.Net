@@ -1,7 +1,7 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -14,43 +14,51 @@ namespace DAL.Repositories
 {
     public class ClinicRepository : IRepository<Clinic>
     {
-        private readonly ClinicContext db;
+        private readonly ClinicContext _db;
 
         public ClinicRepository(ClinicContext context)
         {
-            this.db = context;
+            _db = context;
+        }
+
+        public async Task<int> Create(Clinic clinic)
+        {
+            string sql = $"sp_CreateClinic @Name = '{clinic.Name}', @Address = '{clinic.Address}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+            return result;
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @resid = dbo.sp_DeleteClinic @id = {id}";
+
+            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
         public async Task<List<Clinic>> GetAll()
         {
-            return await db.Clinics.FromSql("sp_GetAllClinics").ToListAsync();
+            return await _db.Clinics.FromSql("sp_GetAllClinics").ToListAsync();
         }
 
-        public async Task<Clinic> Get(int id)
+        public async Task<Clinic> GetById(int id)
         {
-            return await db.Clinics.FirstOrDefaultAsync(x => x.Id == id);
+            var param = new SqlParameter("@id", id);
+            Clinic clinic = await _db.Clinics.FromSql($"sp_GetClinicById @id", param).FirstOrDefaultAsync();
+
+            return clinic;
         }
 
-        public void Create(Clinic clinic)
+        public Task<int> Update(Clinic item)
         {
-            db.Clinics.Add(clinic);
-        }
-
-        public void Update(Clinic clinic)
-        {
-            db.Entry(clinic).State = EntityState.Modified;
-        }
-
-        public async Task<List<Clinic>> Find(Expression<Func<Clinic, bool>> predicate)
-        {
-            return await db.Clinics.Where(predicate).ToListAsync();
-        }
-
-        public void Delete(int id)
-        {
-            Clinic clinic = db.Clinics.Find(id);
-            if (clinic != null)
-                db.Clinics.Remove(clinic);
+            throw new NotImplementedException();
         }
     }
 }

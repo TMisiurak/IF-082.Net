@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
+using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,33 +12,57 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _iMapper;
         private readonly IUserService _serv;
-        public ValuesController(IUserService serv, IMapper iMapper)
+        private readonly IService<RoleDTO> _servRole;
+        //private readonly IService<ClinicDTO> _servClinic;
+
+        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole/*, IService<ClinicDTO> servClinic*/)
         {
             _serv = serv;
             _iMapper = iMapper;
+            _servRole = servRole;
+            //_servClinic = servClinic;
         }
+
+        // GET api/users
         [Authorize(Roles = "admin")]
-        // GET api/values
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> GetUsers()
         {
-            var users = _serv.GetUsers();
-            return Json(users);
+            var users = await _serv.GetAll();
+            return Ok(users);
         }
+
+        // GET api/roles
+        [Authorize(Roles = "admin")]
+        [HttpGet("/all_roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _servRole.GetAll();
+            return Ok(roles);
+        }
+
+        //// GET api/roles
+        //[Authorize(Roles = "admin")]
+        //[HttpGet("/all_clinics")]
+        //public async Task<IActionResult> GetClinics()
+        //{
+        //    var clinics = await _servClinic.GetAll();
+        //    return Ok(clinics);
+        //}
 
         // GET api/values/5
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public async Task<IActionResult> GetUserById(int? id)
         {
-            var user = _serv.GetUserById(id);
-            return Json(user);
+            var user = await _serv.GetById(id.Value);
+            return Ok(user);
         }
 
-        //[HttpGet("{email}")]
-        //public JsonResult Get(string email)
-        //{
-        //    var user = _serv.GetUserByEmail(email);
-        //    return Json(user);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            _serv.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

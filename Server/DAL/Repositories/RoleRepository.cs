@@ -4,6 +4,8 @@ using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,43 +15,51 @@ namespace DAL.Repositories
 {
     public class RoleRepository : IRepository<Role>
     {
-        private readonly ClinicContext db;
+        private readonly ClinicContext _db;
 
-        public RoleRepository(ClinicContext context)
+        public RoleRepository(ClinicContext db)
         {
-            this.db = context;
+            _db = db;
+        }
+
+        public async Task<int> Create(Role role)
+        {
+            string sql = $"sp_CreateRole @Name = '{role.Name}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+            return result;
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @resid = dbo.sp_DeleteRole @id = {id}";
+
+            //string sql = $"sp_DeleteUser @id = {id}";
+            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
         public async Task<List<Role>> GetAll()
         {
-            return await db.Roles.FromSql("sp_GetAllRoles").ToListAsync();
+            return await _db.Roles.FromSql("sp_GetAllRoles").ToListAsync();
         }
 
-        public async Task<Role> Get(int id)
+        public async Task<Role> GetById(int id)
         {
-            return await db.Roles.FirstOrDefaultAsync(x => x.Id == id);
+            var param = new SqlParameter("@id", id);
+            Role user = await _db.Roles.FromSql($"sp_GetRoleById @id", param).FirstOrDefaultAsync();
+            return user;
         }
 
-        public void Create(Role role)
+        public Task<int> Update(Role item)
         {
-            db.Roles.Add(role);
-        }
-
-        public void Update(Role role)
-        {
-            db.Entry(role).State = EntityState.Modified;
-        }
-
-        public async Task<List<Role>> Find(Expression<Func<Role, bool>> predicate)
-        {
-            return await db.Roles.Where(predicate).ToListAsync();
-        }
-
-        public void Delete(int id)
-        {
-            Role role = db.Roles.Find(id);
-            if (role != null)
-                db.Roles.Remove(role);
+            throw new NotImplementedException();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace DAL.Repositories
             }
         }
 
-        public IUserRepository<User> Users
+        public IUserRepository Users
         {
             get
             {
@@ -57,13 +57,13 @@ namespace DAL.Repositories
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     db.Dispose();
                 }
-                this.disposed = true;
+                disposed = true;
             }
         }
 

@@ -1,15 +1,12 @@
 ﻿using BLL.DTO;
 using DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IService<UserDTO>
     {
-        void CreateUser(User userDTO);
-        UserDTO GetUserById(int? id);
-        UserDTO GetUserByEmail(string email);
-        IEnumerable<UserDTO> GetUsers();
-        void Dispose();
+        UserDTO GetByEmail(string email);
     }
 }

@@ -1,0 +1,28 @@
+USE [ClinicDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_CreateDrug]
+GO
+
+CREATE PROCEDURE [dbo].[sp_CreateDrug]
+	@DrugName nvarchar(100)
+    
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[Drugs] (DrugName)
+    VALUES (@DrugName)
+
+	RETURN @@IDENTITY
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO

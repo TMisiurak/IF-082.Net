@@ -13,6 +13,7 @@ namespace DAL.Interfaces
         IRepository<Clinic> Clinics { get; }
         IRepository<Procedure> Procedures { get; }
         IRepository<Diagnosis> Diagnoses { get; }
+        IRepository<Drug> Drugs { get; }
 
         void Save();
     }

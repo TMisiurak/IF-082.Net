@@ -13,5 +13,7 @@ namespace DAL.Entities
         public string Name { get; set; }
         [Required, Range(2, 300)]
         public string Address { get; set; }
+
+        public List<Department> Departments { get; set; }
     }
 }

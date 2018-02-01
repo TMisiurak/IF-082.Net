@@ -13,8 +13,10 @@ namespace DAL.Repositories
         private RoleRepository roleRepository;
         private UserRepository userRepository;
         private ClinicRepository clinicRepository;
+        private DepartmentRepository departmentRepository;
         private ProcedureRepository procedureRepository;
         private DiagnosisRepository diagnosisRepository;
+        private RoomRepository roomRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -50,6 +52,16 @@ namespace DAL.Repositories
             }
         }
 
+        public IRepository<Department> Departments
+        {
+            get
+            {
+                if (departmentRepository == null)
+                    departmentRepository = new DepartmentRepository(db);
+                return departmentRepository;
+            }
+        }
+
         public IRepository<Procedure> Procedures
         {
             get
@@ -70,29 +82,14 @@ namespace DAL.Repositories
             }
         }
 
-        public void Save()
+        public IRepository<Room> Rooms
         {
-            db.SaveChanges();
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
+            get
             {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                disposed = true;
+                if (roomRepository == null)
+                    roomRepository = new RoomRepository(db);
+                return roomRepository;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

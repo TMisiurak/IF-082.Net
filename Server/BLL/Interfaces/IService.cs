@@ -13,7 +13,5 @@ namespace BLL.Interfaces
         Task<int> Create(T item);
         Task<int> Update(T item);
         Task<int> DeleteById(int id);
-
-        void Dispose();
     }
 }

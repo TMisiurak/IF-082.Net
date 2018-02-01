@@ -33,9 +33,12 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
+            services.AddTransient<IService<RoomDTO>, RoomService>();
+
 
             services.AddAutoMapper();
 
@@ -76,7 +79,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -94,6 +97,22 @@ namespace WebAPI
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                List<Clinic> clinics = new List<Clinic>
+                {
+                    new Clinic{ Name = "CDC", Address = "Mazepy 114a, Ivano-Frankivsk" },
+                    new Clinic{ Name = "Regional Hospital", Address = "Fedkovych 91, Ivano-Frankivsk" },
+                    new Clinic{ Name = "Children's Hospital", Address = "Konovaltcia 132, Ivano-Frankivsk" },
+                };
+
+                List<Department> departments = new List<Department>
+                {
+                    new Department {Name = "Diagnostic", ClinicId=1},
+                    new Department {Name = "Cardiac", ClinicId=1},
+                    new Department {Name = "Pediatric", ClinicId =1},
+                    new Department {Name = "Ophtalmology", ClinicId=1}
+
+                };
+
                 List<Role> roles = new List<Role>
                 {
                     new Role{ Name="admin" },
@@ -101,17 +120,11 @@ namespace WebAPI
                     new Role{ Name="doctor" },
                     new Role{ Name="accountant" },
                 };
-                List<Clinic> clinics = new List<Clinic>
-                {
-                    new Clinic{ Name="Clinic1" },
-                    new Clinic{ Name="Clinic2" },
-                    new Clinic{ Name="Clinic3" },
-                    new Clinic{ Name="Clinic4" },
-                };
+
                 List<User> users = new List<User>
                 {
                     // password is "pass"
-                    new User{ Email = "email1@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=", 
+                    new User{ Email = "email1@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
                         RoleId = 1, FullName = "Full Name 1", Address = "Address 1", BirthDay = new DateTime(1995, 1, 1),
                         PhoneNumber = "0123456781", Sex = "mal", Image = "imagesrc 1" },
                     new User{ Email = "email2@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
@@ -125,8 +138,49 @@ namespace WebAPI
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
                 };
 
+                List<Drug> drugs = new List<Drug>
+                {
+                    new Drug{ DrugName="Aspirin" },
+                    new Drug{ DrugName="Lidokain" },
+                    new Drug{ DrugName="Dimedrol" },
+                    new Drug{ DrugName="Validol" },
+                    new Drug{ DrugName="Urolesan" },
+                    new Drug{ DrugName="Mesim Forte" },
+                    new Drug{ DrugName="Allergomaks" },
+                    new Drug{ DrugName="Skinoren" },
+                    new Drug{ DrugName="Clotrimazole" },
+                    new Drug{ DrugName="Ketanol" },
+                };
+
+                List<Room> rooms = new List<Room>
+                {
+                    new Room { Name = "Reception", Number = 1 },
+                    new Room { Name = "Doctor Name Here", Number = 10 },
+                    new Room { Name = "Intense Therapy", Number = 15 },
+                    new Room { Name = "X-Ray", Number = 17 },
+                    new Room { Name = "Diagnostics Room", Number = 50 }
+                };
+
+                List<Diagnosis> diagnosis = new List<Diagnosis>
+                {
+                    new Diagnosis{ DiagnoseName="Migren", Description = "easy" },
+                    new Diagnosis{ DiagnoseName="Kashel", Description = "middle" },
+                    new Diagnosis{ DiagnoseName="GRZ", Description = "easy" },
+                };
+
+                List<Prescription> prescriptions = new List<Prescription>
+                {
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tablets",
+                    Date = DateTime.Now, DiagnosisId = 1},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tea",
+                    Date = DateTime.Now, DiagnosisId = 2},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "nimesil",
+                    Date = DateTime.Now, DiagnosisId = 3},
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
+
                 if (!context.Roles.Any())
                 {
                     context.Roles.AddRange(roles);
@@ -142,6 +196,36 @@ namespace WebAPI
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
+
+                if (!context.Departments.Any())
+                {
+                    context.Departments.AddRange(departments);
+                    context.SaveChanges();
+                }
+
+                if (!context.Drugs.Any())
+                {
+                    context.Drugs.AddRange(drugs);
+                    context.SaveChanges();
+                }
+
+                if (!context.Rooms.Any())
+                {
+                    context.Rooms.AddRange(rooms);
+                    context.SaveChanges();
+                }
+
+                if (!context.Diagnoses.Any())
+                {
+                    context.Diagnoses.AddRange(diagnosis);
+                    context.SaveChanges();
+                }
+
+                if (!context.Prescriptions.Any())
+                {
+                    context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
                 }
             }

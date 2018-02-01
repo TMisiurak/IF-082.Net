@@ -33,7 +33,6 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
-            //services.AddTransient<IService<Clinic>, ClinicService>();
             services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();

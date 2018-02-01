@@ -33,7 +33,6 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
-            //services.AddTransient<IService<Clinic>, ClinicService>();
             services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
@@ -80,7 +79,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -162,6 +161,23 @@ namespace WebAPI
                     new Room { Name = "Diagnostics Room", Number = 50 }
                 };
 
+                List<Diagnosis> diagnosis = new List<Diagnosis>
+                {
+                    new Diagnosis{ DiagnoseName="Migren", Description = "easy" },
+                    new Diagnosis{ DiagnoseName="Kashel", Description = "middle" },
+                    new Diagnosis{ DiagnoseName="GRZ", Description = "easy" },
+                };
+
+                List<Prescription> prescriptions = new List<Prescription>
+                {
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tablets",
+                    Date = DateTime.Now, DiagnosisId = 1},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tea",
+                    Date = DateTime.Now, DiagnosisId = 2},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "nimesil",
+                    Date = DateTime.Now, DiagnosisId = 3},
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -198,6 +214,18 @@ namespace WebAPI
                 if (!context.Rooms.Any())
                 {
                     context.Rooms.AddRange(rooms);
+                    context.SaveChanges();
+                }
+
+                if (!context.Diagnoses.Any())
+                {
+                    context.Diagnoses.AddRange(diagnosis);
+                    context.SaveChanges();
+                }
+
+                if (!context.Prescriptions.Any())
+                {
+                    context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
                 }
             }

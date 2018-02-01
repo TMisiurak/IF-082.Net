@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180130210445_newmig.cs" />
-    <Compile Remove="Migrations\20180130210445_newmig.Designer.cs" />
+    <Compile Remove="Migrations\20180201215054_Add model Prescription.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -125,6 +125,20 @@ namespace WebAPI
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
                 };
 
+                List<Drug> drugs = new List<Drug>
+                {
+                    new Drug{ DrugName="Aspirin" },
+                    new Drug{ DrugName="Lidokain" },
+                    new Drug{ DrugName="Dimedrol" },
+                    new Drug{ DrugName="Validol" },
+                    new Drug{ DrugName="Urolesan" },
+                    new Drug{ DrugName="Mesim Forte" },
+                    new Drug{ DrugName="Allergomaks" },
+                    new Drug{ DrugName="Skinoren" },
+                    new Drug{ DrugName="Clotrimazole" },
+                    new Drug{ DrugName="Ketanol" },
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
                 if (!context.Roles.Any())
@@ -142,6 +156,12 @@ namespace WebAPI
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
+
+                if (!context.Drugs.Any())
+                {
+                    context.Drugs.AddRange(drugs);
                     context.SaveChanges();
                 }
             }

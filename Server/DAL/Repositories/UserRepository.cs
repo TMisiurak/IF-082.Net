@@ -25,53 +25,58 @@ namespace DAL.Repositories
 
         public async Task<User> GetById(int id)
         {
-            var param = new SqlParameter("@id", id);
-            User user = await _db.Users.FromSql($"sp_GetUserById @id", param).FirstOrDefaultAsync();
+            var param = new SqlParameter("@Id", id);
+            User user = await _db.Users.FromSql($"sp_GetUserById @Id", param).FirstOrDefaultAsync();
             return user;
         }
 
         public async Task<User> GetByEmail(string email)
         {
-            var param = new SqlParameter("@email", email);
-            User user = await _db.Users.FromSql($"sp_GetUserByEmail @email", param).FirstOrDefaultAsync();
+            var param = new SqlParameter("@Email", email);
+            User user = await _db.Users.FromSql($"sp_GetUserByEmail @Email", param).FirstOrDefaultAsync();
             return user;
         }
 
         public async Task<int> Create(User user)
         {
-            var param = new SqlParameter
+            var createdId = new SqlParameter
             {
                 ParameterName = "@CreatedId",
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @CreatedId = sp_CreateUser @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
-            return (int)param.Value;
+            string sql = $"exec @CreatedId = dbo.sp_CreateUser @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
+            await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
+            return (int)createdId.Value;
         }
 
         public async Task<int> Update(User user)
         {
-            string sql = $"sp_UpdateUser @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
-            //_db.Entry(user).State = EntityState.Modified;
-            return result;
-        }
-
-        public async Task<int> Delete(int id)
-        {
-            var param = new SqlParameter
+            var updateCounter = new SqlParameter
             {
-                ParameterName = "@DeletedId",
+                ParameterName = "@UpdateCounter",
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @DeletedId = dbo.sp_DeleteUser @Id = {id}";
-            
-            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
-            return (int)param.Value;
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateUser @Id = {user.Id}, @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
+            await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
+            return (int)updateCounter.Value;
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            var delCounter = new SqlParameter
+            {
+                ParameterName = "@DelCounter",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @DelCounter = dbo.sp_DeleteUser @Id = {id}";            
+            await _db.Database.ExecuteSqlCommandAsync(sql, delCounter);
+            return (int)delCounter.Value;
         }
     }
 }

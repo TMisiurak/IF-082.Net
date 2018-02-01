@@ -120,13 +120,7 @@ namespace WebAPI
                     new Role{ Name="doctor" },
                     new Role{ Name="accountant" },
                 };
-                List<Clinic> clinics = new List<Clinic>
-                {
-                    new Clinic{ Name="Clinic1", Address = "Address1" },
-                    new Clinic{ Name="Clinic2", Address = "Address2" },
-                    new Clinic{ Name="Clinic3", Address = "Address3" },
-                    new Clinic{ Name="Clinic4", Address = "Address4" },
-                };
+
                 List<User> users = new List<User>
                 {
                     // password is "pass"
@@ -167,20 +161,6 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-
-                if (!context.Departments.Any())
-                {
-                    context.Departments.AddRange(departments);
-                    context.SaveChanges();
-                }
-
-                
-                if (!context.Clinics.Any())
-                {
-                    context.Clinics.AddRange(clinics);
-                    context.SaveChanges();
-                }
-
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(users);
@@ -190,6 +170,12 @@ namespace WebAPI
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
+
+                if (!context.Departments.Any())
+                {
+                    context.Departments.AddRange(departments);
                     context.SaveChanges();
                 }
 

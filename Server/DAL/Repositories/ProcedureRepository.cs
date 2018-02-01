@@ -28,7 +28,9 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @CreatedId = sp_CreateProcedure @Name = '{procedure.Name}', @Price = '{procedure.Price}', @Room = '{procedure.Room}'";
+            decimal price = procedure.Price;
+
+            string sql = $"exec @CreatedId = sp_CreateProcedure @Name = '{procedure.Name}', @Price = {price}, @Room = {procedure.Room}";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }

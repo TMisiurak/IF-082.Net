@@ -16,14 +16,17 @@ namespace WebAPI.Controllers
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
         private readonly IService<ProcedureDTO> _servProcedure;
+        private readonly IService<DiagnosisDTO> _servDiagnosis;
 
-        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure)
+        // TODO: update ctor
+        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure, IService<DiagnosisDTO> servDiagnosis)
         {
             _serv = serv;
             _iMapper = iMapper;
             _servRole = servRole;
             _servClinic = servClinic;
             _servProcedure = servProcedure;
+            _servDiagnosis = servDiagnosis;
         }
 
         [HttpPost("create_role")]
@@ -65,6 +68,20 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> DeleteProcedureById(int? id)
         {
             int result = await _servProcedure.DeleteById(id.Value);
+            return Ok(result);
+        }
+
+        [HttpPost("create_diagnosis")]
+        public async Task<IActionResult> CreateDiagnosis([FromForm] DiagnosisDTO diagnosisDTO)
+        {
+            int result = await _servDiagnosis.Create(diagnosisDTO);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete_diagnosis/{id}")]
+        public async Task<IActionResult> DeleteDiagnosisById(int? id)
+        {
+            int result = await _servDiagnosis.DeleteById(id.Value);
             return Ok(result);
         }
     }

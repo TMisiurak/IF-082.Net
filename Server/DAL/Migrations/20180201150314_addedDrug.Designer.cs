@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    partial class ClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20180201150314_addedDrug")]
+    partial class addedDrug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,39 +65,23 @@ namespace DAL.Migrations
 
                     b.ToTable("Drugs");
                 });
-            modelBuilder.Entity("DAL.Entities.Department", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd();
-
-                b.Property<int>("ClinicId");
-
-                b.Property<string>("Name")
-                    .IsRequired();
-
-                b.HasKey("Id");
-
-                b.HasIndex("ClinicId");
-
-                b.ToTable("Departments");
-            });
 
             modelBuilder.Entity("DAL.Entities.Procedure", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd();
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
-                b.Property<string>("Name")
-                    .IsRequired();
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                b.Property<double>("Price");
+                    b.Property<double>("Price");
 
-                b.Property<int>("Room");
+                    b.Property<int>("Room");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.ToTable("Procedures");
-            });
+                    b.ToTable("Procedures");
+                });
 
             modelBuilder.Entity("DAL.Entities.Role", b =>
                 {
@@ -150,14 +135,6 @@ namespace DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Department", b =>
-                {
-                    b.HasOne("DAL.Entities.Clinic", "Clinic")
-                        .WithMany("Departments")
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Entities.User", b =>

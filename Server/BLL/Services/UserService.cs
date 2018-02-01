@@ -42,14 +42,12 @@ namespace BLL.Services
         public async Task<int> Create(UserDTO userDTO)
         {
             int result = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
-            //DataBase.Save();
             return result;
         }
 
         public async Task<int> Update(UserDTO userDTO)
         {
             int result = await DataBase.Users.Update(_mapper.Map<User>(userDTO));
-            //DataBase.Save();
             return result;
         }
 

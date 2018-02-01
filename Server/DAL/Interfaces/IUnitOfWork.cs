@@ -11,6 +11,7 @@ namespace DAL.Interfaces
         IRepository<Role> Roles { get; }
         IUserRepository Users { get; }
         IRepository<Clinic> Clinics { get; }
+        IRepository<Procedure> Procedures { get; }
 
         void Save();
     }

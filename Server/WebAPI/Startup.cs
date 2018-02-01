@@ -33,8 +33,12 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            //services.AddTransient<IService<Clinic>, ClinicService>();
+            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
+            services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
+
 
             services.AddAutoMapper();
 
@@ -75,7 +79,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -93,6 +97,22 @@ namespace WebAPI
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                List<Clinic> clinics = new List<Clinic>
+                {
+                    new Clinic{ Name = "CDC", Address = "Mazepy 114a, Ivano-Frankivsk" },
+                    new Clinic{ Name = "Regional Hospital", Address = "Fedkovych 91, Ivano-Frankivsk" },
+                    new Clinic{ Name = "Children's Hospital", Address = "Konovaltcia 132, Ivano-Frankivsk" },
+                };
+
+                List<Department> departments = new List<Department>
+                {
+                    new Department {Name = "Diagnostic", ClinicId=1},
+                    new Department {Name = "Cardiac", ClinicId=1},
+                    new Department {Name = "Pediatric", ClinicId =1},
+                    new Department {Name = "Ophtalmology", ClinicId=1}
+
+                };
+
                 List<Role> roles = new List<Role>
                 {
                     new Role{ Name="admin" },
@@ -100,13 +120,7 @@ namespace WebAPI
                     new Role{ Name="doctor" },
                     new Role{ Name="accountant" },
                 };
-                List<Clinic> clinics = new List<Clinic>
-                {
-                    new Clinic{ Name="Clinic1" },
-                    new Clinic{ Name="Clinic2" },
-                    new Clinic{ Name="Clinic3" },
-                    new Clinic{ Name="Clinic4" },
-                };
+
                 List<User> users = new List<User>
                 {
                     // password is "pass"
@@ -124,8 +138,23 @@ namespace WebAPI
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
                 };
 
+                List<Drug> drugs = new List<Drug>
+                {
+                    new Drug{ DrugName="Aspirin" },
+                    new Drug{ DrugName="Lidokain" },
+                    new Drug{ DrugName="Dimedrol" },
+                    new Drug{ DrugName="Validol" },
+                    new Drug{ DrugName="Urolesan" },
+                    new Drug{ DrugName="Mesim Forte" },
+                    new Drug{ DrugName="Allergomaks" },
+                    new Drug{ DrugName="Skinoren" },
+                    new Drug{ DrugName="Clotrimazole" },
+                    new Drug{ DrugName="Ketanol" },
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
+
                 if (!context.Roles.Any())
                 {
                     context.Roles.AddRange(roles);
@@ -141,6 +170,18 @@ namespace WebAPI
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
+
+                if (!context.Departments.Any())
+                {
+                    context.Departments.AddRange(departments);
+                    context.SaveChanges();
+                }
+
+                if (!context.Drugs.Any())
+                {
+                    context.Drugs.AddRange(drugs);
                     context.SaveChanges();
                 }
             }

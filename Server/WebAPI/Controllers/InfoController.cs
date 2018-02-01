@@ -15,13 +15,15 @@ namespace WebAPI.Controllers
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
         private readonly IService<ProcedureDTO> _servProcedure;
+        private readonly IService<DiagnosisDTO> _servDiagnosis;
 
-        public InfoController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure)
+        public InfoController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure, IService<DiagnosisDTO> servDiagnosis)
         {
             _iMapper = iMapper;
             _servRole = servRole;
             _servClinic = servClinic;
             _servProcedure = servProcedure;
+            _servDiagnosis = servDiagnosis;
         }
 
         // GET api/roles
@@ -50,6 +52,14 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin, patient, doctor, accountant")]
+        [HttpGet("/all_diagnoses")]
+        public async Task<IActionResult> GetDianoses()
+        {
+            var diagnoses = await _servDiagnosis.GetAll();
+            return Ok(diagnoses);
+        }
+
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpGet("role/{id}")]
         public async Task<IActionResult> GetRoleById(int? id)
         {
@@ -73,10 +83,12 @@ namespace WebAPI.Controllers
             return Ok(procedure);
         }
 
-        protected override void Dispose(bool disposing)
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
+        [HttpGet("/diagnosis/{id}")]
+        public async Task<IActionResult> GetDiagnosisById(int? id)
         {
-            _serv.Dispose();
-            base.Dispose(disposing);
+            var diagnosis = await _servDiagnosis.GetById(id.Value);
+            return Ok(diagnosis);
         }
     }
 }

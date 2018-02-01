@@ -9,6 +9,9 @@ namespace DAL.EF
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Procedure> Procedures { get; set; }
+        public DbSet<Diagnosis> Diagnoses { get; set; }
+        public DbSet<Drug> Drugs { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         public ClinicContext(DbContextOptions<ClinicContext> options)
             : base(options)

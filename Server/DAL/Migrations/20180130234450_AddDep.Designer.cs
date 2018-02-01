@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    partial class ClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20180130234450_AddDep")]
+    partial class AddDep
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,52 +52,6 @@ namespace DAL.Migrations
                     b.HasIndex("ClinicId");
 
                     b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Diagnosis", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description")
-                        .IsRequired();
-
-                    b.Property<string>("DiagnoseName")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Diagnoses");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Drug", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DrugName")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Drugs");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Procedure", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<decimal>("Price");
-
-                    b.Property<int>("Room");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Procedures");
                 });
 
             modelBuilder.Entity("DAL.Entities.Role", b =>

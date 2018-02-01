@@ -43,9 +43,10 @@ namespace BLL.Services
             return result;
         }
 
-        public Task<int> Update(DrugDTO item)
+        public async Task<int> Update(DrugDTO drugDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Drugs.Update(_mapper.Map<Drug>(drugDTO));
+            return result;
         }
 
         public async Task<int> DeleteById(int id)

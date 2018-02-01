@@ -31,7 +31,7 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @CreatedId = sp_CreateClinic @DrugName = '{drug.DrugName}'";
+            string sql = $"exec @CreatedId = sp_CreateDrug @DrugName = '{drug.DrugName}'";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }

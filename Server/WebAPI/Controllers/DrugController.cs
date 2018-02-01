@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         }
 
         //[Authorize(Roles = "admin")]
-        [HttpPut("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateDrug([FromBody]DrugDTO drugDTO)
         {
             if (drugDTO == null)
@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
         }
 
         //[Authorize(Roles = "admin")]
-        [HttpGet("get_all")]
+        [HttpGet]
         public async Task<IActionResult> GetDrugs()
         {
             var drugs = await _drugService.GetAll();
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
         }
         
         //[Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int? id)
         {
             if (!id.HasValue)
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
         }
 
         //[Authorize(Roles = "admin")]
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateDrugById([FromBody]DrugDTO drugDTO)
         {
             if (drugDTO == null)
@@ -95,7 +95,7 @@ namespace WebAPI.Controllers
         }
 
         //[Authorize(Roles = "admin")]
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDrugById(int? id)
         {
             if (!id.HasValue)

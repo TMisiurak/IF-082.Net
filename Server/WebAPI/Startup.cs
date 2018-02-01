@@ -36,6 +36,7 @@ namespace WebAPI
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
+            services.AddTransient<IService<DrugDTO>, DrugService>();
 
             services.AddAutoMapper();
 

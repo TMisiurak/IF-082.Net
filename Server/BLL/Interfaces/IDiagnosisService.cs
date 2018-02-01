@@ -5,11 +5,8 @@ using System.Text;
 
 namespace BLL.Interfaces
 {
-    public interface IDiagnosisService
+    public interface IDiagnosisService : IService<DiagnosisDTO>
     {
-        void CreateDiagnosis(DiagnosisDTO diagnosisDTO);
-        DiagnosisDTO GetDiagnosisById(int? id);
-        IEnumerable<DiagnosisDTO> GetDiagnosis();
-        void Dispose();
+
     }
 }

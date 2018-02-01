@@ -20,6 +20,8 @@ namespace BLL.DTO
 
             CreateMap<Diagnosis, DiagnosisDTO>();
             CreateMap<DiagnosisDTO, Diagnosis>();
+            CreateMap<Room, RoomDTO>();
+            CreateMap<RoomDTO, Room>();
         }
     }
 }

@@ -1,0 +1,15 @@
+USE [ClinicDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_GetRoomById]
+	@id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT * FROM [dbo].Rooms WHERE Id = @id
+END

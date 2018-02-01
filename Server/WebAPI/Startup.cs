@@ -38,6 +38,7 @@ namespace WebAPI
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
+            services.AddTransient<IService<RoomDTO>, RoomService>();
 
 
             services.AddAutoMapper();
@@ -79,7 +80,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //InitializeDatabase(app);
+                InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -124,7 +125,7 @@ namespace WebAPI
                 List<User> users = new List<User>
                 {
                     // password is "pass"
-                    new User{ Email = "email1@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=", 
+                    new User{ Email = "email1@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
                         RoleId = 1, FullName = "Full Name 1", Address = "Address 1", BirthDay = new DateTime(1995, 1, 1),
                         PhoneNumber = "0123456781", Sex = "mal", Image = "imagesrc 1" },
                     new User{ Email = "email2@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
@@ -150,6 +151,15 @@ namespace WebAPI
                     new Drug{ DrugName="Skinoren" },
                     new Drug{ DrugName="Clotrimazole" },
                     new Drug{ DrugName="Ketanol" },
+                };
+
+                List<Room> rooms = new List<Room>
+                {
+                    new Room { Name = "Reception", Number = 1 },
+                    new Room { Name = "Doctor Name Here", Number = 10 },
+                    new Room { Name = "Intense Therapy", Number = 15 },
+                    new Room { Name = "X-Ray", Number = 17 },
+                    new Room { Name = "Diagnostics Room", Number = 50 }
                 };
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
@@ -182,6 +192,12 @@ namespace WebAPI
                 if (!context.Drugs.Any())
                 {
                     context.Drugs.AddRange(drugs);
+                    context.SaveChanges();
+                }
+
+                if (!context.Rooms.Any())
+                {
+                    context.Rooms.AddRange(rooms);
                     context.SaveChanges();
                 }
             }

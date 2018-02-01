@@ -19,6 +19,7 @@ namespace WebAPI.Controllers
         private readonly IService<DepartmentDTO> _servDepartment;
         private readonly IService<ProcedureDTO> _servProcedure;
         private readonly IService<DiagnosisDTO> _servDiagnosis;
+        private readonly IService<RoomDTO> _servRoom;
 
         // TODO: update ctor
         public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure, IService<DiagnosisDTO> servDiagnosis)

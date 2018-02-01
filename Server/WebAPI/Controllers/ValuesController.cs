@@ -41,15 +41,6 @@ namespace WebAPI.Controllers
             return Ok(clinics);
         }
 
-        // GET api/values/5
-        [Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(int? id)
-        {
-            var user = await _serv.GetById(id.Value);
-            return Ok(user);
-        }
-
         protected override void Dispose(bool disposing)
         {
             _serv.Dispose();

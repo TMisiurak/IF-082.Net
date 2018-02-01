@@ -151,6 +151,15 @@ namespace WebAPI
                     new Drug{ DrugName="Ketanol" },
                 };
 
+                List<Procedure> procedures = new List<Procedure>
+                {
+                    new Procedure{Name = "V/Q Scan", Price = 2500.50M, Room = 101 },
+                    new Procedure{Name = "VSclerotherapy", Price = 1500.50M, Room = 25 },
+                    new Procedure{Name = "Sperm Banking", Price = 500.50M, Room = 141 },
+                    new Procedure{Name = "Oral Wellness", Price = 200.50M, Room = 99 },
+                    new Procedure{Name = "Electrical Cardioversion", Price = 100.50M, Room = 12 },
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -181,6 +190,12 @@ namespace WebAPI
                 if (!context.Drugs.Any())
                 {
                     context.Drugs.AddRange(drugs);
+                    context.SaveChanges();
+                }
+
+                if (!context.Procedures.Any())
+                {
+                    context.Procedures.AddRange(procedures);
                     context.SaveChanges();
                 }
             }

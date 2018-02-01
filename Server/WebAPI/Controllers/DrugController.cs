@@ -4,7 +4,6 @@ using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -20,7 +19,7 @@ namespace WebAPI.Controllers
             _iMapper = iMapper;
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateDrug([FromBody]DrugDTO drugDTO)
         {
@@ -40,7 +39,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> GetDrugs()
         {
@@ -55,7 +54,7 @@ namespace WebAPI.Controllers
             }
         }
         
-        //[Authorize(Roles = "admin, patient, doctor, accountant")]
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int? id)
         {
@@ -74,7 +73,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateDrugById([FromBody]DrugDTO drugDTO)
         {
@@ -94,7 +93,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDrugById(int? id)
         {

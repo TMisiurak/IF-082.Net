@@ -90,11 +90,5 @@ namespace WebAPI.Controllers
             var diagnosis = await _servDiagnosis.GetById(id.Value);
             return Ok(diagnosis);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _serv.Dispose();
-            base.Dispose(disposing);
-        }
     }
 }

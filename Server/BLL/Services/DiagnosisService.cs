@@ -27,11 +27,6 @@ namespace BLL.Services
             return result;
         }
 
-        public void Dispose()
-        {
-            DataBase.Dispose();
-        }
-
         public async Task<List<DiagnosisDTO>> GetAll()
         {
             List<Diagnosis> diagnosis = await DataBase.Diagnoses.GetAll();

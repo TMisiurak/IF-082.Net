@@ -79,7 +79,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //InitializeDatabase(app);
+                InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -152,6 +152,23 @@ namespace WebAPI
                     new Drug{ DrugName="Ketanol" },
                 };
 
+                List<Diagnosis> diagnosis = new List<Diagnosis>
+                {
+                    new Diagnosis{ DiagnoseName="Migren", Description = "easy" },
+                    new Diagnosis{ DiagnoseName="Kashel", Description = "middle" },
+                    new Diagnosis{ DiagnoseName="GRZ", Description = "easy" },
+                };
+
+                List<Prescription> prescriptions = new List<Prescription>
+                {
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tablets",
+                    Date = DateTime.Now, DiagnosisId = 1},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tea",
+                    Date = DateTime.Now, DiagnosisId = 2},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "nimesil",
+                    Date = DateTime.Now, DiagnosisId = 3},
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -182,6 +199,18 @@ namespace WebAPI
                 if (!context.Drugs.Any())
                 {
                     context.Drugs.AddRange(drugs);
+                    context.SaveChanges();
+                }
+
+                if (!context.Diagnoses.Any())
+                {
+                    context.Diagnoses.AddRange(diagnosis);
+                    context.SaveChanges();
+                }
+
+                if (!context.Prescriptions.Any())
+                {
+                    context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
                 }
             }

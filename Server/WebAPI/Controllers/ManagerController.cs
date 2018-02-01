@@ -15,13 +15,15 @@ namespace WebAPI.Controllers
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
+        private readonly IService<ProcedureDTO> _servProcedure;
 
-        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic)
+        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure)
         {
             _serv = serv;
             _iMapper = iMapper;
             _servRole = servRole;
             _servClinic = servClinic;
+            _servProcedure = servProcedure;
         }
 
         [HttpPost("create_role")]
@@ -49,6 +51,20 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> DeleteClinicById(int? id)
         {
             int result = await _servClinic.DeleteById(id.Value);
+            return Ok(result);
+        }
+
+        [HttpPost("create_procedure")]
+        public async Task<IActionResult> CreateProcedure([FromBody]ProcedureDTO procedureDTO)
+        {
+            int result = await _servProcedure.Create(procedureDTO);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete_procedure/{id}")]
+        public async Task<IActionResult> DeleteProcedureById(int? id)
+        {
+            int result = await _servProcedure.DeleteById(id.Value);
             return Ok(result);
         }
     }

@@ -34,6 +34,7 @@ namespace WebAPI
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
+            services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
 
             services.AddAutoMapper();
 

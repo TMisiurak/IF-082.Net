@@ -70,10 +70,10 @@ namespace DALTests
             };
 
             var userRepo = new Mock<IUserRepository>();
-            userRepo.Setup(m => m.GetById(1)).Returns(async () =>
+            userRepo.Setup(m => m.GetById(3)).Returns(async () =>
             {
                 await Task.Yield();
-                return users.Where(x => x.Id == 1).FirstOrDefault();
+                return users.Where(x => x.Id == 3).FirstOrDefault();
             });
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -84,10 +84,10 @@ namespace DALTests
                 .Returns(new UserDTO());
 
             IUserService userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
-            var user = userService.GetById(1);
+            var user = userService.GetById(3);
 
             Assert.NotNull(user);
-            Assert.Equal(1, user.Id);
+            Assert.Equal(3, user.Id);
         }
     }
 }

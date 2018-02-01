@@ -13,6 +13,8 @@ namespace BLL.DTO
             CreateMap<UserDTO, User>();
             CreateMap<Clinic, ClinicDTO>();
             CreateMap<ClinicDTO, Clinic>();
+            CreateMap<Procedure, ProcedureDTO>();
+            CreateMap<ProcedureDTO, Procedure>();
         }
     }
 }

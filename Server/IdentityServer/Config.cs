@@ -10,17 +10,10 @@ namespace IdentityServer
     {
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
-            var customProfile = new IdentityResource(
-                name: "custom.profile",
-                displayName: "Custom profile",
-                claimTypes: new[] { "role" });
-
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Email(),
                 new IdentityResources.Profile(),
-                customProfile,
             };
         }
 
@@ -28,7 +21,7 @@ namespace IdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API", new[]{ "name", "role" })
+                new ApiResource("api1", new[]{ "role" })
             };
         }
 
@@ -52,9 +45,7 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Email,
                         "api1",
-                        "custom.profile"
                     },
                 }
             };

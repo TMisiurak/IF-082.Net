@@ -23,15 +23,6 @@ namespace WebAPI.Controllers
             //_servClinic = servClinic;
         }
 
-        // GET api/users
-        [Authorize(Roles = "admin")]
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
-        {
-            var users = await _serv.GetAll();
-            return Ok(users);
-        }
-
         // GET api/roles
         [Authorize(Roles = "admin")]
         [HttpGet("/all_roles")]
@@ -49,16 +40,7 @@ namespace WebAPI.Controllers
         //    var clinics = await _servClinic.GetAll();
         //    return Ok(clinics);
         //}
-
-        // GET api/values/5
-        [Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(int? id)
-        {
-            var user = await _serv.GetById(id.Value);
-            return Ok(user);
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             _serv.Dispose();

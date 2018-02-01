@@ -66,7 +66,7 @@ namespace DAL.Repositories
             {
                 if (diagnosisRepository == null)
                     diagnosisRepository = new DiagnosisRepository(db);
-                return (IRepository<Diagnosis>)diagnosisRepository; 
+                return diagnosisRepository;
             }
         }
 

@@ -24,9 +24,16 @@ namespace DAL.Repositories
 
         public async Task<int> Create(Role role)
         {
-            string sql = $"sp_CreateRole @Name = '{role.Name}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
-            return result;
+            var param = new SqlParameter
+            {
+                ParameterName = "@CreatedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @CreatedId = sp_CreateRole @Name = '{role.Name}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
         public async Task<int> Delete(int id)

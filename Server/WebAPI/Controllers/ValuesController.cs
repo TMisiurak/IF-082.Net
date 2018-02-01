@@ -13,14 +13,14 @@ namespace WebAPI.Controllers
         private readonly IMapper _iMapper;
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
-        //private readonly IService<ClinicDTO> _servClinic;
+        private readonly IService<ClinicDTO> _servClinic;
 
-        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole/*, IService<ClinicDTO> servClinic*/)
+        public ValuesController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic)
         {
             _serv = serv;
             _iMapper = iMapper;
             _servRole = servRole;
-            //_servClinic = servClinic;
+            _servClinic = servClinic;
         }
 
         // GET api/roles
@@ -32,15 +32,24 @@ namespace WebAPI.Controllers
             return Ok(roles);
         }
 
-        //// GET api/roles
-        //[Authorize(Roles = "admin")]
-        //[HttpGet("/all_clinics")]
-        //public async Task<IActionResult> GetClinics()
-        //{
-        //    var clinics = await _servClinic.GetAll();
-        //    return Ok(clinics);
-        //}
-        
+        // GET api/roles
+        [Authorize(Roles = "admin")]
+        [HttpGet("/all_clinics")]
+        public async Task<IActionResult> GetClinics()
+        {
+            var clinics = await _servClinic.GetAll();
+            return Ok(clinics);
+        }
+
+        // GET api/values/5
+        [Authorize(Roles = "admin, patient, doctor, accountant")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(int? id)
+        {
+            var user = await _serv.GetById(id.Value);
+            return Ok(user);
+        }
+
         protected override void Dispose(bool disposing)
         {
             _serv.Dispose();

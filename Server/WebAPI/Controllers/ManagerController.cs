@@ -4,6 +4,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebAPI.Controllers
 {
@@ -15,14 +16,16 @@ namespace WebAPI.Controllers
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
+        private readonly IService<DepartmentDTO> _servDepartment;
         private readonly IService<ProcedureDTO> _servProcedure;
 
-        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure)
+        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<DepartmentDTO> servDepartment, IService<ProcedureDTO> servProcedure)
         {
             _serv = serv;
             _iMapper = iMapper;
             _servRole = servRole;
             _servClinic = servClinic;
+            _servDepartment = servDepartment;
             _servProcedure = servProcedure;
         }
 
@@ -66,6 +69,23 @@ namespace WebAPI.Controllers
         {
             int result = await _servProcedure.DeleteById(id.Value);
             return Ok(result);
+        }
+
+        [HttpPost("create_department")]
+        public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
+        {
+            int result = await _servDepartment.Create(departmentDTO);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete_department/{id}")]
+        public async Task<IActionResult> DeleteDepartmentById(int? id)
+        {
+
+            int result = await _servDepartment.DeleteById(id.Value);
+            // return RedirectToAction(nameof(Index));
+            return Ok(result);
+
         }
     }
 }

@@ -33,8 +33,11 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            //services.AddTransient<IService<Clinic>, ClinicService>();
+            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
+
 
             services.AddAutoMapper();
 
@@ -93,6 +96,22 @@ namespace WebAPI
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                List<Clinic> clinics = new List<Clinic>
+                {
+                    new Clinic{ Name = "CDC", Address = "Mazepy 114a, Ivano-Frankivsk" },
+                    new Clinic{ Name = "regional hospital", Address = "Fedkovych 91, Ivano-Frankivsk" },
+                    new Clinic{ Name = "children's hospital", Address = "Konovaltcia 132, Ivano-Frankivsk" },
+                };
+
+                List<Department> departments = new List<Department>
+                {
+                    new Department {Name = "Diagnostic", ClinicId=1},
+                    new Department {Name = "Cardiac", ClinicId=1},
+                    new Department {Name = "Pediatric", ClinicId =1},
+                    new Department {Name = "Ophtalmology", ClinicId=1}
+
+                };
+
                 List<Role> roles = new List<Role>
                 {
                     new Role{ Name="admin" },
@@ -126,9 +145,24 @@ namespace WebAPI
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
+
                 if (!context.Roles.Any())
                 {
                     context.Roles.AddRange(roles);
+                    context.SaveChanges();
+                }
+
+
+                if (!context.Departments.Any())
+                {
+                    context.Departments.AddRange(departments);
+                    context.SaveChanges();
+                }
+
+                
+                if (!context.Clinics.Any())
+                {
+                    context.Clinics.AddRange(clinics);
                     context.SaveChanges();
                 }
 

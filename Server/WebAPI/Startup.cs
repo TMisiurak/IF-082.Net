@@ -103,10 +103,10 @@ namespace WebAPI
                 };
                 List<Clinic> clinics = new List<Clinic>
                 {
-                    new Clinic{ Name="Clinic1" },
-                    new Clinic{ Name="Clinic2" },
-                    new Clinic{ Name="Clinic3" },
-                    new Clinic{ Name="Clinic4" },
+                    new Clinic{ Name="Clinic1", Address="Adress1" },
+                    new Clinic{ Name="Clinic2", Address="Adress2" },
+                    new Clinic{ Name="Clinic3", Address="Adress3" },
+                    new Clinic{ Name="Clinic4", Address="Adress4" },
                 };
                 List<User> users = new List<User>
                 {

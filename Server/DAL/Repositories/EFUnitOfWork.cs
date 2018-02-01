@@ -13,7 +13,9 @@ namespace DAL.Repositories
         private RoleRepository roleRepository;
         private UserRepository userRepository;
         private ClinicRepository clinicRepository;
+        private DepartmentRepository departmentRepository;
         private ProcedureRepository procedureRepository;
+        private DiagnosisRepository diagnosisRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -48,6 +50,15 @@ namespace DAL.Repositories
                 return clinicRepository;
             }
         }
+        public IRepository<Department> Departments
+        {
+            get
+            {
+                if (departmentRepository == null)
+                    departmentRepository = new DepartmentRepository(db);
+                return departmentRepository;
+            }
+        }
 
         public IRepository<Procedure> Procedures
         {
@@ -56,6 +67,16 @@ namespace DAL.Repositories
                 if (procedureRepository == null)
                     procedureRepository = new ProcedureRepository(db);
                 return procedureRepository;
+            }
+        }
+
+        public IRepository<Diagnosis> Diagnoses
+        {
+            get
+            {
+                if (diagnosisRepository == null)
+                    diagnosisRepository = new DiagnosisRepository(db);
+                return (IRepository<Diagnosis>)diagnosisRepository; 
             }
         }
 

@@ -179,6 +179,8 @@ namespace WebAPI
                     Date = DateTime.Now, DiagnosisId = 2},
                     new Prescription{ DoctorId = 1, PatientId = 1, Description = "nimesil",
                     Date = DateTime.Now, DiagnosisId = 3},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "analgin",
+                    Date = DateTime.Now, DiagnosisId = 1},
                 };
 
                 List<Procedure> procedures = new List<Procedure>
@@ -235,12 +237,12 @@ namespace WebAPI
                     context.Diagnoses.AddRange(diagnosis);
                     context.SaveChanges();
                 }
-                /*
+
                 if (!context.Prescriptions.Any())
                 {
                     context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
-                }*/
+                }
 
                 if (!context.Procedures.Any())
                 {

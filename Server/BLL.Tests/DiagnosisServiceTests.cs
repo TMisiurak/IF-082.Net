@@ -1,6 +1,4 @@
-﻿/*
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Moq;
 using Xunit;
@@ -84,5 +82,3 @@ namespace BLL.Tests
         }
     }
 }
-
-*/

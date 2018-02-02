@@ -55,16 +55,14 @@ namespace DAL.Repositories
 
             public async Task<List<Prescription>> GetAll()
             {
-                //return await _db.Prescriptions.FromSql("sp_GetAllPrescriptions").ToListAsync();
-                return null;
+                return await _db.Prescriptions.FromSql("sp_GetAllPrescriptions").ToListAsync();
             }
 
             public async Task<Prescription> GetById(int id)
             {
                 var param = new SqlParameter("@id", id);
-                //Prescription prescription = await _db.Prescriptions.FromSql($"sp_GetPrescriptionById @id", param).FirstOrDefaultAsync();
-                //return prescription;
-                return null;
+                Prescription prescription = await _db.Prescriptions.FromSql($"sp_GetPrescriptionById @id", param).FirstOrDefaultAsync();
+                return prescription;
 
             }
 

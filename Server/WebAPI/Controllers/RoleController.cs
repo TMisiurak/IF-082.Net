@@ -44,6 +44,21 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateRoleById([FromBody]RoleDTO roleDTO)
+        {
+            int result = await _servRole.Update(roleDTO);
+            if (result > 0)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoleById(int? id)
         {

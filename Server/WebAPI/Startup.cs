@@ -227,9 +227,9 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Diagnoses.Any())
+                if (!context.Diagnosis.Any())
                 {
-                    context.Diagnoses.AddRange(diagnosis);
+                    context.Diagnosis.AddRange(diagnosis);
                     context.SaveChanges();
                 }
 

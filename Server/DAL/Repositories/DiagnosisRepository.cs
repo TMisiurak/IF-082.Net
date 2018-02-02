@@ -17,11 +17,6 @@ namespace DAL.Repositories
             _db = context;
         }
 
-        public Task<int> Create(DiagnosisRepository item)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<int> Create(Diagnosis item)
         {
             throw new NotImplementedException();
@@ -32,32 +27,17 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<DiagnosisRepository>> GetAll()
+        public Task<List<Diagnosis>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<DiagnosisRepository> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Update(DiagnosisRepository item)
+        public Task<Diagnosis> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
         public Task<int> Update(Diagnosis item)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<List<Diagnosis>> IRepository<Diagnosis>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Diagnosis> IRepository<Diagnosis>.GetById(int id)
         {
             throw new NotImplementedException();
         }

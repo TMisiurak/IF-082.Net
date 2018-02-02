@@ -7,6 +7,7 @@ using System.Text;
 
 namespace DAL.Repositories
 {
+
     public class EFUnitOfWork : IUnitOfWork
     {
         private ClinicContext db;
@@ -78,6 +79,16 @@ namespace DAL.Repositories
                 if (diagnosisRepository == null)
                     diagnosisRepository = new DiagnosisRepository(db);
                 return (IRepository<Diagnosis>)diagnosisRepository; 
+            }
+        }
+
+        public IRepository<Drug> Drugs
+        {
+            get
+            {
+                if (drugRepository == null)
+                    drugRepository = new DrugRepository(db);
+                return (IRepository<Drug>)drugRepository;
             }
         }
 

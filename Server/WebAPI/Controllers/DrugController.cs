@@ -112,10 +112,10 @@ namespace WebAPI.Controllers
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            _drugService.Dispose();
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    _drugService.Dispose();
+        //    base.Dispose(disposing);
+        //}
     }
 }

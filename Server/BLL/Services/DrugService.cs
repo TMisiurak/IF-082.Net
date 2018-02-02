@@ -56,9 +56,9 @@ namespace BLL.Services
             return result;
         }
 
-        public void Dispose()
-        {
-            DataBase.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    DataBase.Dispose();
+        //}
     }
 }

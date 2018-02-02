@@ -33,10 +33,13 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
+            services.AddTransient<IService<PrescriptionDTO>, PrescriptionService>();
             //services.AddTransient<IService<Clinic>, ClinicService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
+            services.AddTransient<IService<RoomDTO>, RoomService>();
 
 
             services.AddAutoMapper();
@@ -78,7 +81,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -119,17 +122,11 @@ namespace WebAPI
                     new Role{ Name="doctor" },
                     new Role{ Name="accountant" },
                 };
-                //List<Clinic> clinics = new List<Clinic>
-                //{
-                //    new Clinic{ Name="Clinic1" },
-                //    new Clinic{ Name="Clinic2" },
-                //    new Clinic{ Name="Clinic3" },
-                //    new Clinic{ Name="Clinic4" },
-                //};
+
                 List<User> users = new List<User>
                 {
                     // password is "pass"
-                    new User{ Email = "email1@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=", 
+                    new User{ Email = "email1@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
                         RoleId = 1, FullName = "Full Name 1", Address = "Address 1", BirthDay = new DateTime(1995, 1, 1),
                         PhoneNumber = "0123456781", Sex = "mal", Image = "imagesrc 1" },
                     new User{ Email = "email2@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
@@ -157,6 +154,32 @@ namespace WebAPI
                     new Drug{ DrugName="Ketanol" },
                 };
 
+                List<Room> rooms = new List<Room>
+                {
+                    new Room { Name = "Reception", Number = 1 },
+                    new Room { Name = "Doctor Name Here", Number = 10 },
+                    new Room { Name = "Intense Therapy", Number = 15 },
+                    new Room { Name = "X-Ray", Number = 17 },
+                    new Room { Name = "Diagnostics Room", Number = 50 }
+                };
+
+                List<Diagnosis> diagnosis = new List<Diagnosis>
+                {
+                    new Diagnosis{ DiagnoseName="Migren", Description = "easy" },
+                    new Diagnosis{ DiagnoseName="Kashel", Description = "middle" },
+                    new Diagnosis{ DiagnoseName="GRZ", Description = "easy" },
+                };
+
+                List<Prescription> prescriptions = new List<Prescription>
+                {
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tablets",
+                    Date = DateTime.Now, DiagnosisId = 1},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "tea",
+                    Date = DateTime.Now, DiagnosisId = 2},
+                    new Prescription{ DoctorId = 1, PatientId = 1, Description = "nimesil",
+                    Date = DateTime.Now, DiagnosisId = 3},
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -166,6 +189,17 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
+                if (!context.Users.Any())
+                {
+                    context.Users.AddRange(users);
+                    context.SaveChanges();
+                }
+
+                if (!context.Clinics.Any())
+                {
+                    context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
@@ -179,20 +213,27 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                
-                
-
-                if (!context.Users.Any())
-                {
-                    context.Users.AddRange(users);
-                    context.SaveChanges();
-                }
-
-                
-
                 if (!context.Drugs.Any())
                 {
                     context.Drugs.AddRange(drugs);
+                    context.SaveChanges();
+                }
+
+                if (!context.Rooms.Any())
+                {
+                    context.Rooms.AddRange(rooms);
+                    context.SaveChanges();
+                }
+
+                if (!context.Diagnoses.Any())
+                {
+                    context.Diagnoses.AddRange(diagnosis);
+                    context.SaveChanges();
+                }
+
+                if (!context.Prescriptions.Any())
+                {
+                    context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
                 }
             }

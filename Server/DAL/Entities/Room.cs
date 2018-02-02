@@ -5,15 +5,13 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    public class Procedure
+    public class Room
     {
         [Key]
         public int Id { get; set; }
-        [Required, Range(2, 120)]
+        [Required, Range(2, 100)]
         public string Name { get; set; }
         [Required]
-        public decimal Price { get; set; }
-        [Required]
-        public int Room { get; set; }
+        public int Number { get; set; }
     }
 }

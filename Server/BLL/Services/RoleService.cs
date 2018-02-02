@@ -51,10 +51,5 @@ namespace BLL.Services
             int result = await DataBase.Roles.Delete(id);
             return result;
         }
-
-        public void Dispose()
-        {
-            DataBase.Dispose();
-        }
     }
 }

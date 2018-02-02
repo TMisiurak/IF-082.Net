@@ -36,11 +36,6 @@ namespace BLL.Services
             return result;
         }
 
-        public void Dispose()
-        {
-            Database.Dispose();
-        }
-
         public async Task<List<DepartmentDTO>> GetAll()
         {
             IEnumerable<Department> departments = await Database.Departments.GetAll();

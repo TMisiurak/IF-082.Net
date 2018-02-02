@@ -33,11 +33,6 @@ namespace BLL.Services
             return result;
         }
 
-        public void Dispose()
-        {
-            DataBase.Dispose();
-        }
-
         public async Task<List<ProcedureDTO>> GetAll()
         {
             List<Procedure> procedures = await DataBase.Procedures.GetAll();

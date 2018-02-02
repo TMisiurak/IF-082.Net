@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
         
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody]UserDTO userDTO)
         {
             if (userDTO == null || string.IsNullOrEmpty(userDTO.Password))

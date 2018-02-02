@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
 {
@@ -10,5 +11,7 @@ namespace DAL.Entities
         public string DiagnoseName { get; set; }
         [Required, Range(2, 4000)]
         public string Description { get; set; }
+
+        public List<Prescription> Prescriptions { get; set; }
     }
 }

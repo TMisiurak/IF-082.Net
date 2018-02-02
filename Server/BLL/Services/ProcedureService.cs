@@ -47,9 +47,10 @@ namespace BLL.Services
             return result;
         }
 
-        public Task<int> Update(ProcedureDTO item)
+        public async Task<int> Update(ProcedureDTO procedureDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Procedures.Update(_mapper.Map<Procedure>(procedureDTO));
+            return result;
         }
     }
 }

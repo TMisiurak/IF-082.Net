@@ -47,9 +47,10 @@ namespace BLL.Services
             return result;
         }
 
-        public Task<int> Update(ClinicDTO item)
+        public async Task<int> Update(ClinicDTO clinicDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Clinics.Update(_mapper.Map<Clinic>(clinicDTO));
+            return result;
         }
     }
 }

@@ -63,9 +63,18 @@ namespace DAL.Repositories
             return clinic;
         }
 
-        public Task<int> Update(Clinic item)
+        public async Task<int> Update(Clinic clinic)
         {
-            throw new NotImplementedException();
+            var updateCounter = new SqlParameter
+            {
+                ParameterName = "@UpdateCounter",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateClinic @Name = '{clinic.Name}', @Address = '{clinic.Address}', @Id = {clinic.Id}";
+            await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
+            return (int)updateCounter.Value;
         }
     }
 }

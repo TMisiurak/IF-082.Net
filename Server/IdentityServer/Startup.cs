@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
 using DAL.EF;
 using DAL.Interfaces;
 using DAL.Repositories;
@@ -15,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServer
 {
@@ -34,9 +29,7 @@ namespace IdentityServer
 
             services.AddTransient<IProfileService, UserProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, UserResourceOwnerPasswordValidator>();
-
-            services.AddAutoMapper();
-
+            
             services.AddDbContext<ClinicContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();

@@ -51,14 +51,14 @@ namespace BLL.Services
 
         public async Task<int> Update(DepartmentDTO departmentDTO)
         {
-            //int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
-            //return result;
+            ////int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
+            ////return result;
        
-            var department = Database.Departments.GetById(departmentDTO.Id);
+            //var department = Database.Departments.GetById(departmentDTO.Id);
 
-            // валидация
-            if (department == null)
-                throw new ValidationException("the department does not exist ");
+            //// валидация
+            //if (department == null)
+            //    throw new ValidationException("the department does not exist ");
             
 
             int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));

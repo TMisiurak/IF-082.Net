@@ -60,17 +60,34 @@ namespace WebAPI.Controllers
 
 
         ////[Authorize(Roles = "admin, patient, doctor, accountant")]
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
+        [HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateDepartment([FromBody]DepartmentDTO departmentDTO)
         //{
-            
-        //    int result = await _servDepartment.Update(departmentDTO);
-            
-        //        return Ok(result);
-           
-        //}
+        //    if (departmentDTO == null )
+        //    {
+        //        return BadRequest();
+        //    }
 
-        
+        //    int result = await _servDepartment.Update(departmentDTO);
+        //    if (result > 0)
+        //    {
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        return NotFound();
+        //    }
+        //}
+        public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
+        {
+
+            int result = await _servDepartment.Update(departmentDTO);
+
+            return Ok(result);
+
+        }
+
+
 
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]

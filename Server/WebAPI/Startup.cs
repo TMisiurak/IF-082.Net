@@ -166,9 +166,9 @@ namespace WebAPI
 
                 List<Diagnosis> diagnosis = new List<Diagnosis>
                 {
-                    new Diagnosis{ DiagnoseName="Migren", Description = "easy" },
-                    new Diagnosis{ DiagnoseName="Kashel", Description = "middle" },
-                    new Diagnosis{ DiagnoseName="GRZ", Description = "easy" },
+                    new Diagnosis{ DiagnosisName="Migren", Description = "easy" },
+                    new Diagnosis{ DiagnosisName="Kashel", Description = "middle" },
+                    new Diagnosis{ DiagnosisName="GRZ", Description = "easy" },
                 };
 
                 List<Prescription> prescriptions = new List<Prescription>

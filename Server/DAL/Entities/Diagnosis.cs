@@ -8,7 +8,7 @@ namespace DAL.Entities
         [Key]
         public int Id { get; set; }
         [Required, Range(2, 100)]
-        public string DiagnoseName { get; set; }
+        public string DiagnosisName { get; set; }
         [Required, Range(2, 4000)]
         public string Description { get; set; }
 

@@ -15,7 +15,7 @@ namespace BLL.Services
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
 
-        public DiagnosisService(IUnitOfWork unitOfWork, Mapper mapper)
+        public DiagnosisService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             DataBase = unitOfWork;

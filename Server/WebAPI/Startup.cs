@@ -35,6 +35,8 @@ namespace WebAPI
             services.AddTransient<IService<RoleDTO>, RoleService>();
             services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<PrescriptionDTO>, PrescriptionService>();
+            //services.AddTransient<IService<Clinic>, ClinicService>();
+            services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
             services.AddTransient<IService<RoomDTO>, RoomService>();
@@ -208,6 +210,12 @@ namespace WebAPI
                     context.Clinics.AddRange(clinics);
                     context.SaveChanges();
                 }
+                if (!context.Clinics.Any())
+                {
+                    context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
+
 
                 if (!context.Departments.Any())
                 {

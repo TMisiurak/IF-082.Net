@@ -20,15 +20,15 @@ namespace DAL.Repositories
             _db = db;
         }
 
-      
-        public  async Task<int> Create(Department department)
+
+        public async Task<int> Create(Department department)
         {
             string sql = $"sp_CreateDepartment   @Name = '{department.Name}',  @ClinicId = '{department.ClinicId}'";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql);
             return result;
         }
 
-       
+
 
         public async Task<int> Delete(int id)
         {

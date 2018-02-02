@@ -1,16 +1,34 @@
-﻿SET ANSI_NULLS ON
+﻿USE [ClinicDB]
 GO
+
+SET ANSI_NULLS ON
+GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_UpdateRole]
+GO
+
 CREATE PROCEDURE [dbo].[sp_UpdateRole]
-	@Name nvarchar(MAX),
-	@RoleId int
+	@Name nvarchar(30),
+	@Id int
 AS
-IF EXISTS (SELECT * FROM Roles WHERE Id = @RoleId)
+
+IF NOT EXISTS (SELECT 1 FROM Roles WHERE Id=@Id)
 BEGIN
+	RETURN -1
+END
+
+BEGIN TRY	
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].Roles SET
-		[Name] = @Name WHERE Id = @RoleId
-END
+		[Name] = @Name WHERE Id = @Id
+
+	RETURN @@ROWCOUNT
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
 GO

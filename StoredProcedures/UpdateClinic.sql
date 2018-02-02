@@ -2,17 +2,26 @@
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+DROP PROCEDURE IF EXISTS [dbo].[sp_UpdateClinic]
+GO
 CREATE PROCEDURE [dbo].[sp_UpdateClinic]
 	@Address nvarchar(MAX),
 	@Name nvarchar(MAX),
-	@ClinicId int
+	@Id int
 AS
-IF EXISTS (SELECT * FROM Clinics WHERE Id=@ClinicId)
+IF NOT EXISTS (SELECT 1 FROM Clinics WHERE Id=@Id)
 BEGIN
+	RETURN -1
+END
+BEGIN TRY
 	SET NOCOUNT ON;
 
     UPDATE [dbo].Clinics SET
 	[Address] = @Address, [Name] = @Name
-	WHERE Id = @ClinicId
-END
+	WHERE Id = @Id
+	RETURN @@ROWCOUNT
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
 GO

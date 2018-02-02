@@ -44,6 +44,14 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateClinicById([FromBody]ClinicDTO clinicDTO)
+        {
+            int result = await _servClinic.Update(clinicDTO);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClinicById(int? id)
         {

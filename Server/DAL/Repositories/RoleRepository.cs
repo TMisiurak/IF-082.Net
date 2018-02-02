@@ -6,9 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories
@@ -64,9 +61,18 @@ namespace DAL.Repositories
             return user;
         }
 
-        public Task<int> Update(Role item)
+        public async Task<int> Update(Role role)
         {
-            throw new NotImplementedException();
+            var updateCounter = new SqlParameter
+            {
+                ParameterName = "@UpdateCounter",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateRole @Name = '{role.Name}', @Id = {role.Id}";
+            await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
+            return (int)updateCounter.Value;
         }
     }
 }

@@ -66,7 +66,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Diagnoses");
+                    b.ToTable("Diagnosis");
                 });
 
             modelBuilder.Entity("DAL.Entities.Drug", b =>

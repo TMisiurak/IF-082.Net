@@ -41,9 +41,10 @@ namespace BLL.Services
             return result;
         }
 
-        public Task<int> Update(RoleDTO item)
+        public async Task<int> Update(RoleDTO roleDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Roles.Update(_mapper.Map<Role>(roleDTO));
+            return result;
         }
 
         public async Task<int> DeleteById(int id)

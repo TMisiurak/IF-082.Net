@@ -4,11 +4,10 @@ using System.Text;
 
 namespace BLL.DTO
 {
-    public class ProcedureDTO
+    public class RoomDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
-        public int Room { get; set; }
+        public int Number { get; set; }
     }
 }

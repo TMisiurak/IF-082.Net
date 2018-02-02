@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20180130210445_newmig")]
-    partial class newmig
+    [Migration("20180201111429_Chanched Price type")]
+    partial class ChanchedPricetype
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,23 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clinics");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Procedure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("Room");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Procedures");
                 });
 
             modelBuilder.Entity("DAL.Entities.Role", b =>

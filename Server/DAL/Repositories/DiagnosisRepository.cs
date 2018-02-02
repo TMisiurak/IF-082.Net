@@ -4,10 +4,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.EF;
+using DAL.Entities;
 
 namespace DAL.Repositories
 {
-    class DiagnosisRepository : IRepository<DiagnosisRepository>
+    class DiagnosisRepository : IRepository<Diagnosis>
     {
         private readonly ClinicContext _db;
 
@@ -16,7 +17,7 @@ namespace DAL.Repositories
             _db = context;
         }
 
-        public Task<int> Create(DiagnosisRepository item)
+        public Task<int> Create(Diagnosis item)
         {
             throw new NotImplementedException();
         }
@@ -26,17 +27,17 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<DiagnosisRepository>> GetAll()
+        public Task<List<Diagnosis>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<DiagnosisRepository> GetById(int id)
+        public Task<Diagnosis> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> Update(DiagnosisRepository item)
+        public Task<int> Update(Diagnosis item)
         {
             throw new NotImplementedException();
         }

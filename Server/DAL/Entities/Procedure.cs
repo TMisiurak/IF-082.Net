@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
 {
@@ -12,7 +9,7 @@ namespace DAL.Entities
         [Required, Range(2, 120)]
         public string Name { get; set; }
         [Required]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         [Required]
         public int Room { get; set; }
     }

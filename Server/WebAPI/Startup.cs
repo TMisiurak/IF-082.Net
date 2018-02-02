@@ -33,10 +33,13 @@ namespace WebAPI
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
+            //services.AddTransient<IService<Clinic>, ClinicService>();
+            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
             services.AddTransient<IService<DrugDTO>, DrugService>();
+
 
             services.AddAutoMapper();
 
@@ -77,7 +80,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -95,6 +98,22 @@ namespace WebAPI
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                List<Clinic> clinics = new List<Clinic>
+                {
+                    new Clinic{ Name = "CDC", Address = "Mazepy 114a, Ivano-Frankivsk" },
+                    new Clinic{ Name = "Regional Hospital", Address = "Fedkovych 91, Ivano-Frankivsk" },
+                    new Clinic{ Name = "Children's Hospital", Address = "Konovaltcia 132, Ivano-Frankivsk" },
+                };
+
+                List<Department> departments = new List<Department>
+                {
+                    new Department {Name = "Diagnostic", ClinicId=1},
+                    new Department {Name = "Cardiac", ClinicId=1},
+                    new Department {Name = "Pediatric", ClinicId =1},
+                    new Department {Name = "Ophtalmology", ClinicId=1}
+
+                };
+
                 List<Role> roles = new List<Role>
                 {
                     new Role{ Name="admin" },
@@ -102,13 +121,7 @@ namespace WebAPI
                     new Role{ Name="doctor" },
                     new Role{ Name="accountant" },
                 };
-                List<Clinic> clinics = new List<Clinic>
-                {
-                    new Clinic{ Name="Clinic1", Address="Adress1" },
-                    new Clinic{ Name="Clinic2", Address="Adress2" },
-                    new Clinic{ Name="Clinic3", Address="Adress3" },
-                    new Clinic{ Name="Clinic4", Address="Adress4" },
-                };
+
                 List<User> users = new List<User>
                 {
                     // password is "pass"
@@ -142,6 +155,7 @@ namespace WebAPI
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
+
                 if (!context.Roles.Any())
                 {
                     context.Roles.AddRange(roles);
@@ -157,6 +171,12 @@ namespace WebAPI
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
+                    context.SaveChanges();
+                }
+
+                if (!context.Departments.Any())
+                {
+                    context.Departments.AddRange(departments);
                     context.SaveChanges();
                 }
 

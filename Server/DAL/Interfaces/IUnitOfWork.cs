@@ -6,15 +6,13 @@ using System.Text;
 
 namespace DAL.Interfaces
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         IRepository<Role> Roles { get; }
         IUserRepository Users { get; }
         IRepository<Clinic> Clinics { get; }
+        IRepository<Department> Departments { get; }
         IRepository<Procedure> Procedures { get; }
-        IRepository<Diagnosis> Diagnoses { get; }
         IRepository<Drug> Drugs { get; }
-
-        void Save();
     }
 }

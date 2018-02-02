@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
         }
         
         [Authorize(Roles = "admin")]
-        [HttpGet("get_all")]
+        [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAll();
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
         }
         
         [Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int? id)
         {
             if (!id.HasValue)
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpPut("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateUserById([FromBody]UserDTO userDTO)
         {
             if (userDTO == null || string.IsNullOrEmpty(userDTO.Password))
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserById(int? id)
         {
             if (!id.HasValue)
@@ -91,12 +91,6 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _userService.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

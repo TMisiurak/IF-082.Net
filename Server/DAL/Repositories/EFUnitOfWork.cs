@@ -13,6 +13,7 @@ namespace DAL.Repositories
         private RoleRepository roleRepository;
         private UserRepository userRepository;
         private ClinicRepository clinicRepository;
+        private DepartmentRepository departmentRepository;
         private ProcedureRepository procedureRepository;
         private DiagnosisRepository diagnosisRepository;
         private DrugRepository drugRepository;
@@ -50,6 +51,15 @@ namespace DAL.Repositories
                 return clinicRepository;
             }
         }
+        public IRepository<Department> Departments
+        {
+            get
+            {
+                if (departmentRepository == null)
+                    departmentRepository = new DepartmentRepository(db);
+                return departmentRepository;
+            }
+        }
 
         public IRepository<Procedure> Procedures
         {
@@ -71,40 +81,5 @@ namespace DAL.Repositories
             }
         }
 
-        public IRepository<Drug> Drugs
-        {
-            get
-            {
-                if (drugRepository == null)
-                    drugRepository = new DrugRepository(db);
-                return drugRepository;
-            }
-        }
-
-
-        public void Save()
-        {
-            db.SaveChanges();
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
     }
 }

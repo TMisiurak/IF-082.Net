@@ -4,6 +4,7 @@ using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebAPI.Controllers
 {
@@ -15,6 +16,7 @@ namespace WebAPI.Controllers
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
+        private readonly IService<DepartmentDTO> _servDepartment;
         private readonly IService<ProcedureDTO> _servProcedure;
         private readonly IService<DiagnosisDTO> _servDiagnosis;
 

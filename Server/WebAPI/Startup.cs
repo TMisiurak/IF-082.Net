@@ -204,12 +204,7 @@ namespace WebAPI
                     context.Users.AddRange(users);
                     context.SaveChanges();
                 }
-
-                if (!context.Clinics.Any())
-                {
-                    context.Clinics.AddRange(clinics);
-                    context.SaveChanges();
-                }
+                
                 if (!context.Clinics.Any())
                 {
                     context.Clinics.AddRange(clinics);
@@ -235,17 +230,17 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Diagnosis.Any())
+                if (!context.Diagnoses.Any())
                 {
-                    context.Diagnosis.AddRange(diagnosis);
+                    context.Diagnoses.AddRange(diagnosis);
                     context.SaveChanges();
                 }
-
+                /*
                 if (!context.Prescriptions.Any())
                 {
                     context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
-                }
+                }*/
 
                 if (!context.Procedures.Any())
                 {

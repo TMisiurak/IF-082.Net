@@ -61,12 +61,12 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("DiagnoseName")
+                    b.Property<string>("DiagnosisName")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.ToTable("Diagnosis");
+                    b.ToTable("Diagnoses");
                 });
 
             modelBuilder.Entity("DAL.Entities.Drug", b =>
@@ -103,7 +103,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("DiagnosisId");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescription");
                 });
 
             modelBuilder.Entity("DAL.Entities.Procedure", b =>

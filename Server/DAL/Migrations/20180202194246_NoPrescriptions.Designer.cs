@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20180130234450_AddDep")]
-    partial class AddDep
+    [Migration("20180202194246_NoPrescriptions")]
+    partial class NoPrescriptions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,76 @@ namespace DAL.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Diagnosis", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("DiagnosisName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Diagnoses");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Drug", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DrugName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drugs");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Prescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000);
+
+                    b.Property<int>("DiagnosisId");
+
+                    b.Property<int>("DoctorId");
+
+                    b.Property<int>("PatientId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiagnosisId");
+
+                    b.ToTable("Prescription");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Procedure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("Room");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Procedures");
+                });
+
             modelBuilder.Entity("DAL.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -65,6 +135,21 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("DAL.Entities.User", b =>
@@ -113,6 +198,14 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Clinic", "Clinic")
                         .WithMany("Departments")
                         .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Prescription", b =>
+                {
+                    b.HasOne("DAL.Entities.Diagnosis", "Diagnosis")
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

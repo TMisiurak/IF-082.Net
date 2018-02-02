@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20180202094349_Changed price type in procedures")]
-    partial class Changedpricetypeinprocedures
+    [Migration("20180202190830_CleanInit")]
+    partial class CleanInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,12 +62,12 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("DiagnoseName")
+                    b.Property<string>("DiagnosisName")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.ToTable("Diagnosis");
+                    b.ToTable("Diagnoses");
                 });
 
             modelBuilder.Entity("DAL.Entities.Drug", b =>

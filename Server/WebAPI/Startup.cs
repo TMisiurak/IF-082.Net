@@ -40,6 +40,7 @@ namespace WebAPI
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
             services.AddTransient<IService<RoomDTO>, RoomService>();
+            services.AddTransient<IService<DrugDTO>, DrugService>();
 
 
             services.AddAutoMapper();
@@ -180,6 +181,15 @@ namespace WebAPI
                     Date = DateTime.Now, DiagnosisId = 3},
                 };
 
+                List<Procedure> procedures = new List<Procedure>
+                {
+                    new Procedure{Name = "V/Q Scan", Price = 2500.50M, Room = 101 },
+                    new Procedure{Name = "VSclerotherapy", Price = 1500.50M, Room = 25 },
+                    new Procedure{Name = "Sperm Banking", Price = 500.50M, Room = 141 },
+                    new Procedure{Name = "Oral Wellness", Price = 200.50M, Room = 99 },
+                    new Procedure{Name = "Electrical Cardioversion", Price = 100.50M, Room = 12 },
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -225,15 +235,21 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Diagnoses.Any())
+                if (!context.Diagnosis.Any())
                 {
-                    context.Diagnoses.AddRange(diagnosis);
+                    context.Diagnosis.AddRange(diagnosis);
                     context.SaveChanges();
                 }
 
                 if (!context.Prescriptions.Any())
                 {
                     context.Prescriptions.AddRange(prescriptions);
+                    context.SaveChanges();
+                }
+
+                if (!context.Procedures.Any())
+                {
+                    context.Procedures.AddRange(procedures);
                     context.SaveChanges();
                 }
             }

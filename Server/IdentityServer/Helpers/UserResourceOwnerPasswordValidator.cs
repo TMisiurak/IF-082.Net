@@ -58,8 +58,8 @@ namespace IdentityServer
             return new Claim[]
             {
             new Claim("user_id", user.Id.ToString() ?? ""),
-            new Claim(JwtClaimTypes.Name, user.FullName  ?? ""),
-            new Claim(JwtClaimTypes.Email, user.Email  ?? ""),
+            //new Claim(JwtClaimTypes.Name, user.FullName  ?? ""),
+            //new Claim(JwtClaimTypes.Email, user.Email  ?? ""),
 
             //roles
             new Claim(JwtClaimTypes.Role, role.Name)

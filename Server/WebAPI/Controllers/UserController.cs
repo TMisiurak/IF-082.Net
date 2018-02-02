@@ -5,26 +5,25 @@ using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Helpers;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IMapper _iMapper;
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, IMapper iMapper)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _iMapper = iMapper;
         }
         
         [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userService.GetAll();
+            List<UserDTO> users = await _userService.GetAll();
             if (users != null)
             {
                 return Ok(users);
@@ -43,7 +42,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            var user = await _userService.GetById(id.Value);
+            UserDTO user = await _userService.GetById(id.Value);
             if (user != null)
             {
                 return Ok(user);

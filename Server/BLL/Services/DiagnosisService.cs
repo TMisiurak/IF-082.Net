@@ -15,6 +15,12 @@ namespace BLL.Services
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
 
+        public DiagnosisService(IUnitOfWork unitOfWork, Mapper mapper)
+        {
+            _mapper = mapper;
+            DataBase = unitOfWork;
+        }
+
         public async Task<int> Create(DiagnosisDTO diagnosisDTO)
         {
             int result = await DataBase.Diagnoses.Create(_mapper.Map<Diagnosis>(diagnosisDTO));

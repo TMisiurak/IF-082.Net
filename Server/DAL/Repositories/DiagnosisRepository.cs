@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.EF;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -27,9 +28,9 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<Diagnosis>> GetAll()
+        public async Task<List<Diagnosis>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Diagnosis.FromSql("sp_GetAllDiagnosis").ToListAsync();
         }
 
         public Task<Diagnosis> GetById(int id)

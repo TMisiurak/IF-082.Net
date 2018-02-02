@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class ChanchedPricetype : Migration
+    public partial class Changedpricetypeinprocedures : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

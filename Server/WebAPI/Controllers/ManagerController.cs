@@ -16,12 +16,12 @@ namespace WebAPI.Controllers
         private readonly IUserService _serv;
         private readonly IService<RoleDTO> _servRole;
         private readonly IService<ClinicDTO> _servClinic;
-        private readonly IService<DepartmentDTO> _servDepartment;
         private readonly IService<ProcedureDTO> _servProcedure;
         private readonly IService<DiagnosisDTO> _servDiagnosis;
+        private readonly IService<DepartmentDTO> _servDepartment;
 
         // TODO: update ctor
-        public ManagerController(IUserService serv, IMapper iMapper, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure, IService<DiagnosisDTO> servDiagnosis)
+        public ManagerController(IUserService serv, IMapper iMapper, IService<DepartmentDTO> servDepartment, IService<RoleDTO> servRole, IService<ClinicDTO> servClinic, IService<ProcedureDTO> servProcedure, IService<DiagnosisDTO> servDiagnosis)
         {
             _serv = serv;
             _iMapper = iMapper;
@@ -29,6 +29,7 @@ namespace WebAPI.Controllers
             _servClinic = servClinic;
             _servProcedure = servProcedure;
             _servDiagnosis = servDiagnosis;
+            _servDepartment = servDepartment;
         }
 
         [HttpPost("create_role")]
@@ -42,6 +43,13 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> DeleteRoleById(int? id)
         {
             int result = await _servRole.DeleteById(id.Value);
+            return Ok(result);
+        }
+
+        [HttpPost("create_department")]
+        public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
+        {
+            int result = await _servDepartment.Create(departmentDTO);
             return Ok(result);
         }
 

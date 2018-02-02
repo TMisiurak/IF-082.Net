@@ -23,9 +23,17 @@ namespace DAL.Repositories
       
         public  async Task<int> Create(Department department)
         {
-            string sql = $"sp_CreateDepartment   @Name = '{department.Name}',  @ClinicId = '{department.ClinicId}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
-            return result;
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @resid=sp_CreateDepartment  @Name = 'Name = '{department.Name}',  @ClinicId = '{department.ClinicId}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
+            
         }
 
        

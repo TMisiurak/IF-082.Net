@@ -25,21 +25,10 @@ namespace BLL.Services
 
         public async Task<int> Create(DepartmentDTO departmentDTO)
         {
-            Task<Clinic> clinic = Database.Clinics.GetById(departmentDTO.ClinicId);
-
-            // валидация
-            if (clinic == null)
-                throw new ValidationException("the clinic does not exist ");
-            Department department = new Department
-            {
-
-                Name = departmentDTO.Name,
-                ClinicId = departmentDTO.ClinicId
-            };
-
             int result = await Database.Departments.Create(_mapper.Map<Department>(departmentDTO));
             return result;
         }
+
 
         public async  Task<int> DeleteById(int id)
         {
@@ -70,7 +59,7 @@ namespace BLL.Services
             //int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
             //return result;
        
-            Task<Department> department = Database.Departments.GetById(departmentDTO.Id);
+            var department = Database.Departments.GetById(departmentDTO.Id);
 
             // валидация
             if (department == null)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BLL.DTO;
 using BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -25,24 +26,54 @@ namespace WebAPI.Controllers
             _servDepartment = servDepartment;
         }
 
+        //Get  api/departments
+        [HttpGet]
+        public async Task<IActionResult> GetDepartments()
+        {
+            var departments = await _servDepartment.GetAll();
+            return Ok(departments);
+        }
 
-        //// UPDATE api/values/5
-        //[HttpPut("update")]
-        //public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
-        //{
-        //    //userDTO.Password = HashService.HashPassword(userDTO.Password);
-        //    int result = await _servDepartment.Update(departmentDTO);
-        //    return Ok(result);
-        //}
+        //GET api/
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetDepartmentById(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest();
+            }
+            var department = await _servDepartment.GetById(id.Value);
+            if (department != null)
+            { return Ok(department); }
+            else
+            { return NotFound(); }
+        }
 
-        [HttpPost("create_department")]
+        //[Authorize(Roles = "admin")]
+        [HttpPost]
         public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
         {
             int result = await _servDepartment.Create(departmentDTO);
-            return Ok(result);
+            return Ok();
+        }
+        
+
+
+        //[Authorize(Roles = "admin, patient, doctor, accountant")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
+        {
+            
+            int result = await _servDepartment.Update(departmentDTO);
+            
+                return Ok(result);
+           
         }
 
-        [HttpDelete("delete_department/{id}")]
+        
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartmentById(int? id)
         {
 
@@ -53,21 +84,7 @@ namespace WebAPI.Controllers
         }
 
 
-        //Get  api/departments
-        [HttpGet("/all_departments")]
-        public async Task<IActionResult> GetDepartments()
-        {
-            var departments = await _servDepartment.GetAll();
-            return Ok(departments);
-        }
-
-        //GET api/
-        [HttpGet("/department/{id}")]
-        public async Task<IActionResult> GetDepartmentById(int? id)
-        {
-            var department = await _servDepartment.GetById(id.Value);
-            return Ok(department);
-        }
+       
 
 
 

@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
             { return NotFound(); }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
         {
@@ -59,16 +59,16 @@ namespace WebAPI.Controllers
         
 
 
-        //[Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
-        {
+        ////[Authorize(Roles = "admin, patient, doctor, accountant")]
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
+        //{
             
-            int result = await _servDepartment.Update(departmentDTO);
+        //    int result = await _servDepartment.Update(departmentDTO);
             
-                return Ok(result);
+        //        return Ok(result);
            
-        }
+        //}
 
         
 

@@ -17,6 +17,9 @@ namespace BLL.DTO
             CreateMap<ProcedureDTO, Procedure>();
             CreateMap<Procedure, ProcedureDTO>();
             CreateMap<ProcedureDTO, Procedure>();
+            CreateMap<Department, DepartmentDTO>();
+            CreateMap<DepartmentDTO, Department>();
+            
 
             CreateMap<Diagnosis, DiagnosisDTO>();
             CreateMap<DiagnosisDTO, Diagnosis>();

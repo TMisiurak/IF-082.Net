@@ -1,13 +1,17 @@
-﻿using System;
+﻿using DAL.EF;
+using DAL.Entities;
+using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Interfaces;
-using DAL.EF;
 
 namespace DAL.Repositories
 {
-    public class PrescriptionRepository : IRepository<PrescriptionRepository>
+    public class PrescriptionRepository : IRepository<Prescription>
     {
             private readonly ClinicContext _db;
 
@@ -16,29 +20,60 @@ namespace DAL.Repositories
                 _db = context;
             }
 
-            public Task<int> Create(PrescriptionRepository item)
+            public async Task<int> Create(Prescription item)
             {
-                throw new NotImplementedException();
+                var param = new SqlParameter
+                {
+                    ParameterName = "@CreatedId",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output
+                };
+
+                string sql = $"exec @CreatedId = sp_CreatePrescription @Date = '{item.Date}', " +
+                        $"@Description = '{item.Description}'" +
+                        $"@DiagnosisId = '{item.DiagnosisId}'" +
+                        $"@DoctorId = '{item.DoctorId}'" +
+                        $"@PatientId = '{item.PatientId}'";
+                int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+                return (int)param.Value;
             }
 
-            public Task<int> Delete(int id)
+            public async Task<int> Delete(int id)
             {
-                throw new NotImplementedException();
+                var param = new SqlParameter
+                {
+                    ParameterName = "@DeletedId",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output
+                };
+
+                string sql = $"exec @DeletedId = dbo.sp_DeletePrescription @id = {id}";
+
+                int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+                return (int)param.Value;
             }
 
-            public Task<List<PrescriptionRepository>> GetAll()
+            public async Task<List<Prescription>> GetAll()
             {
-                throw new NotImplementedException();
+                return await _db.Prescriptions.FromSql("sp_GetAllPrescriptions").ToListAsync();
             }
 
-            public Task<PrescriptionRepository> GetById(int id)
+            public async Task<Prescription> GetById(int id)
             {
-                throw new NotImplementedException();
+                var param = new SqlParameter("@id", id);
+                Prescription prescription = await _db.Prescriptions.FromSql($"sp_GetPrescriptionById @id", param).FirstOrDefaultAsync();
+                return prescription;
             }
 
-            public Task<int> Update(PrescriptionRepository item)
+            public async Task<int> Update(Prescription item)
             {
-                throw new NotImplementedException();
+                string sql = $"sp_UpdatePrescription @Date = '{item.Date}',  " +
+                        $"@Description = '{item.Description}'" +
+                        $"@DiagnosisId = '{item.DiagnosisId}'" +
+                        $"@DoctorId = '{item.DoctorId}'" +
+                        $"@PatientId = '{item.PatientId}'";
+                int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+                return result;
             }
     }
 }

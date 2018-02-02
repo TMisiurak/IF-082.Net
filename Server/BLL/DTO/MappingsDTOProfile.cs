@@ -22,6 +22,8 @@ namespace BLL.DTO
             CreateMap<DiagnosisDTO, Diagnosis>();
             CreateMap<Room, RoomDTO>();
             CreateMap<RoomDTO, Room>();
+            CreateMap<Prescription, PrescriptionDTO>();
+            CreateMap<PrescriptionDTO, Prescription>();
         }
     }
 }

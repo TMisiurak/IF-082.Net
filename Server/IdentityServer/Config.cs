@@ -40,7 +40,7 @@ namespace IdentityServer
                     AllowOfflineAccess = true,
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
-                    AllowedCorsOrigins = { "http://localhost:5003" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

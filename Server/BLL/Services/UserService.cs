@@ -23,20 +23,22 @@ namespace BLL.Services
         public async Task<List<UserDTO>> GetAll()
         {
             List<User> users = await DataBase.Users.GetAll();
-            var result = _mapper.Map<List<UserDTO>>(users);
+            List<UserDTO> result = _mapper.Map<List<UserDTO>>(users);
             return result;
         }
 
         public async Task<UserDTO> GetById(int id)
         {
             User user = await DataBase.Users.GetById(id);
-            return _mapper.Map<UserDTO>(user);
+            UserDTO result = _mapper.Map<UserDTO>(user);
+            return result;
         }
 
-        public UserDTO GetByEmail(string email)
+        public async Task<UserDTO> GetByEmail(string email)
         {
-            var user = DataBase.Users.GetByEmail(email);
-            return _mapper.Map<UserDTO>(user);
+            User user = await DataBase.Users.GetByEmail(email);
+            UserDTO result = _mapper.Map<UserDTO>(user);
+            return result;
         }
 
         public async Task<int> Create(UserDTO userDTO)

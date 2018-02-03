@@ -28,11 +28,11 @@ namespace IdentityServer
             {
                 //get user from db (find user by user id)
                 User user = await DataBase.Users.GetById(userId);
-                Role role = await DataBase.Roles.GetById(user.RoleId);
 
                 // issue the claims for the user
                 if (user != null)
                 {
+                    Role role = await DataBase.Roles.GetById(user.RoleId);
                     var claims = UserResourceOwnerPasswordValidator.GetUserClaims(user, role);
 
                     context.IssuedClaims = claims.Where(x => context.RequestedClaimTypes.Contains(x.Type)).ToList();

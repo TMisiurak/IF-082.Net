@@ -7,6 +7,6 @@ namespace BLL.Interfaces
 {
     public interface IUserService : IService<UserDTO>
     {
-        UserDTO GetByEmail(string email);
+        Task<UserDTO> GetByEmail(string email);
     }
 }

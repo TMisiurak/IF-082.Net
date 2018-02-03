@@ -22,23 +22,25 @@ namespace DAL.Repositories
 
             public async Task<int> Create(Prescription item)
             {
-                var param = new SqlParameter
+                var createdId = new SqlParameter
                 {
                     ParameterName = "@CreatedId",
                     SqlDbType = SqlDbType.Int,
                     Direction = ParameterDirection.Output
                 };
 
-                string sql = $"exec @CreatedId = sp_CreatePrescription @Date = '{item.Date}', " +
+                /*string sql = $"exec @CreatedId = dbo.sp_CreatePrescription @Date = '{item.Date.ToString("yyyy-MM-dd")}', " +
                         $"@Description = '{item.Description}'" +
                         $"@DiagnosisId = '{item.DiagnosisId}'" +
                         $"@DoctorId = '{item.DoctorId}'" +
-                        $"@PatientId = '{item.PatientId}'";
-                int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
-                return (int)param.Value;
+                        $"@PatientId = '{item.PatientId}'";*/
+                string sql = $"exec @CreatedId = dbo.sp_CreatePrescription @Date = '{item.Date.ToString("yyyy-MM-dd")}', @Description = '{item.Description}', @DiagnosisId = {item.DiagnosisId}, @DoctorId = '{item.DoctorId}', @PatientId = '{item.PatientId}'";
+            
+                await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
+                return (int)createdId.Value;
             }
 
-            public async Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
             {
                 var param = new SqlParameter
                 {

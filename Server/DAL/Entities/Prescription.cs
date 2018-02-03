@@ -17,6 +17,7 @@ namespace DAL.Entities
         [Required, MaxLength(4000)]
         public string Description { get; set; }
         [Required]
+        [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Date { get; set; }
         

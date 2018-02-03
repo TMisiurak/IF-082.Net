@@ -12,6 +12,5 @@ namespace BLL.DTO
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public int DiagnosisId { get; set; }
-        public DiagnosisDTO Diagnosis { get; set; }
     }
 }

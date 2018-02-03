@@ -36,7 +36,7 @@ namespace BLL.Tests
             diagnosisRepo.Setup(x => x.GetAll()).Returns(GetTestDiagnosis());
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
-            unitOfWorkMock.Setup(m => m.Diagnoses).Returns(diagnosisRepo.Object);
+            unitOfWorkMock.Setup(m => m.Diagnosis).Returns(diagnosisRepo.Object);
 
             var mockMapper = new Mock<IMapper>();
 
@@ -68,7 +68,7 @@ namespace BLL.Tests
             });
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
-            unitOfWorkMock.Setup(m => m.Diagnoses).Returns(diagnosisRepo.Object);
+            unitOfWorkMock.Setup(m => m.Diagnosis).Returns(diagnosisRepo.Object);
 
             var mockMapper = new Mock<IMapper>();
             mockMapper.Setup(x => x.Map<DiagnosisDTO>(It.IsAny<Diagnosis>()))

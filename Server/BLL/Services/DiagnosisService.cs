@@ -23,33 +23,33 @@ namespace BLL.Services
 
         public async Task<int> Create(DiagnosisDTO diagnosisDTO)
         {
-            int result = await DataBase.Diagnoses.Create(_mapper.Map<Diagnosis>(diagnosisDTO));
+            int result = await DataBase.Diagnosis.Create(_mapper.Map<Diagnosis>(diagnosisDTO));
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Diagnoses.Delete(id);
+            int result = await DataBase.Diagnosis.Delete(id);
             return result;
         }
 
         public async Task<List<DiagnosisDTO>> GetAll()
         {
-            List<Diagnosis> diagnosis = await DataBase.Diagnoses.GetAll();
+            List<Diagnosis> diagnosis = await DataBase.Diagnosis.GetAll();
             var result = _mapper.Map<List<DiagnosisDTO>>(diagnosis);
             return result;
         }
 
         public async Task<DiagnosisDTO> GetById(int id)
         {
-            Diagnosis diagnosis = await DataBase.Diagnoses.GetById(id);
+            Diagnosis diagnosis = await DataBase.Diagnosis.GetById(id);
             var result = _mapper.Map<DiagnosisDTO>(diagnosis);
             return result;
         }
 
         public async Task<int> Update(DiagnosisDTO diagnosisDTO)
         {
-            int result = await DataBase.Diagnoses.Update(_mapper.Map<Diagnosis>(diagnosisDTO));
+            int result = await DataBase.Diagnosis.Update(_mapper.Map<Diagnosis>(diagnosisDTO));
             return result;
         }
     }

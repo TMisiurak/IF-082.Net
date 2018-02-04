@@ -42,6 +42,7 @@ namespace WebAPI
             services.AddTransient<IService<RoomDTO>, RoomService>();
             services.AddTransient<IService<DrugDTO>, DrugService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
+            services.AddTransient<IService<PatientDTO>, PatientService>();
 
             services.AddAutoMapper();
 
@@ -192,6 +193,12 @@ namespace WebAPI
                     new Procedure{Name = "Electrical Cardioversion", Price = 100.50M, Room = 12 },
                 };
 
+                List<Patient> patients = new List<Patient>
+                {
+                    new Patient {UserId=2 },
+                    new Patient {UserId=1 },
+                };
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -247,6 +254,11 @@ namespace WebAPI
                 if (!context.Procedures.Any())
                 {
                     context.Procedures.AddRange(procedures);
+                    context.SaveChanges();
+                }
+                if(!context.Patients.Any())
+                {
+                    context.Patients.AddRange(patients);
                     context.SaveChanges();
                 }
             }

@@ -30,5 +30,7 @@ namespace DAL.Entities
 
         public int RoleId { get; set; }
         public Role Role { get; set; }   
+        // try to add patient
+        public virtual Patient Patient { get; set; }
     }
 }

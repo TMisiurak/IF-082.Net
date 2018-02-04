@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    partial class ClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20180203214809_newinit")]
+    partial class newinit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,21 +81,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Drugs");
-                });
-
-            modelBuilder.Entity("DAL.Entities.Patient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("DAL.Entities.Prescription", b =>
@@ -213,14 +199,6 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Clinic", "Clinic")
                         .WithMany("Departments")
                         .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DAL.Entities.Patient", b =>
-                {
-                    b.HasOne("DAL.Entities.User", "User")
-                        .WithOne("Patient")
-                        .HasForeignKey("DAL.Entities.Patient", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

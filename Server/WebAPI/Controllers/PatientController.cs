@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             { return NotFound(); }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreatePatient([FromBody]PatientDTO patientDTO)
         {
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
 
 
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public async Task<IActionResult> UpdatePatientById([FromBody]PatientDTO patientDTO)
         {
@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
 
 
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatientById(int? id)
         {

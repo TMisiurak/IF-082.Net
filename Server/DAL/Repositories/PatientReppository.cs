@@ -21,14 +21,35 @@ namespace DAL.Repositories
         }
 
 
+        //public async Task<int> Create(Patient patient)
+        //{
+        //    string sql = $"sp_CreatePatient    @UsercId = '{patient.UserId}'";
+        //    int result = await _db.Database.ExecuteSqlCommandAsync(sql);
+        //    return result;
+        //}
+
+
+
         public async Task<int> Create(Patient patient)
         {
-            string sql = $"sp_CreatePatient    @UsercId = '{patient.UserId}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
-            return result;
+            var param = new SqlParameter
+            {
+                ParameterName = "@CreatedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @CreatedId = sp_CreatePatient @UserId = {patient.UserId}";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
 
+
+        public async Task<List<Patient>> GetAll()
+        {
+            return await _db.Patients.FromSql("sp_GetAllPatients").ToListAsync();
+        }
 
         public async Task<int> Delete(int id)
         {
@@ -41,17 +62,9 @@ namespace DAL.Repositories
 
             string sql = $"exec @resid = dbo.sp_DeletePatient @id = {id}";
 
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
-
-
-
-        public async Task<List<Patient>> GetAll()
-        {
-            return await _db.Patients.FromSql("sp_GetAllPatients").ToListAsync();
-        }
-
 
 
         public async Task<Patient> GetById(int id)

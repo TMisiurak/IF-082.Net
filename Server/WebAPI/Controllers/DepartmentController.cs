@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
             { return NotFound(); }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
         {
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
             int result = await _servDepartment.Create(departmentDTO);
-            if (result > 0)
+            if (result == 0)
             {
                 return Ok(result);
             }
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
 
 
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateDepartmnetById([FromBody]DepartmentDTO departmentDTO)
         {
@@ -95,7 +95,7 @@ namespace WebAPI.Controllers
 
 
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartmentById(int? id)
         {

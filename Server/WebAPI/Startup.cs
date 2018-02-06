@@ -136,9 +136,9 @@ namespace WebAPI
                     new User{ Email = "email3@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
                         RoleId = 3, FullName = "Full Name 3", Address = "Address 3", BirthDay = new DateTime(1995, 3, 3),
                         PhoneNumber = "0123456783", Sex = "fem", Image = "imagesrc 3" },
-                    /*new User{ Email = "email4@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
+                    new User{ Email = "email4@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
                         RoleId = 4, FullName = "Full Name 4", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
-                        PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },*/
+                        PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
                 };
 
                 List<Drug> drugs = new List<Drug>
@@ -164,7 +164,7 @@ namespace WebAPI
                     new Room { Name = "Diagnostics Room", Number = 50 }
                 };
 
-                List<Diagnosis> diagnosis = new List<Diagnosis>
+                List<Diagnosis> diagnoses = new List<Diagnosis>
                 {
                     new Diagnosis{ DiagnosisName="Migren", Description = "easy" },
                     new Diagnosis{ DiagnosisName="Kashel", Description = "middle" },
@@ -232,9 +232,9 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Diagnosis.Any())
+                if (!context.Diagnoses.Any())
                 {
-                    context.Diagnosis.AddRange(diagnosis);
+                    context.Diagnoses.AddRange(diagnoses);
                     context.SaveChanges();
                 }
 

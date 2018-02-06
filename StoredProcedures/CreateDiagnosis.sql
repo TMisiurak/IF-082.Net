@@ -18,7 +18,7 @@ AS
 BEGIN TRY
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Diagnosis] (DiagnosisName, Description)
+	INSERT INTO [dbo].[Diagnoses] (DiagnosisName, Description)
     VALUES (@DiagnosisName, @Description)
 
 	RETURN @@IDENTITY

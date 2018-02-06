@@ -75,7 +75,7 @@ namespace DAL.Repositories
             }
         }
 
-        public IRepository<Diagnosis> Diagnosis
+        public IRepository<Diagnosis> Diagnoses
         {
             get
             {

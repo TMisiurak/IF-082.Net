@@ -17,7 +17,7 @@ CREATE PROCEDURE [dbo].[sp_UpdateDiagnosis]
 	
 AS
 
-IF NOT EXISTS (SELECT 1 FROM Diagnosis WHERE Id=@Id)
+IF NOT EXISTS (SELECT 1 FROM Diagnoses WHERE Id=@Id)
 BEGIN
 	RETURN -1
 END
@@ -25,7 +25,7 @@ END
 BEGIN TRY
 	SET NOCOUNT ON;
 
-    UPDATE [dbo].[Diagnosis]
+    UPDATE [dbo].[Diagnoses]
 		SET	[DiagnosisName] = @DiagnosisName
 		, [Description] = @Description
 		WHERE Id = @Id

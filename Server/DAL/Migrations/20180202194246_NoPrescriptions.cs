@@ -9,7 +9,7 @@ namespace DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Prescriptions_Diagnosis_DiagnosisId",
+                name: "FK_Prescriptions_Diagnoses_DiagnosisId",
                 table: "Prescriptions");
 
             migrationBuilder.DropPrimaryKey(
@@ -31,10 +31,10 @@ namespace DAL.Migrations
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Prescription_Diagnosis_DiagnosisId",
+                name: "FK_Prescription_Diagnoses_DiagnosisId",
                 table: "Prescription",
                 column: "DiagnosisId",
-                principalTable: "Diagnosis",
+                principalTable: "Diagnoses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -42,7 +42,7 @@ namespace DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Prescription_Diagnosis_DiagnosisId",
+                name: "FK_Prescription_Diagnoses_DiagnosisId",
                 table: "Prescription");
 
             migrationBuilder.DropPrimaryKey(
@@ -64,10 +64,10 @@ namespace DAL.Migrations
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Prescriptions_Diagnosis_DiagnosisId",
+                name: "FK_Prescriptions_Diagnoses_DiagnosisId",
                 table: "Prescriptions",
                 column: "DiagnosisId",
-                principalTable: "Diagnosis",
+                principalTable: "Diagnoses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

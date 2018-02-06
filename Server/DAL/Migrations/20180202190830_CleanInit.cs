@@ -24,7 +24,7 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Diagnosis",
+                name: "Diagnoses",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -34,7 +34,7 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Diagnosis", x => x.Id);
+                    table.PrimaryKey("PK_Diagnoses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,9 +128,9 @@ namespace DAL.Migrations
                 {
                     table.PrimaryKey("PK_Prescriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Prescriptions_Diagnosis_DiagnosisId",
+                        name: "FK_Prescriptions_Diagnoses_DiagnosisId",
                         column: x => x.DiagnosisId,
-                        principalTable: "Diagnosis",
+                        principalTable: "Diagnoses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -203,7 +203,7 @@ namespace DAL.Migrations
                 name: "Clinics");
 
             migrationBuilder.DropTable(
-                name: "Diagnosis");
+                name: "Diagnoses");
 
             migrationBuilder.DropTable(
                 name: "Roles");

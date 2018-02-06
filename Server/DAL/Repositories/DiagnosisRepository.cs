@@ -30,7 +30,7 @@ namespace DAL.Repositories
 
         public async Task<List<Diagnosis>> GetAll()
         {
-            return await _db.Diagnosis.FromSql("sp_GetAllDiagnosis").ToListAsync();
+            return await _db.Diagnoses.FromSql("sp_GetAllDiagnoses").ToListAsync();
         }
 
         public Task<Diagnosis> GetById(int id)

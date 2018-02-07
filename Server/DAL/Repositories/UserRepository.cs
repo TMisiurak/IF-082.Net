@@ -1,7 +1,7 @@
 ﻿using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,7 +18,7 @@ namespace DAL.Repositories
             _db = db;
         }
 
-        public async Task<List<User>> GetAll()
+        public async Task<IList<User>> GetAll()
         {
             return await _db.Users.FromSql("sp_GetAllUsers").ToListAsync();
         }

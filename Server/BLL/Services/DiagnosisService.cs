@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using BLL.Interfaces;
-using BLL.DTO;
 using AutoMapper;
 using DAL.Interfaces;
-using DAL.Entities;
 using System.Threading.Tasks;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 
 namespace BLL.Services
 {
-    public class DiagnosisService : IService<DiagnosisDTO>
+    public class DiagnosisService : IDiagnosisService<DiagnosisDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
+
+        public DiagnosisService(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _mapper = mapper;
+            DataBase = unitOfWork;
+        }
 
         public async Task<int> Create(DiagnosisDTO diagnosisDTO)
         {
@@ -27,10 +31,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<DiagnosisDTO>> GetAll()
+        public async Task<IList<DiagnosisDTO>> GetAll()
         {
-            List<Diagnosis> diagnosis = await DataBase.Diagnoses.GetAll();
-            var result = _mapper.Map<List<DiagnosisDTO>>(diagnosis);
+            IList<Diagnosis> diagnoses = await DataBase.Diagnoses.GetAll();
+            var result = _mapper.Map<IList<DiagnosisDTO>>(diagnoses);
             return result;
         }
 

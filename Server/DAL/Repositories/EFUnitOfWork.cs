@@ -1,12 +1,10 @@
 ﻿using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
+
     public class EFUnitOfWork : IUnitOfWork
     {
         private ClinicContext db;
@@ -16,6 +14,9 @@ namespace DAL.Repositories
         private DepartmentRepository departmentRepository;
         private ProcedureRepository procedureRepository;
         private DiagnosisRepository diagnosisRepository;
+        private RoomRepository roomRepository;
+        private PrescriptionRepository prescriptionRepository;
+        private DrugRepository drugRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -50,6 +51,7 @@ namespace DAL.Repositories
                 return clinicRepository;
             }
         }
+
         public IRepository<Department> Departments
         {
             get
@@ -76,8 +78,40 @@ namespace DAL.Repositories
             {
                 if (diagnosisRepository == null)
                     diagnosisRepository = new DiagnosisRepository(db);
-                return (IRepository<Diagnosis>)diagnosisRepository; 
+                return diagnosisRepository;
             }
         }
+
+        public IRepository<Room> Rooms
+        {
+            get
+            {
+                if (roomRepository == null)
+                    roomRepository = new RoomRepository(db);
+                return roomRepository;
+            }
+        }
+
+        public IRepository<Prescription> Prescriptions
+        {
+            get
+            {
+                if (prescriptionRepository == null)
+                    prescriptionRepository = new PrescriptionRepository(db);
+                return prescriptionRepository;
+            }
+        }
+
+        public IRepository<Drug> Drugs
+        {
+            get
+            {
+                if (drugRepository == null)
+                    drugRepository = new DrugRepository(db);
+                return (IRepository<Drug>)drugRepository;
+            }
+        }
+
+
     }
 }

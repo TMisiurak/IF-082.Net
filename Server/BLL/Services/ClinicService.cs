@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
-using System;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class ClinicService : IService<ClinicDTO>
+    public class ClinicService : IClinicService<ClinicDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -33,10 +31,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async  Task<List<ClinicDTO>> GetAll()
+        public async  Task<IList<ClinicDTO>> GetAll()
         {
-            List<Clinic> clinics = await DataBase.Clinics.GetAll();
-            var result = _mapper.Map<List<ClinicDTO>>(clinics);
+            IList<Clinic> clinics = await DataBase.Clinics.GetAll();
+            var result = _mapper.Map<IList<ClinicDTO>>(clinics);
             return result;
         }
 
@@ -47,9 +45,10 @@ namespace BLL.Services
             return result;
         }
 
-        public Task<int> Update(ClinicDTO item)
+        public async Task<int> Update(ClinicDTO clinicDTO)
         {
-            throw new NotImplementedException();
+            int result = await DataBase.Clinics.Update(_mapper.Map<Clinic>(clinicDTO));
+            return result;
         }
     }
 }

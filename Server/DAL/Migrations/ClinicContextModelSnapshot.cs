@@ -61,7 +61,7 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("DiagnoseName")
+                    b.Property<string>("DiagnosisName")
                         .IsRequired();
 
                     b.HasKey("Id");
@@ -82,6 +82,46 @@ namespace DAL.Migrations
                     b.ToTable("Drugs");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Prescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000);
+
+                    b.Property<int>("DiagnosisId");
+
+                    b.Property<int>("DoctorId");
+
+                    b.Property<int>("PatientId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiagnosisId");
+
+                    b.ToTable("Prescriptions");
+                });
+
             modelBuilder.Entity("DAL.Entities.Procedure", b =>
                 {
                     b.Property<int>("Id")
@@ -90,7 +130,7 @@ namespace DAL.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<double>("Price");
+                    b.Property<decimal>("Price");
 
                     b.Property<int>("Room");
 
@@ -110,6 +150,21 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("DAL.Entities.User", b =>
@@ -158,6 +213,22 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Clinic", "Clinic")
                         .WithMany("Departments")
                         .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Patient", b =>
+                {
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithOne("Patient")
+                        .HasForeignKey("DAL.Entities.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Prescription", b =>
+                {
+                    b.HasOne("DAL.Entities.Diagnosis", "Diagnosis")
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

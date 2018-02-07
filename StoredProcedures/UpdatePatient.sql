@@ -1,0 +1,25 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+create PROCEDURE [dbo].[sp_UpdateClinic]
+	@UserId int,
+	@Id int
+AS
+IF NOT EXISTS (SELECT 1 FROM Patients WHERE Id=@Id)
+BEGIN
+	RETURN -1
+END
+BEGIN TRY
+	SET NOCOUNT ON;
+
+    UPDATE [dbo].Patients SET
+	[UserId]=@UserId
+	WHERE Id = @Id
+	RETURN @@ROWCOUNT
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO

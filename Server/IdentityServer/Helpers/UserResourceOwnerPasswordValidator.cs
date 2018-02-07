@@ -1,11 +1,9 @@
-﻿using DAL.EF;
-using DAL.Entities;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
 using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
+using ProjectCore.Entities;
 using System;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 

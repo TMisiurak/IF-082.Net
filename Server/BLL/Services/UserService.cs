@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
-using System;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : IUserService
+    public class UserService : IUserService<UserDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -20,10 +19,10 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<List<UserDTO>> GetAll()
+        public async Task<IList<UserDTO>> GetAll()
         {
-            List<User> users = await DataBase.Users.GetAll();
-            List<UserDTO> result = _mapper.Map<List<UserDTO>>(users);
+            IList<User> users = await DataBase.Users.GetAll();
+            var result = _mapper.Map<IList<UserDTO>>(users);
             return result;
         }
 

@@ -1,7 +1,6 @@
-﻿using BLL.DTO;
-using BLL.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 using WebAPI.Helpers;
 
@@ -10,9 +9,9 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUserService<UserDTO> _userService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService<UserDTO> userService)
         {
             _userService = userService;
         }

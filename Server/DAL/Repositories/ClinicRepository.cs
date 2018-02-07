@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
@@ -50,7 +47,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Clinic>> GetAll()
+        public async Task<IList<Clinic>> GetAll()
         {
             return await _db.Clinics.FromSql("sp_GetAllClinics").ToListAsync();
         }
@@ -63,9 +60,18 @@ namespace DAL.Repositories
             return clinic;
         }
 
-        public Task<int> Update(Clinic item)
+        public async Task<int> Update(Clinic clinic)
         {
-            throw new NotImplementedException();
+            var updateCounter = new SqlParameter
+            {
+                ParameterName = "@UpdateCounter",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateClinic @Name = '{clinic.Name}', @Address = '{clinic.Address}', @Id = {clinic.Id}";
+            await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
+            return (int)updateCounter.Value;
         }
     }
 }

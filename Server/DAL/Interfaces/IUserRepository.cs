@@ -1,7 +1,4 @@
-﻿using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ProjectCore.Entities;
 using System.Threading.Tasks;
 
 namespace DAL.Interfaces

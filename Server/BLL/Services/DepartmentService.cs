@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 
 namespace BLL.Services
 
 {
-    public class DepartmentService : IService<DepartmentDTO>
+    public class DepartmentService : IDepartmentService<DepartmentDTO>
     {
         IUnitOfWork Database { get; set; }
         IMapper _mapper;
@@ -25,21 +22,10 @@ namespace BLL.Services
 
         public async Task<int> Create(DepartmentDTO departmentDTO)
         {
-            Task<Clinic> clinic = Database.Clinics.GetById(departmentDTO.ClinicId);
-
-            // валидация
-            if (clinic == null)
-                throw new ValidationException("the clinic does not exist ");
-            Department department = new Department
-            {
-
-                Name = departmentDTO.Name,
-                ClinicId = departmentDTO.ClinicId
-            };
-
             int result = await Database.Departments.Create(_mapper.Map<Department>(departmentDTO));
             return result;
         }
+
 
         public async  Task<int> DeleteById(int id)
         {
@@ -47,10 +33,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<DepartmentDTO>> GetAll()
+        public async Task<IList<DepartmentDTO>> GetAll()
         {
             IEnumerable<Department> departments = await Database.Departments.GetAll();
-            return _mapper.Map<List<DepartmentDTO>>(departments);
+            return _mapper.Map<IList<DepartmentDTO>>(departments);
         }
 
         public  async Task<DepartmentDTO> GetById(int id)
@@ -62,14 +48,14 @@ namespace BLL.Services
 
         public async Task<int> Update(DepartmentDTO departmentDTO)
         {
-            //int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
-            //return result;
+            ////int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
+            ////return result;
        
-            Task<Department> department = Database.Departments.GetById(departmentDTO.Id);
+            //var department = Database.Departments.GetById(departmentDTO.Id);
 
-            // валидация
-            if (department == null)
-                throw new ValidationException("the department does not exist ");
+            //// валидация
+            //if (department == null)
+            //    throw new ValidationException("the department does not exist ");
             
 
             int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));

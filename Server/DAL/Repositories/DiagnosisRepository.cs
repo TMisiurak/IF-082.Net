@@ -1,44 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.EF;
+using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace DAL.Repositories
 {
-    class DiagnosisRepository : IRepository<DiagnosisRepository>
+    class DiagnosisRepository : IRepository<Diagnosis>
     {
         private readonly ClinicContext _db;
 
-        public DiagnosisRepository (ClinicContext context)
+        public DiagnosisRepository(ClinicContext context)
         {
             _db = context;
         }
 
-        public Task<int> Create(DiagnosisRepository item)
+        public async Task<int> Create(Diagnosis diagnosis)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter
+            {
+                ParameterName = "@CreatedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+            string sql = $"exec @CreatedId = sp_CreateDiagnosis @DiagnosisName = '{diagnosis.DiagnosisName}', @Description = '{diagnosis.Description}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+            string sql = $"exec @resid = dbo.sp_DeleteDiagnosis @Id = {id}";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
-        public Task<List<DiagnosisRepository>> GetAll()
+        public async Task<IList<Diagnosis>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Diagnoses.FromSql("sp_GetAllDiagnoses").ToListAsync();
         }
 
-        public Task<DiagnosisRepository> GetById(int id)
+        public async Task<Diagnosis> GetById(int id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter("@id", id);
+            Diagnosis diagnosis = await _db.Diagnoses.FromSql($"sp_GetDiagnosisById @id", param).FirstOrDefaultAsync();
+            return diagnosis;
         }
 
-        public Task<int> Update(DiagnosisRepository item)
+        public async Task<int> Update(Diagnosis diagnosis)
         {
-            throw new NotImplementedException();
+            var updateCounter = new SqlParameter
+            {
+                ParameterName = "@UpdateCounter",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateDiagnosis @Id = '{diagnosis.Id}', @DiagnosisName = '{diagnosis.DiagnosisName}', @Description = '{diagnosis.Description}'";
+            await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
+            return (int)updateCounter.Value;
         }
     }
 }

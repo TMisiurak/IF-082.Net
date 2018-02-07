@@ -30,12 +30,12 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            //services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
             services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
             services.AddTransient<IService<PrescriptionDTO>, PrescriptionService>();
-            //services.AddTransient<IService<Clinic>, ClinicService>();
             services.AddTransient<IService<ClinicDTO>, ClinicService>();
             services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
             services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();

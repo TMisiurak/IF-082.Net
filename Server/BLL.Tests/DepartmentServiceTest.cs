@@ -39,7 +39,7 @@ namespace BLL.Tests
 
                 var mockMapper = new Mock<IMapper>();
 
-                IDepartmentService<DepartmentDTO> depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
+                IDepartmentService depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
                 var getAll = depService.GetAll();
 
                 Assert.NotNull(getAll);
@@ -73,7 +73,7 @@ namespace BLL.Tests
                 mockMapper.Setup(x => x.Map<DepartmentDTO>(It.IsAny<Department>()))
                     .Returns(new DepartmentDTO());
 
-                IDepartmentService<DepartmentDTO> depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
+                IDepartmentService depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
                 var dep = depService.GetById(1);
 
                 Assert.NotNull(dep);

@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IUserService<UserDTO> _userService;
+        private readonly IUserService _userService;
 
-        public UserController(IUserService<UserDTO> userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

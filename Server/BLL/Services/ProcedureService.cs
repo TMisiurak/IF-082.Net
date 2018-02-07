@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class ProcedureService : IProcedureService<ProcedureDTO>
+    public class ProcedureService : IProcedureService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

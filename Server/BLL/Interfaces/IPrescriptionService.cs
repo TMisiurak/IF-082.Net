@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IPrescriptionService<T> where T : PrescriptionDTO
+    public interface IPrescriptionService
     {
-        Task<IList<T>> GetAll();
-        Task<T> GetById(int id);
-        Task<int> Create(T item);
-        Task<int> Update(T item);
+        Task<IList<PrescriptionDTO>> GetAll();
+        Task<PrescriptionDTO> GetById(int id);
+        Task<int> Create(PrescriptionDTO item);
+        Task<int> Update(PrescriptionDTO item);
         Task<int> DeleteById(int id);
     }
 }

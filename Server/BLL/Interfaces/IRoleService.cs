@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IRoleService<T> where T : RoleDTO
+    public interface IRoleService
     {
-        Task<IList<T>> GetAll();
-        Task<T> GetById(int id);
-        Task<int> Create(T item);
-        Task<int> Update(T item);
+        Task<IList<RoleDTO>> GetAll();
+        Task<RoleDTO> GetById(int id);
+        Task<int> Create(RoleDTO item);
+        Task<int> Update(RoleDTO item);
         Task<int> DeleteById(int id);
     }
 }

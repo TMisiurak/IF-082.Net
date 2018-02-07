@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class ProcedureController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IProcedureService<ProcedureDTO> _servProcedure;
+        private readonly IProcedureService _servProcedure;
 
-        public ProcedureController(IMapper iMapper, IProcedureService<ProcedureDTO> servProcedure)
+        public ProcedureController(IMapper iMapper, IProcedureService servProcedure)
         {
             _iMapper = iMapper;
             _servProcedure = servProcedure;

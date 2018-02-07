@@ -48,7 +48,7 @@ namespace BLL.Tests
 
             mockMapper.Object.Map<List<UserDTO>>(It.IsAny<List<User>>());
 
-            IUserService<UserDTO> userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
+            IUserService userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = userService.GetAll();
 
             Assert.NotNull(getAll);

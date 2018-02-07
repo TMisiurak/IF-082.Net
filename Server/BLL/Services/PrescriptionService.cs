@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class PrescriptionService : IPrescriptionService<PrescriptionDTO>
+    public class PrescriptionService : IPrescriptionService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

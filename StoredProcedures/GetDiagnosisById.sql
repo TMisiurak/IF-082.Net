@@ -16,7 +16,7 @@ AS
 BEGIN TRY
 	SET NOCOUNT ON;
 
-	SELECT * FROM [dbo].[Diagnosis] WHERE Id = @Id
+	SELECT * FROM [dbo].[Diagnoses] WHERE Id = @Id
 
 	RETURN 0
 END TRY

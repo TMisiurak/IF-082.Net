@@ -17,7 +17,7 @@ namespace BLL.Tests
     {
         private async Task<List<Diagnosis>> GetTestDiagnosis()
         {
-            var diagnosis = new List<Diagnosis>
+            var diagnoses = new List<Diagnosis>
             {
                 new Diagnosis { Id=1, DiagnosisName = "TestDiagnosis1", Description = "TestDescription1" },
                 new Diagnosis { Id=2, DiagnosisName = "TestDiagnosis2", Description = "TestDescription2" },
@@ -26,7 +26,7 @@ namespace BLL.Tests
                 new Diagnosis { Id=4, DiagnosisName = "TestDiagnosis5", Description = "TestDescription5" }
             };
             await Task.Yield();
-            return diagnosis;
+            return diagnoses;
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace BLL.Tests
             diagnosisRepo.Setup(x => x.GetAll()).Returns(GetTestDiagnosis());
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
-            unitOfWorkMock.Setup(m => m.Diagnosis).Returns(diagnosisRepo.Object);
+            unitOfWorkMock.Setup(m => m.Diagnoses).Returns(diagnosisRepo.Object);
 
             var mockMapper = new Mock<IMapper>();
 
@@ -51,7 +51,7 @@ namespace BLL.Tests
         [Fact]
         public void GetDiagnosisById()
         {
-            var diagnosis = new List<Diagnosis>
+            var diagnoses = new List<Diagnosis>
             {
                 new Diagnosis { Id=1, DiagnosisName = "TestDiagnosis1", Description = "TestDescription1" },
                 new Diagnosis { Id=2, DiagnosisName = "TestDiagnosis2", Description = "TestDescription2" },
@@ -64,21 +64,21 @@ namespace BLL.Tests
             diagnosisRepo.Setup(m => m.GetById(1)).Returns(async () =>
             {
                 await Task.Yield();
-                return diagnosis.Where(x => x.Id == 1).FirstOrDefault();
+                return diagnoses.Where(x => x.Id == 1).FirstOrDefault();
             });
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
-            unitOfWorkMock.Setup(m => m.Diagnosis).Returns(diagnosisRepo.Object);
+            unitOfWorkMock.Setup(m => m.Diagnoses).Returns(diagnosisRepo.Object);
 
             var mockMapper = new Mock<IMapper>();
             mockMapper.Setup(x => x.Map<DiagnosisDTO>(It.IsAny<Diagnosis>()))
                 .Returns(new DiagnosisDTO());
 
             IService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
-            var diagnoses = diagnosisService.GetById(1);
+            var diagnosis = diagnosisService.GetById(1);
 
             Assert.NotNull(diagnoses);
-            Assert.Equal(1, diagnoses.Id);
+            Assert.Equal(1, diagnosis.Id);
         }
     }
 }

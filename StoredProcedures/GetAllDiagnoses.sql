@@ -7,14 +7,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE IF EXISTS [dbo].[sp_GetAllDiagnosis]
+DROP PROCEDURE IF EXISTS [dbo].[sp_GetAllDiagnoses]
 GO
 
-CREATE PROCEDURE [dbo].[sp_GetAllDiagnosis] AS
+CREATE PROCEDURE [dbo].[sp_GetAllDiagnoses] AS
 BEGIN TRY
 	SET NOCOUNT ON;
 
-	SELECT * FROM [dbo].[Diagnosis]
+	SELECT * FROM [dbo].[Diagnoses]
 
 	RETURN 0
 END TRY

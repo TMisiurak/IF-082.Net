@@ -21,10 +21,10 @@ namespace WebAPI.Controllers
 
         [Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpGet]
-        public async Task<IActionResult> GetDiagnosis()
+        public async Task<IActionResult> GetDiagnoses()
         {
-            var diagnosis = await _servDiagnosis.GetAll();
-            return Ok(diagnosis);
+            var diagnoses = await _servDiagnosis.GetAll();
+            return Ok(diagnoses);
         }
 
         [Authorize(Roles = "admin, patient, doctor, accountant")]

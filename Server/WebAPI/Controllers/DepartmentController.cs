@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
             int result = await _servDepartment.Create(departmentDTO);
-            if (result == 0)
+            if (result >= 0)
             {
                 return Ok(result);
             }

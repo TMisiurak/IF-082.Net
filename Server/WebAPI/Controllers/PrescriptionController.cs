@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class PrescriptionController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<PrescriptionDTO> _servPrescription;
+        private readonly IPrescriptionService _servPrescription;
 
-        public PrescriptionController(IMapper iMapper, IService<PrescriptionDTO> servPrescription)
+        public PrescriptionController(IMapper iMapper, IPrescriptionService servPrescription)
         {
             _iMapper = iMapper;
             _servPrescription = servPrescription;

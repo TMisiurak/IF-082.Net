@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DAL.Interfaces;
-using DAL.Entities;
 using System.Threading.Tasks;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
@@ -40,19 +38,19 @@ namespace DAL.Repositories
             };
 
             string sql = $"exec @resid = dbo.sp_DeleteDepartment @id = {id}";
-            
+
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
 
-       
 
-        public async Task<List<Department>> GetAll()
+
+        public async Task<IList<Department>> GetAll()
         {
             return await _db.Departments.FromSql("sp_GetAllDepartments").ToListAsync();
         }
 
-      
+
 
         public async Task<Department> GetById(int id)
         {
@@ -70,14 +68,14 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @UpdateCounter = dbo.sp_UpdateDepartment @Id = {department.Id}, @Name = '{department.Name}', @ClinicId = {department.ClinicId}'";
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateDepartment @ClinicId = {department.ClinicId}, @Name = '{department.Name}',  @Id = {department.Id}";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
             return (int)updateCounter.Value;
 
             //string sql = $"sp_UpdateDepartment   @DepName = '{department.Name}',  @ClinicId = '{department.ClinicId}'";
             //int result = await _db.Database.ExecuteSqlCommandAsync(sql);
             //return result;
-            // _db.Entry(department).State = EntityState.Modified;
+            //db.Entry(department).State = EntityState.Modified;
 
         }
     }

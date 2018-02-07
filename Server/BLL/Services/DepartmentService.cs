@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 
 namespace BLL.Services
 
 {
-    public class DepartmentService : IService<DepartmentDTO>
+    public class DepartmentService : IDepartmentService
     {
         IUnitOfWork Database { get; set; }
         IMapper _mapper;
@@ -36,10 +33,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<DepartmentDTO>> GetAll()
+        public async Task<IList<DepartmentDTO>> GetAll()
         {
             IEnumerable<Department> departments = await Database.Departments.GetAll();
-            return _mapper.Map<List<DepartmentDTO>>(departments);
+            return _mapper.Map<IList<DepartmentDTO>>(departments);
         }
 
         public  async Task<DepartmentDTO> GetById(int id)

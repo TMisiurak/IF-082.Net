@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class PrescriptionService : IService<PrescriptionDTO>
+    public class PrescriptionService : IPrescriptionService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -33,10 +32,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<PrescriptionDTO>> GetAll()
+        public async Task<IList<PrescriptionDTO>> GetAll()
         {
-            List<Prescription> prescriptions = await DataBase.Prescriptions.GetAll();
-            var result = _mapper.Map<List<PrescriptionDTO>>(prescriptions);
+            IList<Prescription> prescriptions = await DataBase.Prescriptions.GetAll();
+            var result = _mapper.Map<IList<PrescriptionDTO>>(prescriptions);
             return result;
         }
 

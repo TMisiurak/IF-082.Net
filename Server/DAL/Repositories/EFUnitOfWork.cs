@@ -1,9 +1,6 @@
 ﻿using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
@@ -114,6 +111,7 @@ namespace DAL.Repositories
                 return (IRepository<Drug>)drugRepository;
             }
         }
+
 
     }
 }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class DiagnosisController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<DiagnosisDTO> _servDiagnosis;
+        private readonly IDiagnosisService _servDiagnosis;
 
-        public DiagnosisController(IMapper iMapper, IService<DiagnosisDTO> servDiagnosis)
+        public DiagnosisController(IMapper iMapper, IDiagnosisService servDiagnosis)
         {
             _iMapper = iMapper;
             _servDiagnosis = servDiagnosis;
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetDiagnosis")]
         public async Task<IActionResult> GetDiagnosisById(int? id)
         {
             var diagnosis = await _servDiagnosis.GetById(id.Value);
@@ -41,6 +41,18 @@ namespace WebAPI.Controllers
         {
             int result = await _servDiagnosis.Create(diagnosisDTO);
             return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDiagnosis([FromBody] DiagnosisDTO diagnosisDTO)
+        {
+            int result = await _servDiagnosis.Update(diagnosisDTO);
+            if (result > 0)
+            {
+                return CreatedAtRoute("GetDiagnosis", new { id = diagnosisDTO.Id }, diagnosisDTO);
+            }
+            return NotFound();
         }
 
         [Authorize(Roles = "admin")]

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using BLL.DTO;
+﻿using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ProjectCore.DTO;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,13 +12,13 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class DepartmentController : Controller
     {
-        private readonly IMapper _iMapper;
+        //private readonly IMapper _iMapper;
 
-        private readonly IService<DepartmentDTO> _servDepartment;
+        private readonly IDepartmentService _servDepartment;
 
-        public DepartmentController(IMapper iMapper, IService<DepartmentDTO> servDepartment)
+        public DepartmentController(IMapper iMapper, IDepartmentService servDepartment)
         {
-            _iMapper = iMapper;
+          //_iMapper = iMapper;
             _servDepartment = servDepartment;
         }
 
@@ -53,37 +49,43 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
         {
+            if (departmentDTO == null)
+            {
+                return BadRequest();
+            }
             int result = await _servDepartment.Create(departmentDTO);
-            return Ok();
+            if (result >= 0)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
-        
 
 
-        ////[Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateDepartment([FromBody]DepartmentDTO departmentDTO)
-        //{
-        //    if (departmentDTO == null )
-        //    {
-        //        return BadRequest();
-        //    }
 
-        //    int result = await _servDepartment.Update(departmentDTO);
-        //    if (result > 0)
-        //    {
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
-        //}
-        public async Task<IActionResult> UpdateDepartmentById([FromBody]DepartmentDTO departmentDTO)
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDepartmnetById([FromBody]DepartmentDTO departmentDTO)
         {
+       
+
+            if (departmentDTO == null )
+            {
+                return BadRequest();
+            }
 
             int result = await _servDepartment.Update(departmentDTO);
-
-            return Ok(result);
+            if (result > 0)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
 
@@ -93,10 +95,20 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartmentById(int? id)
         {
-
+            if (!id.HasValue)
+            {
+                return BadRequest();
+            }
             int result = await _servDepartment.DeleteById(id.Value);
             // return RedirectToAction(nameof(Index));
-            return Ok(result);
+            if (result == 0)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
 

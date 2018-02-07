@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
@@ -50,7 +47,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Clinic>> GetAll()
+        public async Task<IList<Clinic>> GetAll()
         {
             return await _db.Clinics.FromSql("sp_GetAllClinics").ToListAsync();
         }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class ProcedureController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<ProcedureDTO> _servProcedure;
+        private readonly IProcedureService _servProcedure;
 
-        public ProcedureController(IMapper iMapper, IService<ProcedureDTO> servProcedure)
+        public ProcedureController(IMapper iMapper, IProcedureService servProcedure)
         {
             _iMapper = iMapper;
             _servProcedure = servProcedure;

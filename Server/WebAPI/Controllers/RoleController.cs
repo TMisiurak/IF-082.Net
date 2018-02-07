@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class RoleController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<RoleDTO> _servRole;
+        private readonly IRoleService _servRole;
 
-        public RoleController(IMapper iMapper, IService<RoleDTO> servRole)
+        public RoleController(IMapper iMapper, IRoleService servRole)
         {
             _iMapper = iMapper;
             _servRole = servRole;

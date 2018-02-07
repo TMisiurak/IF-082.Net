@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
 using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -31,17 +31,17 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IService<RoleDTO>, RoleService>();
-            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
-            services.AddTransient<IService<PrescriptionDTO>, PrescriptionService>();
-            //services.AddTransient<IService<Clinic>, ClinicService>();
-            services.AddTransient<IService<ClinicDTO>, ClinicService>();
-            services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
-            services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
-            services.AddTransient<IService<RoomDTO>, RoomService>();
-            services.AddTransient<IService<DrugDTO>, DrugService>();
-            services.AddTransient<IService<ClinicDTO>, ClinicService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
+            services.AddTransient<IPrescriptionService, PrescriptionService>();
+            services.AddTransient <IClinicService, ClinicService>();
+            services.AddTransient<IProcedureService, ProcedureService>();
+            services.AddTransient<IDiagnosisService, DiagnosisService>();
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IDrugService, DrugService>();
+
 
             services.AddAutoMapper();
 
@@ -249,6 +249,7 @@ namespace WebAPI
                     context.Procedures.AddRange(procedures);
                     context.SaveChanges();
                 }
+
             }
         }
     }

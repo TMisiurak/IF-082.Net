@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using BLL.DTO;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Helpers;
+using ProjectCore.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebAPI.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -23,7 +22,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            List<UserDTO> users = await _userService.GetAll();
+            IList<UserDTO> users = await _userService.GetAll();
             if (users != null)
             {
                 return Ok(users);

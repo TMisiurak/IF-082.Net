@@ -1,5 +1,5 @@
-﻿using DAL.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 
 namespace DAL.EF
 {

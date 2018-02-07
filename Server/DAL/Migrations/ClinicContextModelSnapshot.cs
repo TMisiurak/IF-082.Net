@@ -82,6 +82,21 @@ namespace DAL.Migrations
                     b.ToTable("Drugs");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Patients");
+                });
+
             modelBuilder.Entity("DAL.Entities.Prescription", b =>
                 {
                     b.Property<int>("Id")
@@ -198,6 +213,14 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Clinic", "Clinic")
                         .WithMany("Departments")
                         .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Patient", b =>
+                {
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithOne("Patient")
+                        .HasForeignKey("DAL.Entities.Patient", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

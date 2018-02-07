@@ -1,23 +1,22 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
-using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Moq;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using System.Linq;
 
 namespace BLL.Tests
 {
     public class PrescriptionServiceTests
     {
-        private async Task<List<Prescription>> GetTestPrescriptions()
+        private async Task<IList<Prescription>> GetTestPrescriptions()
         {
             var testPrescriptions = new List<Prescription>
                 {
@@ -46,7 +45,7 @@ namespace BLL.Tests
             //mockMapper.Setup(x => x.Map<ClinicDTO>(It.IsAny<Prescription>())).Returns(new PrescriptionDTO());
             //mockMapper.Object.Map<List<PrescriptionDTO>>(It.IsAny<List<Prescripiton>>());
 
-            IService<PrescriptionDTO> prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
+            IPrescriptionService prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
 
             // Act
             var getAllPrescriptions = prescriptionService.GetAll();
@@ -79,7 +78,7 @@ namespace BLL.Tests
             mockMapper.Setup(x => x.Map<PrescriptionDTO>(It.IsAny<Prescription>()))
                 .Returns(new PrescriptionDTO());
 
-            IService<PrescriptionDTO> prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
+            IPrescriptionService prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
 
             // Act
             var getPrescription = prescriptionService.GetById(1);

@@ -1,7 +1,6 @@
-﻿using BLL.DTO;
-using BLL.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 using WebAPI.Helpers;
 

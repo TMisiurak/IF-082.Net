@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
-using System;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class ProcedureService : IService<ProcedureDTO>
+    public class ProcedureService : IProcedureService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -33,10 +31,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<ProcedureDTO>> GetAll()
+        public async Task<IList<ProcedureDTO>> GetAll()
         {
-            List<Procedure> procedures = await DataBase.Procedures.GetAll();
-            var result = _mapper.Map<List<ProcedureDTO>>(procedures);
+            IList<Procedure> procedures = await DataBase.Procedures.GetAll();
+            var result = _mapper.Map<IList<ProcedureDTO>>(procedures);
             return result;
         }
 

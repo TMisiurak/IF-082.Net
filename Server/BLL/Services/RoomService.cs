@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class RoomService : IService<RoomDTO>
+    public class RoomService : IRoomService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -33,10 +32,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<RoomDTO>> GetAll()
+        public async Task<IList<RoomDTO>> GetAll()
         {
-            List<Room> rooms = await DataBase.Rooms.GetAll();
-            var result = _mapper.Map<List<RoomDTO>>(rooms);
+            IList<Room> rooms = await DataBase.Rooms.GetAll();
+            var result = _mapper.Map<IList<RoomDTO>>(rooms);
             return result;
         }
 

@@ -53,15 +53,16 @@ namespace BLL.Tests
         public async void GetAll_Type_Test()
         {
             var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var mockMapper = new Mock<IMapper>();
+
             unitOfWorkMock.Setup(m => m.Users.GetAll()).Returns(async () => {
                 await Task.Yield();
                 return users;
             });
-
-            var mockMapper = new Mock<IMapper>();
             mockMapper.Setup(x => x.Map<List<UserDTO>>(It.IsAny<List<User>>())).Returns(usersDTO);
 
             var userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
+
             var getAll = await userService.GetAll();
 
             Assert.NotNull(getAll);
@@ -71,9 +72,6 @@ namespace BLL.Tests
         [Fact]
         public async void GetById_NotNull_Test()
         {
-            //int index = 2;
-            //int index2 = 5;
-
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             var mockMapper = new Mock<IMapper>();
 
@@ -83,17 +81,16 @@ namespace BLL.Tests
                 return users.Where(s => s.Id == k).FirstOrDefault();
             });
             mockMapper.Setup(x => x.Map<UserDTO>(It.Is<User>(k => k != null))).Returns<User>(x => usersDTO.Where(s => s.Id == x.Id).FirstOrDefault());
-            
             mockMapper.Setup(x => x.Map<UserDTO>(null)).Returns(() => null);
 
             var userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
 
-            var user = await userService.GetById(2);
+            var user1 = await userService.GetById(2);
             var user2 = await userService.GetById(5);
 
-            Assert.NotNull(user);
+            Assert.NotNull(user1);
             Assert.Null(user2);
-            Assert.Equal(2, user.Id);
+            Assert.Equal(2, user1.Id);
         }
     }
 }

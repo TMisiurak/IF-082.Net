@@ -44,6 +44,16 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDiagnosis([FromBody] DiagnosisDTO diagnosisDTO)
+        {
+            int result = await _servDiagnosis.Update(diagnosisDTO);
+            if (result > 0)
+                return Ok();
+            return NotFound();
+        }
+
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDiagnosisById(int? id)
         {

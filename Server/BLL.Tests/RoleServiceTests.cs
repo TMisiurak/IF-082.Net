@@ -37,7 +37,7 @@ namespace DAL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IRoleService<RoleDTO> roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
+            IRoleService roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = roleService.GetAll();
 
             Assert.NotNull(getAll);
@@ -70,7 +70,7 @@ namespace DAL.Tests
             mockMapper.Setup(x => x.Map<RoleDTO>(It.IsAny<Role>()))
                 .Returns(new RoleDTO());
 
-            IRoleService<RoleDTO> roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
+            IRoleService roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
             var role = roleService.GetById(2);
 
             Assert.NotNull(role);

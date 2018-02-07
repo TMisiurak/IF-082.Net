@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
-using DAL.Entities;
 using DAL.Interfaces;
 using Moq;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace BLL.Tests
-    {
-        public class  DepartmentServiceTest
+{
+    public class  DepartmentServiceTest
         {
-            private async Task<List<Department>> GetTestDepartments()
+            private async Task<IList<Department>> GetTestDepartments()
             {
                 var departments = new List<Department>
                 {
@@ -39,7 +39,7 @@ namespace BLL.Tests
 
                 var mockMapper = new Mock<IMapper>();
 
-                IService<DepartmentDTO> depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
+                IDepartmentService<DepartmentDTO> depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
                 var getAll = depService.GetAll();
 
                 Assert.NotNull(getAll);
@@ -73,7 +73,7 @@ namespace BLL.Tests
                 mockMapper.Setup(x => x.Map<DepartmentDTO>(It.IsAny<Department>()))
                     .Returns(new DepartmentDTO());
 
-                IService<DepartmentDTO> depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
+                IDepartmentService<DepartmentDTO> depService = new DepartmentService(unitOfWorkMock.Object, mockMapper.Object);
                 var dep = depService.GetById(1);
 
                 Assert.NotNull(dep);

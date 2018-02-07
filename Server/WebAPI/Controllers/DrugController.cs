@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using BLL.DTO;
+﻿using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class DrugController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<DrugDTO> _drugService;
+        private readonly IDrugService<DrugDTO> _drugService;
 
-        public DrugController(IService<DrugDTO> drugService, IMapper iMapper)
+        public DrugController(IDrugService<DrugDTO> drugService, IMapper iMapper)
         {
             _drugService = drugService;
             _iMapper = iMapper;

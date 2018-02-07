@@ -1,20 +1,4 @@
-﻿using AutoMapper;
-using BLL.DTO;
-using BLL.Interfaces;
-using BLL.Services;
-using DAL.Entities;
-using DAL.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebAPI.Controllers;
-using Xunit;
-
-namespace WebAPI.Tests
+﻿namespace WebAPI.Tests
 {
     public class UserControllerTests
     {

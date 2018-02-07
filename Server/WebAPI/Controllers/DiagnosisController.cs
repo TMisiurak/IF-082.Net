@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class DiagnosisController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<DiagnosisDTO> _servDiagnosis;
+        private readonly IDiagnosisService<DiagnosisDTO> _servDiagnosis;
 
-        public DiagnosisController(IMapper iMapper, IService<DiagnosisDTO> servDiagnosis)
+        public DiagnosisController(IMapper iMapper, IDiagnosisService<DiagnosisDTO> servDiagnosis)
         {
             _iMapper = iMapper;
             _servDiagnosis = servDiagnosis;

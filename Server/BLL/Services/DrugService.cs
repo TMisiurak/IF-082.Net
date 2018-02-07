@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using DAL.Entities;
 using DAL.Interfaces;
-using System;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class DrugService : IService<DrugDTO>
+    public class DrugService : IDrugService<DrugDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -27,13 +25,11 @@ namespace BLL.Services
             DrugDTO result = _mapper.Map<DrugDTO>(drug);
             return result;
         }
-        
 
-
-        public async Task<List<DrugDTO>> GetAll()
+        public async Task<IList<DrugDTO>> GetAll()
         {
-            List<Drug> drugs = await DataBase.Drugs.GetAll();
-            var result = _mapper.Map<List<DrugDTO>>(drugs);
+            IList<Drug> drugs = await DataBase.Drugs.GetAll();
+            var result = _mapper.Map<IList<DrugDTO>>(drugs);
             return result;
         }
 

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using BLL.DTO;
+﻿using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ProjectCore.DTO;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,9 +14,9 @@ namespace WebAPI.Controllers
     {
         //private readonly IMapper _iMapper;
 
-        private readonly IService<DepartmentDTO> _servDepartment;
+        private readonly IDepartmentService<DepartmentDTO> _servDepartment;
 
-        public DepartmentController(/*IMapper iMapper, */IService<DepartmentDTO> servDepartment)
+        public DepartmentController(IMapper iMapper, IDepartmentService<DepartmentDTO> servDepartment)
         {
           //_iMapper = iMapper;
             _servDepartment = servDepartment;

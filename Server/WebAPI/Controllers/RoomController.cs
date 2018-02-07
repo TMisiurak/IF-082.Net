@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ProjectCore.DTO;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -15,22 +11,22 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _iMapper;
 
-        private readonly IService<RoomDTO> _servRoom;
+        private readonly IRoomService<RoomDTO> _servRoom;
 
-        public RoomController(IMapper iMapper, IService<RoomDTO> servRoom)
+        public RoomController(IMapper iMapper, IRoomService<RoomDTO> servRoom)
         {
             _iMapper = iMapper;
             _servRoom = servRoom;
         }
 
-        [HttpPost("create_room")]
+        [HttpPost]
         public async Task<IActionResult> CreateRoom([FromBody]RoomDTO roomDTO)
         {
             int result = await _servRoom.Create(roomDTO);
             return Ok(result);
         }
 
-        [HttpDelete("delete_room/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoomById(int? id)
         {
 
@@ -39,14 +35,14 @@ namespace WebAPI.Controllers
 
         }
         
-        [HttpGet("/all_rooms")]
+        [HttpGet]
         public async Task<IActionResult> GetAllRooms()
         {
             var rooms = await _servRoom.GetAll();
             return Ok(rooms);
         }
 
-        [HttpGet("/room/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetRoomById(int? id)
         {
             var room = await _servRoom.GetById(id.Value);

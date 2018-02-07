@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
-using DAL.Entities;
 using DAL.Interfaces;
 using Moq;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,7 +15,7 @@ namespace BLL.Tests
 {
     public class UserServiceTests
     {
-        private async Task<List<User>> GetTestUsers()
+        private async Task<IList<User>> GetTestUsers()
         {
             var users = new List<User>
             {
@@ -49,7 +48,7 @@ namespace BLL.Tests
 
             mockMapper.Object.Map<List<UserDTO>>(It.IsAny<List<User>>());
 
-            IUserService userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
+            IUserService<UserDTO> userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = userService.GetAll();
 
             Assert.NotNull(getAll);

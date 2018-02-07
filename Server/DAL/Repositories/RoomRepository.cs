@@ -1,12 +1,11 @@
 ﻿using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories
@@ -42,7 +41,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Room>> GetAll()
+        public async Task<IList<Room>> GetAll()
         {
             return await _db.Rooms.FromSql("sp_GetAllRooms").ToListAsync();
         }

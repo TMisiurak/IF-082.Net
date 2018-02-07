@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DAL.Interfaces;
-using DAL.Entities;
 using System.Threading.Tasks;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
@@ -47,7 +45,7 @@ namespace DAL.Repositories
 
 
 
-        public async Task<List<Department>> GetAll()
+        public async Task<IList<Department>> GetAll()
         {
             return await _db.Departments.FromSql("sp_GetAllDepartments").ToListAsync();
         }

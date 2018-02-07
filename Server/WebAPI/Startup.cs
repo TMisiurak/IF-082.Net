@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
 using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -31,18 +31,16 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IService<RoleDTO>, RoleService>();
-            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
-            services.AddTransient<IService<PrescriptionDTO>, PrescriptionService>();
-            //services.AddTransient<IService<Clinic>, ClinicService>();
-            services.AddTransient<IService<ClinicDTO>, ClinicService>();
-            services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
-            services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
-            services.AddTransient<IService<RoomDTO>, RoomService>();
-            services.AddTransient<IService<DrugDTO>, DrugService>();
-            services.AddTransient<IService<ClinicDTO>, ClinicService>();
-            services.AddTransient<IService<PatientDTO>, PatientService>();
+            //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IUserService<UserDTO>, UserService>();
+            services.AddTransient<IRoleService<RoleDTO>, RoleService>();
+            services.AddTransient<IDepartmentService<DepartmentDTO>, DepartmentService>();
+            services.AddTransient<IPrescriptionService<PrescriptionDTO>, PrescriptionService>();
+            services.AddTransient <IClinicService<ClinicDTO>, ClinicService>();
+            services.AddTransient<IProcedureService<ProcedureDTO>, ProcedureService>();
+            services.AddTransient<IDiagnosisService<DiagnosisDTO>, DiagnosisService>();
+            services.AddTransient<IRoomService<RoomDTO>, RoomService>();
+            services.AddTransient<IDrugService<DrugDTO>, DrugService>();
 
             services.AddAutoMapper();
 

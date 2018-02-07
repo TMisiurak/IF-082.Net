@@ -1,4 +1,4 @@
-﻿namespace BLL.DTO
+﻿namespace ProjectCore.DTO
 {
     public class RoleDTO
     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.EF;
-using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {
@@ -28,7 +27,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Diagnosis>> GetAll()
+        public async Task<IList<Diagnosis>> GetAll()
         {
             return await _db.Diagnoses.FromSql("sp_GetAllDiagnoses").ToListAsync();
         }

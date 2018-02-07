@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BLL.DTO
+﻿namespace ProjectCore.DTO
 {
     public class DiagnosisDTO
     {

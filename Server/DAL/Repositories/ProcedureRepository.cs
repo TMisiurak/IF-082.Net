@@ -1,7 +1,7 @@
 ﻿using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -50,7 +50,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Procedure>> GetAll()
+        public async Task<IList<Procedure>> GetAll()
         {
             return await _db.Procedures.FromSql("sp_GetAllProcedures").ToListAsync();
         }

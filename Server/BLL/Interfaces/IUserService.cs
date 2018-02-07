@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IUserService<T> where T : UserDTO
+    public interface IUserService
     {
-        Task<IList<T>> GetAll();
-        Task<T> GetById(int id);
-        Task<int> Create(T item);
-        Task<int> Update(T item);
+        Task<IList<UserDTO>> GetAll();
+        Task<UserDTO> GetById(int id);
+        Task<int> Create(UserDTO item);
+        Task<int> Update(UserDTO item);
         Task<int> DeleteById(int id);
-        UserDTO GetByEmail(string email);
+        Task<UserDTO> GetByEmail(string email);
     }
 }

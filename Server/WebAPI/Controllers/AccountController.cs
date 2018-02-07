@@ -9,9 +9,9 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
-        private readonly IUserService<UserDTO> _userService;
+        private readonly IUserService _userService;
 
-        public AccountController(IUserService<UserDTO> userService)
+        public AccountController(IUserService userService)
         {
             _userService = userService;
         }

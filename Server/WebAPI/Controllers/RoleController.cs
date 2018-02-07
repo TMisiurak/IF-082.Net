@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class RoleController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IRoleService<RoleDTO> _servRole;
+        private readonly IRoleService _servRole;
 
-        public RoleController(IMapper iMapper, IRoleService<RoleDTO> servRole)
+        public RoleController(IMapper iMapper, IRoleService servRole)
         {
             _iMapper = iMapper;
             _servRole = servRole;

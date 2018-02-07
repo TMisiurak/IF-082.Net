@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class DrugController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IDrugService<DrugDTO> _drugService;
+        private readonly IDrugService _drugService;
 
-        public DrugController(IDrugService<DrugDTO> drugService, IMapper iMapper)
+        public DrugController(IDrugService drugService, IMapper iMapper)
         {
             _drugService = drugService;
             _iMapper = iMapper;

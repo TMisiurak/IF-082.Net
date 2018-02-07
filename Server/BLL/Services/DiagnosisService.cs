@@ -8,7 +8,7 @@ using ProjectCore.Entities;
 
 namespace BLL.Services
 {
-    public class DiagnosisService : IDiagnosisService<DiagnosisDTO>
+    public class DiagnosisService : IDiagnosisService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

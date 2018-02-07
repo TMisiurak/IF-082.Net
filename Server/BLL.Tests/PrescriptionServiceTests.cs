@@ -45,7 +45,7 @@ namespace BLL.Tests
             //mockMapper.Setup(x => x.Map<ClinicDTO>(It.IsAny<Prescription>())).Returns(new PrescriptionDTO());
             //mockMapper.Object.Map<List<PrescriptionDTO>>(It.IsAny<List<Prescripiton>>());
 
-            IPrescriptionService<PrescriptionDTO> prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
+            IPrescriptionService prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
 
             // Act
             var getAllPrescriptions = prescriptionService.GetAll();
@@ -78,7 +78,7 @@ namespace BLL.Tests
             mockMapper.Setup(x => x.Map<PrescriptionDTO>(It.IsAny<Prescription>()))
                 .Returns(new PrescriptionDTO());
 
-            IPrescriptionService<PrescriptionDTO> prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
+            IPrescriptionService prescriptionService = new PrescriptionService(unitOfWorkMock.Object, mockMapper.Object);
 
             // Act
             var getPrescription = prescriptionService.GetById(1);

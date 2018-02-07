@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class PrescriptionController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IPrescriptionService<PrescriptionDTO> _servPrescription;
+        private readonly IPrescriptionService _servPrescription;
 
-        public PrescriptionController(IMapper iMapper, IPrescriptionService<PrescriptionDTO> servPrescription)
+        public PrescriptionController(IMapper iMapper, IPrescriptionService servPrescription)
         {
             _iMapper = iMapper;
             _servPrescription = servPrescription;

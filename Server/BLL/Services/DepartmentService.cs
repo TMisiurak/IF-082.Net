@@ -9,7 +9,7 @@ using ProjectCore.Entities;
 namespace BLL.Services
 
 {
-    public class DepartmentService : IDepartmentService<DepartmentDTO>
+    public class DepartmentService : IDepartmentService
     {
         IUnitOfWork Database { get; set; }
         IMapper _mapper;

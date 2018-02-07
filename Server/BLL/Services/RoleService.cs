@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class RoleService : IRoleService<RoleDTO>
+    public class RoleService : IRoleService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

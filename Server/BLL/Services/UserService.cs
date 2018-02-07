@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : IUserService<UserDTO>
+    public class UserService : IUserService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -32,9 +32,9 @@ namespace BLL.Services
             return _mapper.Map<UserDTO>(user);
         }
 
-        public UserDTO GetByEmail(string email)
+        public async Task<UserDTO> GetByEmail(string email)
         {
-            var user = DataBase.Users.GetByEmail(email);
+            var user = await DataBase.Users.GetByEmail(email);
             return _mapper.Map<UserDTO>(user);
         }
 

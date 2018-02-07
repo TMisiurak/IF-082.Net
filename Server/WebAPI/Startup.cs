@@ -32,15 +32,15 @@ namespace WebAPI
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IUserService<UserDTO>, UserService>();
-            services.AddTransient<IRoleService<RoleDTO>, RoleService>();
-            services.AddTransient<IDepartmentService<DepartmentDTO>, DepartmentService>();
-            services.AddTransient<IPrescriptionService<PrescriptionDTO>, PrescriptionService>();
-            services.AddTransient <IClinicService<ClinicDTO>, ClinicService>();
-            services.AddTransient<IProcedureService<ProcedureDTO>, ProcedureService>();
-            services.AddTransient<IDiagnosisService<DiagnosisDTO>, DiagnosisService>();
-            services.AddTransient<IRoomService<RoomDTO>, RoomService>();
-            services.AddTransient<IDrugService<DrugDTO>, DrugService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
+            services.AddTransient<IPrescriptionService, PrescriptionService>();
+            services.AddTransient <IClinicService, ClinicService>();
+            services.AddTransient<IProcedureService, ProcedureService>();
+            services.AddTransient<IDiagnosisService, DiagnosisService>();
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IDrugService, DrugService>();
 
 
             services.AddAutoMapper();

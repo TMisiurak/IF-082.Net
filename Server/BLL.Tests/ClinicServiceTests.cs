@@ -37,7 +37,7 @@ namespace DAL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IClinicService<ClinicDTO> clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
+            IClinicService clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = clinicService.GetAll();
 
             Assert.NotNull(getAll);
@@ -70,7 +70,7 @@ namespace DAL.Tests
             mockMapper.Setup(x => x.Map<ClinicDTO>(It.IsAny<Clinic>()))
                 .Returns(new ClinicDTO());
 
-            IClinicService<ClinicDTO> clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
+            IClinicService clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
             var clinic = clinicService.GetById(1);
 
             Assert.NotNull(clinic);

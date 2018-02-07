@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IProcedureService<T> where T : ProcedureDTO
+    public interface IProcedureService
     {
-        Task<IList<T>> GetAll();
-        Task<T> GetById(int id);
-        Task<int> Create(T item);
-        Task<int> Update(T item);
+        Task<IList<ProcedureDTO>> GetAll();
+        Task<ProcedureDTO> GetById(int id);
+        Task<int> Create(ProcedureDTO item);
+        Task<int> Update(ProcedureDTO item);
         Task<int> DeleteById(int id);
     }
 }

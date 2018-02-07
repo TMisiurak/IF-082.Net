@@ -39,7 +39,7 @@ namespace BLL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IDrugService<DrugDTO> drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
+            IDrugService drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = drugService.GetAll();
 
             Assert.NotNull(getAll);
@@ -73,7 +73,7 @@ namespace BLL.Tests
             mockMapper.Setup(x => x.Map<DrugDTO>(It.IsAny<Drug>()))
                 .Returns(new DrugDTO());
 
-            IDrugService<DrugDTO> drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
+            IDrugService drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
             var drug = drugService.GetById(1);
 
             Assert.NotNull(drug);

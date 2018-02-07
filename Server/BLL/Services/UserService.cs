@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : IUserService<UserDTO>
+    public class UserService : IUserService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

@@ -14,7 +14,6 @@ namespace DAL.EF
         public DbSet<Department> Departments { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
-        public DbSet<Patient> Patients { get; set; }
 
         public ClinicContext(DbContextOptions<ClinicContext> options)
             : base(options)

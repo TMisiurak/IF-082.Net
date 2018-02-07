@@ -48,7 +48,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Drug>> GetAll()
+        public async Task<IList<Drug>> GetAll()
         {
             return await _db.Drugs.FromSql("sp_GetAllDrugs").ToListAsync();  
         }

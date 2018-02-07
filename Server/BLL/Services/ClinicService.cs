@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class ClinicService : IService<ClinicDTO>
+    public class ClinicService : IClinicService<ClinicDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -31,10 +31,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async  Task<List<ClinicDTO>> GetAll()
+        public async  Task<IList<ClinicDTO>> GetAll()
         {
-            List<Clinic> clinics = await DataBase.Clinics.GetAll();
-            var result = _mapper.Map<List<ClinicDTO>>(clinics);
+            IList<Clinic> clinics = await DataBase.Clinics.GetAll();
+            var result = _mapper.Map<IList<ClinicDTO>>(clinics);
             return result;
         }
 

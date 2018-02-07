@@ -14,7 +14,7 @@ namespace BLL.Tests
 {
     public class DrugServiceTest
     {
-        private async Task<List<Drug>> GetTestDrugs()
+        private async Task<IList<Drug>> GetTestDrugs()
         {
             var drugs = new List<Drug>
             {
@@ -39,7 +39,7 @@ namespace BLL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IService<DrugDTO> drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
+            IDrugService<DrugDTO> drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = drugService.GetAll();
 
             Assert.NotNull(getAll);
@@ -73,7 +73,7 @@ namespace BLL.Tests
             mockMapper.Setup(x => x.Map<DrugDTO>(It.IsAny<Drug>()))
                 .Returns(new DrugDTO());
 
-            IService<DrugDTO> drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
+            IDrugService<DrugDTO> drugService = new DrugService(unitOfWorkMock.Object, mockMapper.Object);
             var drug = drugService.GetById(1);
 
             Assert.NotNull(drug);

@@ -14,7 +14,7 @@ namespace BLL.Tests
 {
     public class DiagnosisServiceTests
     {
-        private async Task<List<Diagnosis>> GetTestDiagnosis()
+        private async Task<IList<Diagnosis>> GetTestDiagnosis()
         {
             var diagnoses = new List<Diagnosis>
             {
@@ -39,7 +39,7 @@ namespace BLL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
+            IDiagnosisService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = diagnosisService.GetAll();
 
             Assert.NotNull(getAll);
@@ -73,7 +73,7 @@ namespace BLL.Tests
             mockMapper.Setup(x => x.Map<DiagnosisDTO>(It.IsAny<Diagnosis>()))
                 .Returns(new DiagnosisDTO());
 
-            IService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
+            IDiagnosisService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
             var diagnosis = diagnosisService.GetById(1);
 
             Assert.NotNull(diagnoses);

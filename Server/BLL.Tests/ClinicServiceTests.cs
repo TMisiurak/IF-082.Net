@@ -14,7 +14,7 @@ namespace DAL.Tests
 {
     public class ClinicServiceTests
     {
-        private async Task<List<Clinic>> GetTestClinics()
+        private async Task<IList<Clinic>> GetTestClinics()
         {
             var clinics = new List<Clinic>
             {
@@ -37,7 +37,7 @@ namespace DAL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IService<ClinicDTO> clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
+            IClinicService<ClinicDTO> clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = clinicService.GetAll();
 
             Assert.NotNull(getAll);
@@ -70,7 +70,7 @@ namespace DAL.Tests
             mockMapper.Setup(x => x.Map<ClinicDTO>(It.IsAny<Clinic>()))
                 .Returns(new ClinicDTO());
 
-            IService<ClinicDTO> clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
+            IClinicService<ClinicDTO> clinicService = new ClinicService(unitOfWorkMock.Object, mockMapper.Object);
             var clinic = clinicService.GetById(1);
 
             Assert.NotNull(clinic);

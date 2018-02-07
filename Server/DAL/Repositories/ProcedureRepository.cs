@@ -50,7 +50,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Procedure>> GetAll()
+        public async Task<IList<Procedure>> GetAll()
         {
             return await _db.Procedures.FromSql("sp_GetAllProcedures").ToListAsync();
         }

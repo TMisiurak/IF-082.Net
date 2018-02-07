@@ -32,16 +32,15 @@ namespace WebAPI
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IService<RoleDTO>, RoleService>();
-            services.AddTransient<IService<DepartmentDTO>, DepartmentService>();
-            services.AddTransient<IService<PrescriptionDTO>, PrescriptionService>();
-            services.AddTransient<IService<ClinicDTO>, ClinicService>();
-            services.AddTransient<IService<ProcedureDTO>, ProcedureService>();
-            services.AddTransient<IService<DiagnosisDTO>, DiagnosisService>();
-            services.AddTransient<IService<RoomDTO>, RoomService>();
-            services.AddTransient<IService<DrugDTO>, DrugService>();
-            services.AddTransient<IService<ClinicDTO>, ClinicService>();
+            services.AddTransient<IUserService<UserDTO>, UserService>();
+            services.AddTransient<IRoleService<RoleDTO>, RoleService>();
+            services.AddTransient<IDepartmentService<DepartmentDTO>, DepartmentService>();
+            services.AddTransient<IPrescriptionService<PrescriptionDTO>, PrescriptionService>();
+            services.AddTransient <IClinicService<ClinicDTO>, ClinicService>();
+            services.AddTransient<IProcedureService<ProcedureDTO>, ProcedureService>();
+            services.AddTransient<IDiagnosisService<DiagnosisDTO>, DiagnosisService>();
+            services.AddTransient<IRoomService<RoomDTO>, RoomService>();
+            services.AddTransient<IDrugService<DrugDTO>, DrugService>();
 
             services.AddAutoMapper();
 

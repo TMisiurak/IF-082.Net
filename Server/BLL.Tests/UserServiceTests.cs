@@ -15,7 +15,7 @@ namespace BLL.Tests
 {
     public class UserServiceTests
     {
-        private async Task<List<User>> GetTestUsers()
+        private async Task<IList<User>> GetTestUsers()
         {
             var users = new List<User>
             {
@@ -48,7 +48,7 @@ namespace BLL.Tests
 
             mockMapper.Object.Map<List<UserDTO>>(It.IsAny<List<User>>());
 
-            IUserService userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
+            IUserService<UserDTO> userService = new UserService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = userService.GetAll();
 
             Assert.NotNull(getAll);

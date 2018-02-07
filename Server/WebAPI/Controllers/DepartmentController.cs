@@ -14,9 +14,9 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _iMapper;
 
-        private readonly IService<DepartmentDTO> _servDepartment;
+        private readonly IDepartmentService<DepartmentDTO> _servDepartment;
 
-        public DepartmentController(IMapper iMapper, IService<DepartmentDTO> servDepartment)
+        public DepartmentController(IMapper iMapper, IDepartmentService<DepartmentDTO> servDepartment)
         {
             _iMapper = iMapper;
             _servDepartment = servDepartment;

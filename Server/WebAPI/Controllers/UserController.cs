@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUserService<UserDTO> _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService<UserDTO> userService)
         {
             _userService = userService;
         }
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            List<UserDTO> users = await _userService.GetAll();
+            IList<UserDTO> users = await _userService.GetAll();
             if (users != null)
             {
                 return Ok(users);

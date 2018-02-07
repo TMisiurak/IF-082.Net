@@ -14,7 +14,7 @@ namespace DAL.Tests
 {
     public class RoleServiceTests
     {
-        private async Task<List<Role>> GetTestRoles()
+        private async Task<IList<Role>> GetTestRoles()
         {
             var roles = new List<Role>
             {
@@ -37,7 +37,7 @@ namespace DAL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IService<RoleDTO> roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
+            IRoleService<RoleDTO> roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = roleService.GetAll();
 
             Assert.NotNull(getAll);
@@ -70,7 +70,7 @@ namespace DAL.Tests
             mockMapper.Setup(x => x.Map<RoleDTO>(It.IsAny<Role>()))
                 .Returns(new RoleDTO());
 
-            IService<RoleDTO> roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
+            IRoleService<RoleDTO> roleService = new RoleService(unitOfWorkMock.Object, mockMapper.Object);
             var role = roleService.GetById(2);
 
             Assert.NotNull(role);

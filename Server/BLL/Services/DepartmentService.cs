@@ -9,7 +9,7 @@ using ProjectCore.Entities;
 namespace BLL.Services
 
 {
-    public class DepartmentService : IService<DepartmentDTO>
+    public class DepartmentService : IDepartmentService<DepartmentDTO>
     {
         IUnitOfWork Database { get; set; }
         IMapper _mapper;
@@ -33,10 +33,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<DepartmentDTO>> GetAll()
+        public async Task<IList<DepartmentDTO>> GetAll()
         {
             IEnumerable<Department> departments = await Database.Departments.GetAll();
-            return _mapper.Map<List<DepartmentDTO>>(departments);
+            return _mapper.Map<IList<DepartmentDTO>>(departments);
         }
 
         public  async Task<DepartmentDTO> GetById(int id)

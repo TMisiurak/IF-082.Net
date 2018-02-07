@@ -27,7 +27,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Diagnosis>> GetAll()
+        public async Task<IList<Diagnosis>> GetAll()
         {
             return await _db.Diagnoses.FromSql("sp_GetAllDiagnoses").ToListAsync();
         }

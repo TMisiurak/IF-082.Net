@@ -48,7 +48,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Role>> GetAll()
+        public async Task<IList<Role>> GetAll()
         {
             return await _db.Roles.FromSql("sp_GetAllRoles").ToListAsync();
         }

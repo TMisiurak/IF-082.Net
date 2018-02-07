@@ -8,7 +8,7 @@ namespace DAL.Tests
 {
     public class MockPrescriptionRepository : IRepository<Prescription>
     {
-            List<Prescription> mockPrescriptions;
+            IList<Prescription> mockPrescriptions;
 
             public MockPrescriptionRepository()
             {
@@ -23,7 +23,7 @@ namespace DAL.Tests
                 };
             }
 
-            public Task<List<Prescription>> GetAll()
+            public Task<IList<Prescription>> GetAll()
             {
                 Task.Delay(1000);
                 return Task.Run(() => mockPrescriptions);

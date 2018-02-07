@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class DiagnosisController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IService<DiagnosisDTO> _servDiagnosis;
+        private readonly IDiagnosisService<DiagnosisDTO> _servDiagnosis;
 
-        public DiagnosisController(IMapper iMapper, IService<DiagnosisDTO> servDiagnosis)
+        public DiagnosisController(IMapper iMapper, IDiagnosisService<DiagnosisDTO> servDiagnosis)
         {
             _iMapper = iMapper;
             _servDiagnosis = servDiagnosis;

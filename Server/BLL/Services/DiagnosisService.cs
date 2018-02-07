@@ -8,7 +8,7 @@ using ProjectCore.Entities;
 
 namespace BLL.Services
 {
-    public class DiagnosisService : IService<DiagnosisDTO>
+    public class DiagnosisService : IDiagnosisService<DiagnosisDTO>
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;
@@ -31,10 +31,10 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<List<DiagnosisDTO>> GetAll()
+        public async Task<IList<DiagnosisDTO>> GetAll()
         {
-            List<Diagnosis> diagnoses = await DataBase.Diagnoses.GetAll();
-            var result = _mapper.Map<List<DiagnosisDTO>>(diagnoses);
+            IList<Diagnosis> diagnoses = await DataBase.Diagnoses.GetAll();
+            var result = _mapper.Map<IList<DiagnosisDTO>>(diagnoses);
             return result;
         }
 

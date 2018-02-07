@@ -18,7 +18,7 @@ namespace DAL.Repositories
             _db = db;
         }
 
-        public async Task<List<User>> GetAll()
+        public async Task<IList<User>> GetAll()
         {
             return await _db.Users.FromSql("sp_GetAllUsers").ToListAsync();
         }

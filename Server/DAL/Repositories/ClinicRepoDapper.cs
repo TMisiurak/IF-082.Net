@@ -29,7 +29,7 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Clinic>> GetAll()
+        public async Task<IList<Clinic>> GetAll()
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {

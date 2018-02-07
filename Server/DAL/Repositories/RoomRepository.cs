@@ -41,7 +41,7 @@ namespace DAL.Repositories
             return (int)param.Value;
         }
 
-        public async Task<List<Room>> GetAll()
+        public async Task<IList<Room>> GetAll()
         {
             return await _db.Rooms.FromSql("sp_GetAllRooms").ToListAsync();
         }

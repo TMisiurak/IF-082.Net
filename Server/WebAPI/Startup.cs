@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
 using DAL.EF;
-using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -30,8 +30,8 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-            services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IService<RoleDTO>, RoleService>();
             services.AddTransient<IService<DepartmentDTO>, DepartmentService>();

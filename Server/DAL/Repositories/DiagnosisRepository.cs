@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.EF;
-using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using ProjectCore.Entities;
 
 namespace DAL.Repositories
 {

@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using BLL.DTO;
+﻿using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCore.DTO;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {

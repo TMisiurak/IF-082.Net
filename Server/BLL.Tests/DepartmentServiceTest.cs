@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
-using DAL.Entities;
 using DAL.Interfaces;
 using Moq;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace BLL.Tests
-    {
-        public class  DepartmentServiceTest
+{
+    public class  DepartmentServiceTest
         {
             private async Task<List<Department>> GetTestDepartments()
             {

@@ -1,8 +1,6 @@
-﻿using DAL.Entities;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
+using ProjectCore.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAL.Repositories
 {

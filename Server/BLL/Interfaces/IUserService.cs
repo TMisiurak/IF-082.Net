@@ -1,7 +1,4 @@
-﻿using BLL.DTO;
-using DAL.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using ProjectCore.DTO;
 
 namespace BLL.Interfaces
 {

@@ -15,4 +15,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DapperRepositories\" />
+    <Folder Include="UnitOfWorks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectCore\ProjectCore.csproj" />
+  </ItemGroup>
+
 </Project>

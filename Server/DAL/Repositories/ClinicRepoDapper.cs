@@ -1,6 +1,6 @@
-﻿using DAL.Entities;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
 using Dapper;
+using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -33,7 +33,7 @@ namespace DAL.Repositories
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<Clinic>("SELECT * FROM Clinics").ToList();
+                return db.Query<Clinic>("sp_GetAllClinics").ToList();
             }
         }
 

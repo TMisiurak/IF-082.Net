@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using BLL.Interfaces;
-using BLL.DTO;
 using AutoMapper;
 using DAL.Interfaces;
-using DAL.Entities;
 using System.Threading.Tasks;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 
 namespace BLL.Services
 {

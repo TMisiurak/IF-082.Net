@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
-using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
-using DAL.Entities;
 using DAL.Interfaces;
 using Moq;
-using System;
+using ProjectCore.DTO;
+using ProjectCore.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DAL.Entities;
+using ProjectCore.Entities;
 
-namespace BLL.DTO
+namespace ProjectCore.DTO
 {
     public class MappingsDTOProfile : Profile
     {

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BLL.DTO
+namespace ProjectCore.DTO
 {
     public class UserDTO
     {

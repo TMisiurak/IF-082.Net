@@ -43,6 +43,7 @@ namespace WebAPI
             services.AddTransient<IDrugService, DrugService>();
             //services.AddTransient<IPatientService<PatientDTO>, PatientService>();
             services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IPaymentService, PaymentService>();
 
             services.AddAutoMapper();
 
@@ -200,6 +201,14 @@ namespace WebAPI
                 };
 
 
+                List<Payment> payments = new List<Payment>
+                {
+                    new Payment { PatientId=1, PaymentDate= DateTime.Now, PaymentType="cash ok", PrescriptionId=1, sum= 250},
+                    new Payment { PatientId=2, PaymentDate= DateTime.Now, PaymentType="cash ok", PrescriptionId=2, sum= 250}
+                    
+                };
+
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -261,6 +270,12 @@ namespace WebAPI
                 if (!context.Patients.Any())
                 {
                     context.Patients.AddRange(patients);
+                    context.SaveChanges();
+                }
+
+                if (!context.Payments.Any())
+                {
+                    context.Payments.AddRange(payments);
                     context.SaveChanges();
                 }
 

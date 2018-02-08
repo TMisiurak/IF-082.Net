@@ -18,6 +18,7 @@ namespace DAL.Repositories
         private PrescriptionRepository prescriptionRepository;
         private DrugRepository drugRepository;
         private PatientRepository patientRepository;
+        private PaymentRepository paymentRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -123,6 +124,15 @@ namespace DAL.Repositories
             }
         }
 
+        public IRepository<Payment> Payments
+        {
+            get
+            {
+                if (paymentRepository == null)
+                    paymentRepository = new PaymentRepository(db);
+                return paymentRepository;
+            }
+        }
 
     }
-}
+    }

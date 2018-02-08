@@ -10,5 +10,8 @@ namespace ProjectCore.Entities
         public string Name { get; set; }
         [Required]
         public int Number { get; set; }
+
+        public Doctor Doctor { get; set; }
+
     }
 }

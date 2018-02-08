@@ -69,6 +69,33 @@ namespace DAL.Migrations
                     b.ToTable("Diagnoses");
                 });
 
+            modelBuilder.Entity("ProjectCore.Entities.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<int>("RoomId");
+
+                    b.Property<string>("Speciality")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("YearsExp");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Doctors");
+                });
+
             modelBuilder.Entity("ProjectCore.Entities.Drug", b =>
                 {
                     b.Property<int>("Id")
@@ -240,6 +267,24 @@ namespace DAL.Migrations
                     b.HasOne("ProjectCore.Entities.Clinic", "Clinic")
                         .WithMany("Departments")
                         .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Doctor", b =>
+                {
+                    b.HasOne("ProjectCore.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

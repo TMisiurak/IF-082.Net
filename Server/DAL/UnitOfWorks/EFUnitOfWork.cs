@@ -1,5 +1,6 @@
 ﻿using DAL.EF;
 using DAL.Interfaces;
+using DAL.Repositories;
 using DAL.Repositories.EFRepositories;
 using ProjectCore.Entities;
 

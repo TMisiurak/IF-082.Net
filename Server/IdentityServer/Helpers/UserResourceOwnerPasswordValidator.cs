@@ -3,11 +3,12 @@ using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using ProjectCore.Entities;
+using ProjectCore.Helpers;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace IdentityServer
+namespace IdentityServer.Helpers
 {
     public class UserResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {

@@ -3,13 +3,12 @@ using BLL.Interfaces;
 using BLL.Services;
 using DAL.EF;
 using DAL.Interfaces;
-using DAL.Repositories;
+using DAL.UnitOfWorks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectCore.DTO;
 using ProjectCore.Entities;
 using ProjectCore.MappingDTOs;
 using Swashbuckle.AspNetCore.Swagger;
@@ -37,12 +36,11 @@ namespace WebAPI
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IPrescriptionService, PrescriptionService>();
-            services.AddTransient <IClinicService, ClinicService>();
+            services.AddTransient<IClinicService, ClinicService>();
             services.AddTransient<IProcedureService, ProcedureService>();
             services.AddTransient<IDiagnosisService, DiagnosisService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IDrugService, DrugService>();
-            //services.AddTransient<IPatientService<PatientDTO>, PatientService>();
             services.AddTransient<IPatientService, PatientService>();
             services.AddTransient<IPaymentService, PaymentService>();
 
@@ -100,7 +98,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 

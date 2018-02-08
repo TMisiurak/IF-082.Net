@@ -1,8 +1,9 @@
 ﻿using DAL.EF;
 using DAL.Interfaces;
+using DAL.Repositories.EFRepositories;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.UnitOfWorks
 {
 
     public class EFUnitOfWork : IUnitOfWork
@@ -110,7 +111,7 @@ namespace DAL.Repositories
             {
                 if (drugRepository == null)
                     drugRepository = new DrugRepository(db);
-                return (IRepository<Drug>)drugRepository;
+                return drugRepository;
             }
         }
 

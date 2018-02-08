@@ -1,25 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using DAL.Interfaces;
 using System.Threading.Tasks;
 using DAL.EF;
-using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
+using System.Data;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.EFRepositories
 {
-    public class DrugRepository : IRepository<Drug>
+    public class PatientRepository : IRepository<Patient>
     {
         private readonly ClinicContext _db;
 
-        public DrugRepository(ClinicContext context)
+        public PatientRepository(ClinicContext db)
         {
-            _db = context;
+            _db = db;
         }
 
 
-        public async Task<int> Create(Drug drug)
+       
+
+        public async Task<int> Create(Patient patient)
         {
             var param = new SqlParameter
             {
@@ -28,9 +32,16 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @CreatedId = sp_CreateDrug @DrugName = '{drug.DrugName}'";
+            string sql = $"exec @CreatedId = sp_CreatePatient @UserId = {patient.UserId}";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
+        }
+
+
+
+        public async Task<IList<Patient>> GetAll()
+        {
+            return await _db.Patients.FromSql("sp_GetAllPatients").ToListAsync();
         }
 
         public async Task<int> Delete(int id)
@@ -42,26 +53,21 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @resid = dbo.sp_DeleteDrug @id = {id}";
+            string sql = $"exec @resid = dbo.sp_DeletePatient @id = {id}";
 
             int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
 
-        public async Task<IList<Drug>> GetAll()
-        {
-            return await _db.Drugs.FromSql("sp_GetAllDrugs").ToListAsync();  
-        }
 
-        public async Task<Drug> GetById(int id)
+        public async Task<Patient> GetById(int id)
         {
             var param = new SqlParameter("@id", id);
-            Drug drug = await _db.Drugs.FromSql($"sp_GetDrugById @id", param).FirstOrDefaultAsync();
-
-            return drug;
+            Patient patient = await _db.Patients.FromSql($"sp_GetPatientById @id", param).FirstOrDefaultAsync();
+            return patient;
         }
 
-        public async Task<int> Update(Drug drug)
+        public async Task<int> Update(Patient patient)
         {
             var updateCounter = new SqlParameter
             {
@@ -70,9 +76,13 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @UpdateCounter = dbo.sp_UpdateDrug @Id = {drug.Id}, @DrugName = {drug.DrugName}";
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdatePatient @UserId = {patient.UserId},  @Id = {patient.Id}";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
             return (int)updateCounter.Value;
+            
+
         }
+
+        
     }
 }

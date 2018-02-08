@@ -1,8 +1,9 @@
 ﻿using DAL.Interfaces;
+using DAL.Repositories.DapperRepositories;
 using ProjectCore.Entities;
 using System;
 
-namespace DAL.Repositories
+namespace DAL.UnitOfWorks
 {
     public class DapperUnitOfWork : IUnitOfWork
     {

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectCore.DTO;
 using System.Threading.Tasks;
-using WebAPI.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -23,10 +22,10 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            userDTO.Password = HashService.HashPassword(userDTO.Password);
             int result = await _userService.Create(userDTO);
             if (result > 0)
             {
+                //return CreatedAtRoute("GetDiagnosis", new { result = result });
                 return Ok();
             }
             else

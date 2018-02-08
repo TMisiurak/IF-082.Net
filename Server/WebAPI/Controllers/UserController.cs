@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectCore.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebAPI.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -60,7 +59,6 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            userDTO.Password = HashService.HashPassword(userDTO.Password);
             int result = await _userService.Update(userDTO);
             if (result > 0)
             {

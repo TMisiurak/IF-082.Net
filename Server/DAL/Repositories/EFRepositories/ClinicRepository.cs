@@ -7,7 +7,7 @@ using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.EFRepositories
 {
     public class ClinicRepository : IRepository<Clinic>
     {

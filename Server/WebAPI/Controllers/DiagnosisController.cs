@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class DiagnosisController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IDiagnosisService<DiagnosisDTO> _servDiagnosis;
+        private readonly IDiagnosisService _servDiagnosis;
 
-        public DiagnosisController(IMapper iMapper, IDiagnosisService<DiagnosisDTO> servDiagnosis)
+        public DiagnosisController(IMapper iMapper, IDiagnosisService servDiagnosis)
         {
             _iMapper = iMapper;
             _servDiagnosis = servDiagnosis;
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         }
 
         [Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetDiagnosis")]
         public async Task<IActionResult> GetDiagnosisById(int? id)
         {
             var diagnosis = await _servDiagnosis.GetById(id.Value);
@@ -49,7 +49,9 @@ namespace WebAPI.Controllers
         {
             int result = await _servDiagnosis.Update(diagnosisDTO);
             if (result > 0)
-                return Ok();
+            {
+                return CreatedAtRoute("GetDiagnosis", new { id = diagnosisDTO.Id }, diagnosisDTO);
+            }
             return NotFound();
         }
 

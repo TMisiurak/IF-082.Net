@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class ClinicService : IClinicService<ClinicDTO>
+    public class ClinicService : IClinicService
     {
         private readonly IUnitOfWork DataBase;
         private readonly IMapper _mapper;

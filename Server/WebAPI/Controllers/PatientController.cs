@@ -17,9 +17,9 @@ namespace WebAPI.Controllers
     public class PatientController : Controller
     {
 
-        private readonly IPatientService<PatientDTO> _servPatient;
+        private readonly IPatientService _servPatient;
 
-        public PatientController(IPatientService<PatientDTO> servPatient)
+        public PatientController(IPatientService servPatient)
         {
             _servPatient = servPatient;
         }

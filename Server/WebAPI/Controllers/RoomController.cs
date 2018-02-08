@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _iMapper;
 
-        private readonly IRoomService<RoomDTO> _servRoom;
+        private readonly IRoomService _servRoom;
 
-        public RoomController(IMapper iMapper, IRoomService<RoomDTO> servRoom)
+        public RoomController(IMapper iMapper, IRoomService servRoom)
         {
             _iMapper = iMapper;
             _servRoom = servRoom;

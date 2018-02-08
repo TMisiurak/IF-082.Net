@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface IClinicService<T> where T : ClinicDTO
+    public interface IClinicService
     {
-        Task<IList<T>> GetAll();
-        Task<T> GetById(int id);
-        Task<int> Create(T item);
-        Task<int> Update(T item);
+        Task<IList<ClinicDTO>> GetAll();
+        Task<ClinicDTO> GetById(int id);
+        Task<int> Create(ClinicDTO item);
+        Task<int> Update(ClinicDTO item);
         Task<int> DeleteById(int id);
     }
 }

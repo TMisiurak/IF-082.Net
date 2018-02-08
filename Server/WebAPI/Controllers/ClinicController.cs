@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     public class ClinicController : Controller
     {
         private readonly IMapper _iMapper;
-        private readonly IClinicService<ClinicDTO> _servClinic;
+        private readonly IClinicService _servClinic;
 
-        public ClinicController(IMapper iMapper, IClinicService<ClinicDTO> servClinic)
+        public ClinicController(IMapper iMapper, IClinicService servClinic)
         {
             _iMapper = iMapper;
             _servClinic = servClinic;

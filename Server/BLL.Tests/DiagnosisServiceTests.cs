@@ -39,7 +39,7 @@ namespace BLL.Tests
 
             var mockMapper = new Mock<IMapper>();
 
-            IDiagnosisService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
+            IDiagnosisService diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
             var getAll = diagnosisService.GetAll();
 
             Assert.NotNull(getAll);
@@ -73,7 +73,7 @@ namespace BLL.Tests
             mockMapper.Setup(x => x.Map<DiagnosisDTO>(It.IsAny<Diagnosis>()))
                 .Returns(new DiagnosisDTO());
 
-            IDiagnosisService<DiagnosisDTO> diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
+            IDiagnosisService diagnosisService = new DiagnosisService(unitOfWorkMock.Object, mockMapper.Object);
             var diagnosis = diagnosisService.GetById(1);
 
             Assert.NotNull(diagnoses);

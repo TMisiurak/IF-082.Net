@@ -32,16 +32,17 @@ namespace WebAPI
         {
             services.AddTransient<IUnitOfWork, EFUnitOfWork>();
             //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IUserService<UserDTO>, UserService>();
-            services.AddTransient<IRoleService<RoleDTO>, RoleService>();
-            services.AddTransient<IDepartmentService<DepartmentDTO>, DepartmentService>();
-            services.AddTransient<IPrescriptionService<PrescriptionDTO>, PrescriptionService>();
-            services.AddTransient <IClinicService<ClinicDTO>, ClinicService>();
-            services.AddTransient<IProcedureService<ProcedureDTO>, ProcedureService>();
-            services.AddTransient<IDiagnosisService<DiagnosisDTO>, DiagnosisService>();
-            services.AddTransient<IRoomService<RoomDTO>, RoomService>();
-            services.AddTransient<IDrugService<DrugDTO>, DrugService>();
-            services.AddTransient<IPatientService<PatientDTO>, PatientService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
+            services.AddTransient<IPrescriptionService, PrescriptionService>();
+            services.AddTransient <IClinicService, ClinicService>();
+            services.AddTransient<IProcedureService, ProcedureService>();
+            services.AddTransient<IDiagnosisService, DiagnosisService>();
+            services.AddTransient<IRoomService, RoomService>();
+            services.AddTransient<IDrugService, DrugService>();
+            //services.AddTransient<IPatientService<PatientDTO>, PatientService>();
+            services.AddTransient<IPatientService, PatientService>();
 
             services.AddAutoMapper();
 
@@ -70,7 +71,7 @@ namespace WebAPI
                 // this defines a CORS policy called "default"
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5003")
+                    policy.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

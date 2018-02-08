@@ -13,7 +13,7 @@ using ProjectCore.DTO;
 namespace BLL.Services
 
 {
-    public class PatientService : IPatientService<PatientDTO>
+    public class PatientService : IPatientService
     {
         IUnitOfWork Database { get; set; }
         IMapper _mapper;

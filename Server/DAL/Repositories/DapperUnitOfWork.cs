@@ -40,5 +40,7 @@ namespace DAL.Repositories
         public IRepository<Prescription> Prescriptions => throw new NotImplementedException();
 
         public IRepository<Drug> Drugs => throw new NotImplementedException();
+
+        public IRepository<Patient> Patients => throw new NotImplementedException();
     }
 }

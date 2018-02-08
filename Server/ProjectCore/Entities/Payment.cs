@@ -17,7 +17,7 @@ namespace ProjectCore.Entities
         public virtual Prescription Prescription { get; set; }
         
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+       // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime PaymentDate { get; set; }
 
         [Required]

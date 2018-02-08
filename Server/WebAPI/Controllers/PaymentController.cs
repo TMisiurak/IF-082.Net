@@ -25,6 +25,7 @@ namespace WebAPI.Controllers
         }
 
         //Get  api/departments
+        [Authorize(Roles = "admin , accountant")]
         [HttpGet]
         public async Task<IActionResult> GetPayments()
         {
@@ -33,6 +34,7 @@ namespace WebAPI.Controllers
         }
 
         //GET api/
+        [Authorize(Roles = "admin , accountant")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPaymentById(int? id)
         {
@@ -47,7 +49,7 @@ namespace WebAPI.Controllers
             { return NotFound(); }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin , accountant")]
         [HttpPost]
         public async Task<IActionResult> CreatePayment([FromBody]PaymentDTO paymentDTO)
         {
@@ -68,7 +70,7 @@ namespace WebAPI.Controllers
 
 
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin , accountant")]
         [HttpPut]
         public async Task<IActionResult> UpdatePaymentById([FromBody]PaymentDTO paymentDTO)
         {
@@ -93,7 +95,7 @@ namespace WebAPI.Controllers
 
 
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaymentById(int? id)
         {

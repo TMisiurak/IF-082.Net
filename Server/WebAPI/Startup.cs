@@ -57,6 +57,8 @@ namespace WebAPI
                 config.AddProfile<DiagnosisDTOProfile>();
                 config.AddProfile<DepartmentDTOProfile>();
                 config.AddProfile<RoomDTOProfile>();
+                config.AddProfile<PatientDTOProfile>();
+                config.AddProfile<PaymentDTOProfile>();
             });
 
             services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());

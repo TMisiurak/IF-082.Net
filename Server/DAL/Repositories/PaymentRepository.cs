@@ -76,7 +76,8 @@ namespace DAL.Repositories
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Output
             };
-            string sql = $"exec @CreatedId = sp_CreatePayment @PatientId = {payment.PatientId}, @PaymentDate = '{payment.PaymentDate.ToString("yyyy-MM-dd")}', @PaymentType = '{payment.PaymentType}', @PrescriptionId = {payment.PrescriptionId}, @sum = {payment.sum}, @Id = {payment.Id}";
+           // string sql = $"exec @UpdateCounter = sp_CreatePayment @PatientId = {payment.PatientId}, @PaymentType = '{payment.PaymentType}', @PrescriptionId = {payment.PrescriptionId}, @sum = {payment.sum}, @Id = {payment.Id}";
+           string sql = $"exec @UpdateCounter = sp_UpdatePayment @PatientId = {payment.PatientId}, @PaymentDate = '{payment.PaymentDate.ToString("yyyy-MM-dd")}', @PaymentType = '{payment.PaymentType}', @PrescriptionId = {payment.PrescriptionId}, @sum = {payment.sum}, @Id = {payment.Id}";
 
             //string sql = $"exec @UpdateCounter = dbo.sp_UpdatePatient @UserId = {patient.UserId},  @Id = {patient.Id}";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);

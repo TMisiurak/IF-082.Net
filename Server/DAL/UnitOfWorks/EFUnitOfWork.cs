@@ -21,6 +21,7 @@ namespace DAL.UnitOfWorks
         private DrugRepository drugRepository;
         private PatientRepository patientRepository;
         private PaymentRepository paymentRepository;
+        private DoctorRepository doctorRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -136,5 +137,16 @@ namespace DAL.UnitOfWorks
             }
         }
 
+        public IRepository<Doctor> Doctors
+        {
+            get
+            {
+                if (doctorRepository == null)
+                    doctorRepository = new DoctorRepository(db);
+                return doctorRepository;
+            }
+        }
+
+        
     }
-    }
+   }

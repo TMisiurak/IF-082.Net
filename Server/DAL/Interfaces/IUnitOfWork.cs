@@ -15,5 +15,6 @@ namespace DAL.Interfaces
         IRepository<Drug> Drugs { get; }
         IRepository<Patient> Patients { get; }
         IRepository<Payment> Payments { get; }
+        IRepository<Doctor> Doctors { get; }
     }
 }

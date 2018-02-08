@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 
-namespace WebAPI.Helpers
+namespace ProjectCore.Helpers
 {
     public static class HashService
     {

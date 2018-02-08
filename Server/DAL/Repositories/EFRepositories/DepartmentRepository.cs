@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.EFRepositories
 {
     public class DepartmentRepository : IRepository<Department>
     {
@@ -21,9 +21,17 @@ namespace DAL.Repositories
 
         public async Task<int> Create(Department department)
         {
-            string sql = $"sp_CreateDepartment   @Name = '{department.Name}',  @ClinicId = '{department.ClinicId}'";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql);
-            return result;
+            var param = new SqlParameter
+            {
+                ParameterName = "@CreatedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            string sql = $"exec @CreatedId = sp_CreateDepartment   @Name = '{department.Name}',  @ClinicId = '{department.ClinicId}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
+           
         }
 
 

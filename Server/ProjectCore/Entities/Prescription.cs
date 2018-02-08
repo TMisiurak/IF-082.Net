@@ -21,5 +21,7 @@ namespace ProjectCore.Entities
         
         public int DiagnosisId { get; set; }
         public Diagnosis Diagnosis { get; set; }
+
+        public virtual Payment Payment { get; set; }
     }
 }

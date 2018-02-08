@@ -1,60 +1,62 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProjectCore.DTO;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class DepartmentController : Controller
+    public class PatientController : Controller
     {
-        //private readonly IMapper _iMapper;
 
-        private readonly IDepartmentService _servDepartment;
+        private readonly IPatientService _servPatient;
 
-        public DepartmentController(IMapper iMapper, IDepartmentService servDepartment)
+        public PatientController(IPatientService servPatient)
         {
-          //_iMapper = iMapper;
-            _servDepartment = servDepartment;
+            _servPatient = servPatient;
         }
 
         //Get  api/departments
         [HttpGet]
-        public async Task<IActionResult> GetDepartments()
+        public async Task<IActionResult> GetPatients()
         {
-            var departments = await _servDepartment.GetAll();
-            return Ok(departments);
+            var patients = await _servPatient.GetAll();
+            return Ok(patients);
         }
 
         //GET api/
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDepartmentById(int? id)
+        public async Task<IActionResult> GetPatientById(int? id)
         {
             if (!id.HasValue)
             {
                 return BadRequest();
             }
-            var department = await _servDepartment.GetById(id.Value);
-            if (department != null)
-            { return Ok(department); }
+            var patient = await _servPatient.GetById(id.Value);
+            if (patient != null)
+            { return Ok(patient); }
             else
             { return NotFound(); }
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateDepartment([FromBody]DepartmentDTO departmentDTO)
+        public async Task<IActionResult> CreatePatient([FromBody]PatientDTO patientDTO)
         {
-            if (departmentDTO == null)
+            if (patientDTO == null)
             {
                 return BadRequest();
             }
-            int result = await _servDepartment.Create(departmentDTO);
-            if (result >= 0)
+            int result = await _servPatient.Create(patientDTO);
+            if (result > 0)
             {
                 return Ok(result);
             }
@@ -68,17 +70,17 @@ namespace WebAPI.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut]
-        public async Task<IActionResult> UpdateDepartmnetById([FromBody]DepartmentDTO departmentDTO)
+        public async Task<IActionResult> UpdatePatientById([FromBody]PatientDTO patientDTO)
         {
-       
 
-            if (departmentDTO == null )
+
+            if (patientDTO == null)
             {
                 return BadRequest();
             }
 
-            int result = await _servDepartment.Update(departmentDTO);
-            if (result >= 0)
+            int result = await _servPatient.Update(patientDTO);
+            if (result > 0)
             {
                 return Ok();
             }
@@ -93,13 +95,13 @@ namespace WebAPI.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDepartmentById(int? id)
+        public async Task<IActionResult> DeletePatientById(int? id)
         {
             if (!id.HasValue)
             {
                 return BadRequest();
             }
-            int result = await _servDepartment.DeleteById(id.Value);
+            int result = await _servPatient.DeleteById(id.Value);
             // return RedirectToAction(nameof(Index));
             if (result == 0)
             {
@@ -113,7 +115,7 @@ namespace WebAPI.Controllers
         }
 
 
-       
+
 
 
 

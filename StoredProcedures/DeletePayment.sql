@@ -1,0 +1,21 @@
+USE [ClinicDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_DeletePayment]
+	@id int
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	DELETE FROM Payments WHERE Id = @id
+	RETURN 0
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO

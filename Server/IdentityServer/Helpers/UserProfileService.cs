@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer
+namespace IdentityServer.Helpers
 {
     public class UserProfileService : IProfileService
     {

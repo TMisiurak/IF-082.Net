@@ -3,14 +3,14 @@ using BLL.Interfaces;
 using BLL.Services;
 using DAL.EF;
 using DAL.Interfaces;
-using DAL.Repositories;
+using DAL.UnitOfWorks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectCore.DTO;
 using ProjectCore.Entities;
+using ProjectCore.MappingDTOs;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -36,14 +36,30 @@ namespace WebAPI
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IPrescriptionService, PrescriptionService>();
-            services.AddTransient <IClinicService, ClinicService>();
+            services.AddTransient<IClinicService, ClinicService>();
             services.AddTransient<IProcedureService, ProcedureService>();
             services.AddTransient<IDiagnosisService, DiagnosisService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IDrugService, DrugService>();
+            services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IPaymentService, PaymentService>();
 
+            var mapperConfig = new MapperConfiguration(config =>
+            {
+                config.AddProfile<ClinicDTOProfile>();
+                config.AddProfile<RoleDTOProfile>();
+                config.AddProfile<DrugDTOProfile>();
+                config.AddProfile<PrescriptionDTOProfile>();
+                config.AddProfile<UserDTOProfile>();
+                config.AddProfile<ProcedureDTOProfile>();
+                config.AddProfile<DiagnosisDTOProfile>();
+                config.AddProfile<DepartmentDTOProfile>();
+                config.AddProfile<RoomDTOProfile>();
+                config.AddProfile<PatientDTOProfile>();
+                config.AddProfile<PaymentDTOProfile>();
+            });
 
-            services.AddAutoMapper();
+            services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
 
             services.AddDbContext<ClinicContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -82,7 +98,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -192,6 +208,21 @@ namespace WebAPI
                     new Procedure{Name = "Electrical Cardioversion", Price = 100.50M, Room = 12 },
                 };
 
+                List<Patient> patients = new List<Patient>
+                {
+                    new Patient {UserId=2 },
+                    new Patient {UserId=1 },
+                };
+
+
+                List<Payment> payments = new List<Payment>
+                {
+                    new Payment { PatientId=1, PaymentDate= DateTime.Now, PaymentType="cash ok", PrescriptionId=1, sum= 250},
+                    new Payment { PatientId=2, PaymentDate= DateTime.Now, PaymentType="cash ok", PrescriptionId=2, sum= 250}
+                    
+                };
+
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -247,6 +278,18 @@ namespace WebAPI
                 if (!context.Procedures.Any())
                 {
                     context.Procedures.AddRange(procedures);
+                    context.SaveChanges();
+                }
+
+                if (!context.Patients.Any())
+                {
+                    context.Patients.AddRange(patients);
+                    context.SaveChanges();
+                }
+
+                if (!context.Payments.Any())
+                {
+                    context.Payments.AddRange(payments);
                     context.SaveChanges();
                 }
 

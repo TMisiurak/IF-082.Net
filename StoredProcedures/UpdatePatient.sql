@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create PROCEDURE [dbo].[sp_UpdateClinic]
+create PROCEDURE [dbo].[sp_UpdatePatient]
 	@UserId int,
 	@Id int
 AS

@@ -1,8 +1,9 @@
 ﻿using DAL.Interfaces;
+using DAL.Repositories.DapperRepositories;
 using ProjectCore.Entities;
 using System;
 
-namespace DAL.Repositories
+namespace DAL.UnitOfWorks
 {
     public class DapperUnitOfWork : IUnitOfWork
     {
@@ -40,5 +41,9 @@ namespace DAL.Repositories
         public IRepository<Prescription> Prescriptions => throw new NotImplementedException();
 
         public IRepository<Drug> Drugs => throw new NotImplementedException();
+
+        public IRepository<Patient> Patients => throw new NotImplementedException();
+
+        public IRepository<Payment> Payments => throw new NotImplementedException();
     }
 }

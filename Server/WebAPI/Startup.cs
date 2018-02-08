@@ -42,6 +42,8 @@ namespace WebAPI
             services.AddTransient<IDiagnosisService, DiagnosisService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IDrugService, DrugService>();
+            //services.AddTransient<IPatientService<PatientDTO>, PatientService>();
+            services.AddTransient<IPatientService, PatientService>();
 
             var mapperConfig = new MapperConfiguration(config =>
             {
@@ -83,7 +85,7 @@ namespace WebAPI
                 // this defines a CORS policy called "default"
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5003")
+                    policy.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -205,6 +207,13 @@ namespace WebAPI
                     new Procedure{Name = "Electrical Cardioversion", Price = 100.50M, Room = 12 },
                 };
 
+                List<Patient> patients = new List<Patient>
+                {
+                    new Patient {UserId=2 },
+                    new Patient {UserId=1 },
+                };
+
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -260,6 +269,12 @@ namespace WebAPI
                 if (!context.Procedures.Any())
                 {
                     context.Procedures.AddRange(procedures);
+                    context.SaveChanges();
+                }
+
+                if (!context.Patients.Any())
+                {
+                    context.Patients.AddRange(patients);
                     context.SaveChanges();
                 }
 

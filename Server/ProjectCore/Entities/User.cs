@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace ProjectCore.Entities
 {
     public class User
@@ -27,6 +28,8 @@ namespace ProjectCore.Entities
         public string PhoneNumber { get; set; }
 
         public int RoleId { get; set; }
-        public Role Role { get; set; }   
+        public Role Role { get; set; }
+
+        public virtual Patient Patient { get; set; }
     }
 }

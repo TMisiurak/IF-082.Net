@@ -3,7 +3,7 @@ using DAL.Interfaces;
 using DAL.Repositories.EFRepositories;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.UnitOfWorks
 {
 
     public class EFUnitOfWork : IUnitOfWork
@@ -123,7 +123,5 @@ namespace DAL.Repositories
                 return patientRepository;
             }
         }
-
-
     }
 }

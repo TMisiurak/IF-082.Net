@@ -1,6 +1,6 @@
 ﻿using DAL.EF;
 using DAL.Interfaces;
-using DAL.Repositories;
+using DAL.UnitOfWorks;
 using IdentityServer.Helpers;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;

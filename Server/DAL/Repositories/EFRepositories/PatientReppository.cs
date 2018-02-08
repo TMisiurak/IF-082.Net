@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using DAL.Interfaces;
-
 using System.Threading.Tasks;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,7 @@ using System.Data.SqlClient;
 using System.Data;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.EFRepositories
 {
     public class PatientRepository : IRepository<Patient>
     {

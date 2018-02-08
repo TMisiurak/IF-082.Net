@@ -43,6 +43,7 @@ namespace WebAPI
             services.AddTransient<IDrugService, DrugService>();
             services.AddTransient<IPatientService, PatientService>();
             services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
 
             var mapperConfig = new MapperConfiguration(config =>
             {
@@ -56,6 +57,7 @@ namespace WebAPI
                 config.AddProfile<DepartmentDTOProfile>();
                 config.AddProfile<RoomDTOProfile>();
                 config.AddProfile<PatientDTOProfile>();
+                config.AddProfile<PaymentDTOProfile>();
                 config.AddProfile<PaymentDTOProfile>();
             });
 
@@ -222,6 +224,14 @@ namespace WebAPI
                     
                 };
 
+                List<Appointment> appointments = new List<Appointment>
+                {
+                    new Appointment { CabinetId=1, Date=DateTime.Now, Description="appointment details 1", DoctorId=1, PatientId=2, PrescriptionId=1, Status=1 },
+                    new Appointment { CabinetId=2, Date=DateTime.Now, Description="appointment details 2", DoctorId=2, PatientId=2, PrescriptionId=2, Status=2 },
+                    new Appointment { CabinetId=4, Date=DateTime.Now, Description="appointment details 3", DoctorId=2, PatientId=2, PrescriptionId=3, Status=3 },
+                    new Appointment { CabinetId=3, Date=DateTime.Now, Description="appointment details 4", DoctorId=1, PatientId=2, PrescriptionId=4, Status=4 }
+                };
+
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
@@ -290,6 +300,12 @@ namespace WebAPI
                 if (!context.Payments.Any())
                 {
                     context.Payments.AddRange(payments);
+                    context.SaveChanges();
+                }
+
+                if (!context.Appointments.Any())
+                {
+                    context.Appointments.AddRange(appointments);
                     context.SaveChanges();
                 }
 

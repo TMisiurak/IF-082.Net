@@ -8,9 +8,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.DapperRepositories
 {
-    class ClinicRepoDapper : IRepository<Clinic>
+    public class ClinicRepoDapper : IRepository<Clinic>
     {
         private readonly string connectionString = null;
 

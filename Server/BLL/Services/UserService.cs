@@ -3,6 +3,7 @@ using BLL.Interfaces;
 using DAL.Interfaces;
 using ProjectCore.DTO;
 using ProjectCore.Entities;
+using ProjectCore.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace BLL.Services
         public async Task<IList<UserDTO>> GetAll()
         {
             IList<User> users = await DataBase.Users.GetAll();
-            var result = _mapper.Map<IList<UserDTO>>(users);
+            IList<UserDTO> result = _mapper.Map<IList<UserDTO>>(users);
             return result;
         }
 
@@ -42,12 +43,14 @@ namespace BLL.Services
 
         public async Task<int> Create(UserDTO userDTO)
         {
+            userDTO.Password = HashService.HashPassword(userDTO.Password);
             int result = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
             return result;
         }
 
         public async Task<int> Update(UserDTO userDTO)
         {
+            userDTO.Password = HashService.HashPassword(userDTO.Password);
             int result = await DataBase.Users.Update(_mapper.Map<User>(userDTO));
             return result;
         }

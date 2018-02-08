@@ -82,7 +82,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 

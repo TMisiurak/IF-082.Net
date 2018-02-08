@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.EFRepositories
 {
     public class RoleRepository : IRepository<Role>
     {

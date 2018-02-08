@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectCore.DTO;
 using ProjectCore.Entities;
+using ProjectCore.MappingDTOs;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,23 @@ namespace WebAPI
             services.AddTransient<IDiagnosisService, DiagnosisService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IDrugService, DrugService>();
+            //services.AddTransient<IPatientService<PatientDTO>, PatientService>();
+            services.AddTransient<IPatientService, PatientService>();
 
+            var mapperConfig = new MapperConfiguration(config =>
+            {
+                config.AddProfile<ClinicDTOProfile>();
+                config.AddProfile<RoleDTOProfile>();
+                config.AddProfile<DrugDTOProfile>();
+                config.AddProfile<PrescriptionDTOProfile>();
+                config.AddProfile<UserDTOProfile>();
+                config.AddProfile<ProcedureDTOProfile>();
+                config.AddProfile<DiagnosisDTOProfile>();
+                config.AddProfile<DepartmentDTOProfile>();
+                config.AddProfile<RoomDTOProfile>();
+            });
 
-            services.AddAutoMapper();
+            services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
 
             services.AddDbContext<ClinicContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -192,6 +207,13 @@ namespace WebAPI
                     new Procedure{Name = "Electrical Cardioversion", Price = 100.50M, Room = 12 },
                 };
 
+                List<Patient> patients = new List<Patient>
+                {
+                    new Patient {UserId=2 },
+                    new Patient {UserId=1 },
+                };
+
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
 
@@ -247,6 +269,12 @@ namespace WebAPI
                 if (!context.Procedures.Any())
                 {
                     context.Procedures.AddRange(procedures);
+                    context.SaveChanges();
+                }
+
+                if (!context.Patients.Any())
+                {
+                    context.Patients.AddRange(patients);
                     context.SaveChanges();
                 }
 

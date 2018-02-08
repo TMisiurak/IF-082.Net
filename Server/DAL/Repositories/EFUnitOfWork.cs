@@ -18,6 +18,7 @@ namespace DAL.Repositories
         private RoomRepository roomRepository;
         private PrescriptionRepository prescriptionRepository;
         private DrugRepository drugRepository;
+        private PatientRepository patientRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -110,6 +111,16 @@ namespace DAL.Repositories
                 if (drugRepository == null)
                     drugRepository = new DrugRepository(db);
                 return drugRepository;
+            }
+        }
+
+        public IRepository<Patient> Patients
+        {
+            get
+            {
+                if (patientRepository == null)
+                    patientRepository = new PatientRepository(db);
+                return patientRepository;
             }
         }
 

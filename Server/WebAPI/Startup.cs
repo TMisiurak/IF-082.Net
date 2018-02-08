@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectCore.DTO;
 using ProjectCore.Entities;
+using ProjectCore.MappingDTOs;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,20 @@ namespace WebAPI
             services.AddTransient<IPatientService, PatientService>();
             services.AddTransient<IPaymentService, PaymentService>();
 
-            services.AddAutoMapper();
+            var mapperConfig = new MapperConfiguration(config =>
+            {
+                config.AddProfile<ClinicDTOProfile>();
+                config.AddProfile<RoleDTOProfile>();
+                config.AddProfile<DrugDTOProfile>();
+                config.AddProfile<PrescriptionDTOProfile>();
+                config.AddProfile<UserDTOProfile>();
+                config.AddProfile<ProcedureDTOProfile>();
+                config.AddProfile<DiagnosisDTOProfile>();
+                config.AddProfile<DepartmentDTOProfile>();
+                config.AddProfile<RoomDTOProfile>();
+            });
+
+            services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
 
             services.AddDbContext<ClinicContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

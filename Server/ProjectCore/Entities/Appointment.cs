@@ -25,4 +25,3 @@ namespace ProjectCore.Entities
         public int PrescriptionId { get; set; }
     }
 }
-}

@@ -43,5 +43,9 @@ namespace DAL.UnitOfWorks
         public IRepository<Drug> Drugs => throw new NotImplementedException();
 
         public IRepository<Patient> Patients => throw new NotImplementedException();
+
+        public IRepository<Payment> Payments => throw new NotImplementedException();
+
+        public IRepository<Doctor> Doctors => throw new NotImplementedException();
     }
 }

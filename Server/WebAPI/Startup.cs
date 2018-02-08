@@ -42,6 +42,7 @@ namespace WebAPI
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IDrugService, DrugService>();
             services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IDoctorService, DoctorService>();
 
             var mapperConfig = new MapperConfiguration(config =>
             {
@@ -54,6 +55,9 @@ namespace WebAPI
                 config.AddProfile<DiagnosisDTOProfile>();
                 config.AddProfile<DepartmentDTOProfile>();
                 config.AddProfile<RoomDTOProfile>();
+                config.AddProfile<PatientDTOProfile>();
+                config.AddProfile<PaymentDTOProfile>();
+                config.AddProfile<DoctorDTOProfile>();
             });
 
             services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
@@ -95,7 +99,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //InitializeDatabase(app);
+                InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -152,6 +156,13 @@ namespace WebAPI
                     new User{ Email = "email4@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
                         RoleId = 4, FullName = "Full Name 4", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
+
+                    new User{ Email = "email5@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
+                        RoleId = 3, FullName = "Full Name 5", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
+                        PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 5" },
+                    new User{ Email = "email6@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
+                        RoleId = 3, FullName = "Full Name 6", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
+                        PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 6" },
                 };
 
                 List<Drug> drugs = new List<Drug>
@@ -196,6 +207,12 @@ namespace WebAPI
                     Date = DateTime.Now, DiagnosisId = 1},
                 };
 
+                List<Doctor> doctors = new List<Doctor>
+                {
+                    new Doctor{ YearsExp = 1, Speciality = "Surgeon", RoomId = 1, DepartmentId = 1, UserId = 5 },
+                    new Doctor{ YearsExp = 2, Speciality = "Oculist", RoomId = 2, DepartmentId = 2, UserId = 6 },
+                };
+
                 List<Procedure> procedures = new List<Procedure>
                 {
                     new Procedure{Name = "V/Q Scan", Price = 2500.50M, Room = 101 },
@@ -209,6 +226,14 @@ namespace WebAPI
                 {
                     new Patient {UserId=2 },
                     new Patient {UserId=1 },
+                };
+
+
+                List<Payment> payments = new List<Payment>
+                {
+                    new Payment { PatientId=1, PaymentDate= DateTime.Now, PaymentType="cash ok", PrescriptionId=1, sum= 250},
+                    new Payment { PatientId=2, PaymentDate= DateTime.Now, PaymentType="cash ok", PrescriptionId=2, sum= 250}
+                    
                 };
 
 
@@ -276,6 +301,17 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
+                if (!context.Payments.Any())
+                {
+                    context.Payments.AddRange(payments);
+                    context.SaveChanges();
+                }
+
+                if (!context.Doctors.Any())
+                {
+                    context.Doctors.AddRange(doctors);
+                    context.SaveChanges();
+                }
             }
         }
     }

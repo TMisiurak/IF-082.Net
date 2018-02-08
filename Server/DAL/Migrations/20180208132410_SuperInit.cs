@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class CleanInit : Migration
+    public partial class SuperInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -118,7 +118,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
                     Description = table.Column<string>(maxLength: 4000, nullable: false),
                     DiagnosisId = table.Column<int>(nullable: false),
                     DoctorId = table.Column<int>(nullable: false),
@@ -163,10 +163,125 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Doctors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    RoomId = table.Column<int>(nullable: false),
+                    Speciality = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    YearsExp = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Doctors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Doctors_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Doctors_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Doctors_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PatientId = table.Column<int>(nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "date", nullable: false),
+                    PaymentType = table.Column<string>(nullable: false),
+                    PrescriptionId = table.Column<int>(nullable: false),
+                    sum = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Payments_Prescriptions_PrescriptionId",
+                        column: x => x.PrescriptionId,
+                        principalTable: "Prescriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_ClinicId",
                 table: "Departments",
                 column: "ClinicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctors_DepartmentId",
+                table: "Doctors",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctors_RoomId",
+                table: "Doctors",
+                column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctors_UserId",
+                table: "Doctors",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_UserId",
+                table: "Patients",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_PatientId",
+                table: "Payments",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_PrescriptionId",
+                table: "Payments",
+                column: "PrescriptionId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_DiagnosisId",
@@ -182,25 +297,34 @@ namespace DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Departments");
+                name: "Doctors");
 
             migrationBuilder.DropTable(
                 name: "Drugs");
 
             migrationBuilder.DropTable(
-                name: "Prescriptions");
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Procedures");
 
             migrationBuilder.DropTable(
+                name: "Departments");
+
+            migrationBuilder.DropTable(
                 name: "Rooms");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Prescriptions");
 
             migrationBuilder.DropTable(
                 name: "Clinics");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Diagnoses");

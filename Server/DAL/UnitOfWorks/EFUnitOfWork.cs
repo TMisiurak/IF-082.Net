@@ -1,5 +1,6 @@
 ﻿using DAL.EF;
 using DAL.Interfaces;
+using DAL.Repositories;
 using DAL.Repositories.EFRepositories;
 using ProjectCore.Entities;
 
@@ -19,6 +20,8 @@ namespace DAL.UnitOfWorks
         private PrescriptionRepository prescriptionRepository;
         private DrugRepository drugRepository;
         private PatientRepository patientRepository;
+        private PaymentRepository paymentRepository;
+        private DoctorRepository doctorRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -123,5 +126,27 @@ namespace DAL.UnitOfWorks
                 return patientRepository;
             }
         }
+
+        public IRepository<Payment> Payments
+        {
+            get
+            {
+                if (paymentRepository == null)
+                    paymentRepository = new PaymentRepository(db);
+                return paymentRepository;
+            }
+        }
+
+        public IRepository<Doctor> Doctors
+        {
+            get
+            {
+                if (doctorRepository == null)
+                    doctorRepository = new DoctorRepository(db);
+                return doctorRepository;
+            }
+        }
+
+        
     }
-}
+   }

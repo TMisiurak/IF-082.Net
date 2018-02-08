@@ -31,5 +31,6 @@ namespace ProjectCore.Entities
         public Role Role { get; set; }
 
         public virtual Patient Patient { get; set; }
+        public Doctor Doctor { get; set; }
     }
 }

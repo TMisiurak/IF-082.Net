@@ -11,5 +11,7 @@ namespace ProjectCore.Entities
 
         public int ClinicId { get; set; }
         public Clinic Clinic { get; set; }
+
+        public Doctor Doctor { get; set; }
     }
 }

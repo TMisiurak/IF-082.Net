@@ -20,7 +20,7 @@ namespace DAL.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Entities.Clinic", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Clinic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -36,7 +36,7 @@ namespace DAL.Migrations
                     b.ToTable("Clinics");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Department", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -53,7 +53,7 @@ namespace DAL.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Diagnosis", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Diagnosis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -69,7 +69,34 @@ namespace DAL.Migrations
                     b.ToTable("Diagnoses");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Drug", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<int>("RoomId");
+
+                    b.Property<string>("Speciality")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("YearsExp");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Drug", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -82,7 +109,7 @@ namespace DAL.Migrations
                     b.ToTable("Drugs");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Patient", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -97,7 +124,34 @@ namespace DAL.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Prescription", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PatientId");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired();
+
+                    b.Property<int>("PrescriptionId");
+
+                    b.Property<int>("sum");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("PrescriptionId")
+                        .IsUnique();
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Prescription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -122,7 +176,7 @@ namespace DAL.Migrations
                     b.ToTable("Prescriptions");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Procedure", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Procedure", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -139,7 +193,7 @@ namespace DAL.Migrations
                     b.ToTable("Procedures");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Role", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -152,7 +206,7 @@ namespace DAL.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Room", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Room", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -167,7 +221,7 @@ namespace DAL.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("DAL.Entities.User", b =>
+            modelBuilder.Entity("ProjectCore.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -208,33 +262,64 @@ namespace DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Department", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Department", b =>
                 {
-                    b.HasOne("DAL.Entities.Clinic", "Clinic")
+                    b.HasOne("ProjectCore.Entities.Clinic", "Clinic")
                         .WithMany("Departments")
                         .HasForeignKey("ClinicId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DAL.Entities.Patient", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Doctor", b =>
                 {
-                    b.HasOne("DAL.Entities.User", "User")
-                        .WithOne("Patient")
-                        .HasForeignKey("DAL.Entities.Patient", "UserId")
+                    b.HasOne("ProjectCore.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DAL.Entities.Prescription", b =>
+            modelBuilder.Entity("ProjectCore.Entities.Patient", b =>
                 {
-                    b.HasOne("DAL.Entities.Diagnosis", "Diagnosis")
+                    b.HasOne("ProjectCore.Entities.User", "User")
+                        .WithOne("Patient")
+                        .HasForeignKey("ProjectCore.Entities.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Payment", b =>
+                {
+                    b.HasOne("ProjectCore.Entities.Patient", "Patient")
+                        .WithMany("Payment")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.Prescription", "Prescription")
+                        .WithOne("Payment")
+                        .HasForeignKey("ProjectCore.Entities.Payment", "PrescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Prescription", b =>
+                {
+                    b.HasOne("ProjectCore.Entities.Diagnosis", "Diagnosis")
                         .WithMany("Prescriptions")
                         .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DAL.Entities.User", b =>
+            modelBuilder.Entity("ProjectCore.Entities.User", b =>
                 {
-                    b.HasOne("DAL.Entities.Role", "Role")
+                    b.HasOne("ProjectCore.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);

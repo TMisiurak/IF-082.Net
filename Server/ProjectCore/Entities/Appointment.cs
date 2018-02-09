@@ -10,13 +10,12 @@ namespace ProjectCore.Entities
         public int Id { get; set; }
         [Required]
         public int PatientId { get; set; }
-        // TODO: fix this fkey when implemented
-        //[Required]
+        [Required]
         public int DoctorId { get; set; }
         [Required, Range(2, 4000)]
         public string Description { get; set; }
         [Required]
-        [Column(TypeName = "date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Column(TypeName = "date")]
         public System.DateTime Date { get; set; }
         [Required]
         public int Status { get; set; }

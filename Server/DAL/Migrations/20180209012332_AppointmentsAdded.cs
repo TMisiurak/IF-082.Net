@@ -5,10 +5,29 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class SuperInit : Migration
+    public partial class AppointmentsAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CabinetId = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    DoctorId = table.Column<int>(nullable: false),
+                    PatientId = table.Column<int>(nullable: false),
+                    PrescriptionId = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Clinics",
                 columns: table => new
@@ -254,17 +273,20 @@ namespace DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_DepartmentId",
                 table: "Doctors",
-                column: "DepartmentId");
+                column: "DepartmentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_RoomId",
                 table: "Doctors",
-                column: "RoomId");
+                column: "RoomId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_UserId",
                 table: "Doctors",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_UserId",
@@ -296,6 +318,9 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Appointments");
+
             migrationBuilder.DropTable(
                 name: "Doctors");
 

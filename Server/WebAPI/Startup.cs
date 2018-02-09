@@ -42,6 +42,8 @@ namespace WebAPI
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IDrugService, DrugService>();
             services.AddTransient<IPatientService, PatientService>();
+            services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IDoctorService, DoctorService>();
 
             var mapperConfig = new MapperConfiguration(config =>
@@ -58,6 +60,7 @@ namespace WebAPI
                 config.AddProfile<PatientDTOProfile>();
                 config.AddProfile<PaymentDTOProfile>();
                 config.AddProfile<DoctorDTOProfile>();
+                config.AddProfile<AppointmentDTOProfile>();
             });
 
             services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
@@ -123,7 +126,7 @@ namespace WebAPI
                     new Clinic{ Name = "Regional Hospital", Address = "Fedkovych 91, Ivano-Frankivsk" },
                     new Clinic{ Name = "Children's Hospital", Address = "Konovaltcia 132, Ivano-Frankivsk" },
                 };
-
+                
                 List<Department> departments = new List<Department>
                 {
                     new Department {Name = "Diagnostic", ClinicId=1},
@@ -236,6 +239,14 @@ namespace WebAPI
                     
                 };
 
+                List<Appointment> appointments = new List<Appointment>
+                {
+                    new Appointment { CabinetId=1, Date=DateTime.Now, Description="appointment details 1", DoctorId=1, PatientId=2, PrescriptionId=1, Status=1 },
+                    new Appointment { CabinetId=2, Date=DateTime.Now, Description="appointment details 2", DoctorId=2, PatientId=2, PrescriptionId=2, Status=2 },
+                    new Appointment { CabinetId=4, Date=DateTime.Now, Description="appointment details 3", DoctorId=2, PatientId=2, PrescriptionId=3, Status=3 },
+                    new Appointment { CabinetId=3, Date=DateTime.Now, Description="appointment details 4", DoctorId=1, PatientId=2, PrescriptionId=4, Status=4 }
+                };
+
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
@@ -257,7 +268,6 @@ namespace WebAPI
                     context.Clinics.AddRange(clinics);
                     context.SaveChanges();
                 }
-
 
                 if (!context.Departments.Any())
                 {
@@ -312,6 +322,13 @@ namespace WebAPI
                     context.Doctors.AddRange(doctors);
                     context.SaveChanges();
                 }
+
+                if (!context.Appointments.Any())
+                {
+                    context.Appointments.AddRange(appointments);
+                    context.SaveChanges();
+                }
+                
             }
         }
     }

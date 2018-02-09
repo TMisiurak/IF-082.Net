@@ -20,6 +20,32 @@ namespace DAL.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ProjectCore.Entities.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CabinetId");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("DoctorId");
+
+                    b.Property<int>("PatientId");
+
+                    b.Property<int>("PrescriptionId");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("ProjectCore.Entities.Clinic", b =>
                 {
                     b.Property<int>("Id")
@@ -87,11 +113,14 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("DepartmentId")
+                        .IsUnique();
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("RoomId")
+                        .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Doctors");
                 });
@@ -273,18 +302,18 @@ namespace DAL.Migrations
             modelBuilder.Entity("ProjectCore.Entities.Doctor", b =>
                 {
                     b.HasOne("ProjectCore.Entities.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
+                        .WithOne("Doctor")
+                        .HasForeignKey("ProjectCore.Entities.Doctor", "DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ProjectCore.Entities.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
+                        .WithOne("Doctor")
+                        .HasForeignKey("ProjectCore.Entities.Doctor", "RoomId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ProjectCore.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Doctor")
+                        .HasForeignKey("ProjectCore.Entities.Doctor", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

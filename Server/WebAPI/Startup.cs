@@ -60,6 +60,7 @@ namespace WebAPI
                 config.AddProfile<PatientDTOProfile>();
                 config.AddProfile<PaymentDTOProfile>();
                 config.AddProfile<DoctorDTOProfile>();
+                config.AddProfile<AppointmentDTOProfile>();
             });
 
             services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
@@ -125,7 +126,7 @@ namespace WebAPI
                     new Clinic{ Name = "Regional Hospital", Address = "Fedkovych 91, Ivano-Frankivsk" },
                     new Clinic{ Name = "Children's Hospital", Address = "Konovaltcia 132, Ivano-Frankivsk" },
                 };
-
+                
                 List<Department> departments = new List<Department>
                 {
                     new Department {Name = "Diagnostic", ClinicId=1},
@@ -268,7 +269,6 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-
                 if (!context.Departments.Any())
                 {
                     context.Departments.AddRange(departments);
@@ -317,17 +317,18 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Appointments.Any())
-                {
-                    context.Appointments.AddRange(appointments);
-                    context.SaveChanges();
-                }
-
                 if (!context.Doctors.Any())
                 {
                     context.Doctors.AddRange(doctors);
                     context.SaveChanges();
                 }
+
+                if (!context.Appointments.Any())
+                {
+                    context.Appointments.AddRange(appointments);
+                    context.SaveChanges();
+                }
+                
             }
         }
     }

@@ -67,20 +67,15 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
         }
-
-
-
+        
         [Authorize(Roles = "admin , accountant")]
         [HttpPut]
         public async Task<IActionResult> UpdatePaymentById([FromBody]PaymentDTO paymentDTO)
         {
-
-
             if (paymentDTO == null)
             {
                 return BadRequest();
             }
-
             int result = await _servPayment.Update(paymentDTO);
             if (result > 0)
             {
@@ -90,11 +85,8 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-
         }
-
-
-
+        
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaymentById(int? id)

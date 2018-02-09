@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule }   from '@angular/http';
 
 import { PatientComponent } from './patient.component';
 
@@ -11,7 +10,7 @@ import { PatientRoutingModule } from './patient-routing.module';
 	declarations: [ PatientComponent, 
 	],
 	imports: [
-		CommonModule, FormsModule, ReactiveFormsModule, HttpModule,
+		CommonModule, FormsModule, ReactiveFormsModule,
 	    PatientRoutingModule
 	],
 	entryComponents: [

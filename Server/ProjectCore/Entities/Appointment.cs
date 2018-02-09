@@ -15,7 +15,8 @@ namespace ProjectCore.Entities
         public int DoctorId { get; set; }
         [Required, Range(2, 4000)]
         public string Description { get; set; }
-        [Required, Column(TypeName = "date")]  // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Required]
+        [Column(TypeName = "date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public System.DateTime Date { get; set; }
         [Required]
         public int Status { get; set; }

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.EF;
 using DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using ProjectCore.Entities;
 
 namespace DAL.Repositories.EFRepositories
@@ -17,39 +20,56 @@ namespace DAL.Repositories.EFRepositories
             _db = clinicContext;
         }
 
-        public Task<int> Create(Appointment item)
+        public async Task<int> Create(Appointment appointment)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IList<Appointment>> GetAll()
-        {
-            throw new NotImplementedException();
-            /*
-            IList<Appointment> test = new List<Appointment>
+            var param = new SqlParameter
             {
-                new Appointment()
-                {
-                    Id = 1, CabinetId = 1, Date = DateTime.Now, Description = " ", DoctorId = 1, PatientId = 1, PrescriptionId = 1, Status = 2
-                }
+                ParameterName = "@CreatedId",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
             };
-            return (Task<IList<Appointment>>)test;
-            */
+            string sql = $"exec @CreatedId = sp_CreateAppointment @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}', @CabinetId = '{appointment.CabinetId}', @PrescriptionId = '{appointment.PrescriptionId}'";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
-        public Task<Appointment> GetById(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new NotImplementedException();
+            var param = new SqlParameter
+            {
+                ParameterName = "@resid",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+            string sql = $"exec @resid = dbo.sp_DeleteAppointment @Id = {id}";
+            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
+            return (int)param.Value;
         }
 
-        public Task<int> Update(Appointment item)
+        public async Task<IList<Appointment>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Appointments.FromSql("sp_GetAllAppointments").ToListAsync();
+        }
+
+        public async Task<Appointment> GetById(int id)
+        {
+            var param = new SqlParameter("@id", id);
+            Appointment appointment = await _db.Appointments.FromSql($"sp_GetAppointmentById @id", param).FirstOrDefaultAsync();
+            return appointment;
+        }
+
+        public async Task<int> Update(Appointment appointment)
+        {
+
+            var updateCounter = new SqlParameter
+            {
+                ParameterName = "@UpdateCounter",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateAppointment @Id = '{appointment.Id}', @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}', @CabinetId = '{appointment.CabinetId}', @PrescriptionId = '{appointment.PrescriptionId}'";
+            await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
+            return (int)updateCounter.Value;
         }
     }
 }

@@ -6,6 +6,7 @@ using DAL.Interfaces;
 using Moq;
 using ProjectCore.Helpers;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BLL.Tests
@@ -24,7 +25,7 @@ namespace BLL.Tests
         }
 
         [Fact]
-        public async void GetAll_Equal_Test()
+        public async Task GetAll_Equal_Test()
         {
             _uow.Setup(m => m.Users.GetAll()).Returns(async () => await UserUowStubService.GetAll());
 
@@ -35,7 +36,7 @@ namespace BLL.Tests
         }
 
         [Fact]
-        public async void GetById_NotNull_Test()
+        public async Task GetById_NotNull_Test()
         {
             _uow.Setup(m => m.Users.GetById(It.IsAny<int>())).Returns<int>(async (id) => await UserUowStubService.GetById(id));
 

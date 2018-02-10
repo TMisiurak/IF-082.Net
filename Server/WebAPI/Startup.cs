@@ -30,8 +30,8 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-            //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
@@ -102,7 +102,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectCore.Entities
 {
@@ -12,5 +13,7 @@ namespace ProjectCore.Entities
         public decimal Price { get; set; }
         [Required]
         public int Room { get; set; }
+
+        public IList<PrescriptionList> PrescriptionLists { get; set; }
     }
 }

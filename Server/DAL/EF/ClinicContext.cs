@@ -18,7 +18,8 @@ namespace DAL.EF
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-
+        public DbSet<PrescriptionList> PrescriptionLists { get; set; }
+        
         public ClinicContext(DbContextOptions<ClinicContext> options)
             : base(options)
         {

@@ -68,11 +68,12 @@ namespace DAL.Repositories.EFRepositories
 
             public async Task<int> Update(Prescription item)
             {
-                string sql = $"sp_UpdatePrescription @Date = '{item.Date}',  " +
-                        $"@Description = '{item.Description}'" +
-                        $"@DiagnosisId = '{item.DiagnosisId}'" +
-                        $"@DoctorId = '{item.DoctorId}'" +
-                        $"@PatientId = '{item.PatientId}'";
+                string sql = $"sp_UpdatePrescription @Id = '{item.Id}', " +
+                                $"@Date = '{item.Date}',  " +
+                                $"@Description = '{item.Description}', " +
+                                $"@DiagnosisId = '{item.DiagnosisId}', " +
+                                $"@DoctorId = '{item.DoctorId}', " +
+                                $"@PatientId = '{item.PatientId}'";
                 int result = await _db.Database.ExecuteSqlCommandAsync(sql);
                 return result;
             }

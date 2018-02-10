@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectCore.Entities;
+using ProjectCore.Helpers;
 using ProjectCore.MappingDTOs;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -46,24 +47,7 @@ namespace WebAPI
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IDoctorService, DoctorService>();
 
-            var mapperConfig = new MapperConfiguration(config =>
-            {
-                config.AddProfile<ClinicDTOProfile>();
-                config.AddProfile<RoleDTOProfile>();
-                config.AddProfile<DrugDTOProfile>();
-                config.AddProfile<PrescriptionDTOProfile>();
-                config.AddProfile<UserDTOProfile>();
-                config.AddProfile<ProcedureDTOProfile>();
-                config.AddProfile<DiagnosisDTOProfile>();
-                config.AddProfile<DepartmentDTOProfile>();
-                config.AddProfile<RoomDTOProfile>();
-                config.AddProfile<PatientDTOProfile>();
-                config.AddProfile<PaymentDTOProfile>();
-                config.AddProfile<DoctorDTOProfile>();
-                config.AddProfile<AppointmentDTOProfile>();
-            });
-
-            services.AddSingleton<IMapper>(s => mapperConfig.CreateMapper());
+            services.AddSingleton(s => AutoMapperConfig.Instance);
 
             services.AddDbContext<ClinicContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -102,7 +86,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                InitializeDatabase(app);
+                //InitializeDatabase(app);
             }
             app.UseCors("default");
 

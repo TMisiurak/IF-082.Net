@@ -12,85 +12,64 @@ namespace DAL.Repositories.DapperRepositories
 {
     public class ClinicRepoDapper : IRepository<Clinic>
     {
-        private readonly string connectionString = null;
+        private IDbTransaction _transaction;
+        private IDbConnection _connection { get { return _transaction.Connection; } }
 
-        public ClinicRepoDapper(string conn)
+        public ClinicRepoDapper(IDbTransaction transaction)
         {
-            connectionString = conn;
+            _transaction = transaction;
         }
 
         public async Task<int> Create(Clinic clinic)
         {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                await connection.OpenAsync();
-                //SqlTransaction sqltrans = connection.BeginTransaction();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@Name", clinic.Name);
-                dynamicParameters.Add("@Address", clinic.Address);
-                dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-                await connection.ExecuteAsync("sp_CreateClinic", dynamicParameters, commandType: CommandType.StoredProcedure);
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Name", clinic.Name);
+            dynamicParameters.Add("@Address", clinic.Address);
+            dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_CreateClinic", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
-                int createdId = dynamicParameters.Get<int>("@CreatedId");
-                return createdId;
-            }
+            int createdId = dynamicParameters.Get<int>("@CreatedId");
+            _transaction.Commit();
+            return createdId;
         }
 
         public async Task<int> Delete(int id)
         {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                await connection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@Id", id);
-                dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-                await connection.ExecuteAsync("sp_DeleteClinic", dynamicParameters, commandType: CommandType.StoredProcedure);
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Id", id);
+            dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_DeleteClinic", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
-                int resetId = dynamicParameters.Get<int>("@ResId");
-                return resetId;
-            }
+            int resetId = dynamicParameters.Get<int>("@ResId");
+            _transaction.Commit();
+            return resetId;
         }
 
         public async Task<IList<Clinic>> GetAll()
         {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                await connection.OpenAsync();
-                var result = await connection.QueryAsync<Clinic>("sp_GetAllClinics");
-                return result.ToList();
-            }
+            var result = await _connection.QueryAsync<Clinic>("sp_GetAllClinics", 0, _transaction, commandType: CommandType.StoredProcedure);
+            return result.ToList();
         }
 
         public async Task<Clinic> GetById(int id)
         {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                await connection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@id", id);
-                return await connection.QuerySingleOrDefaultAsync<Clinic>(
-                    "sp_GetClinicById",
-                    dynamicParameters,
-                    commandType: CommandType.StoredProcedure);
-            }
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@id", id);
+            return await _connection.QuerySingleOrDefaultAsync<Clinic>("sp_GetClinicById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<int> Update(Clinic clinic)
         {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                await connection.OpenAsync();
-                //SqlTransaction sqltrans = connection.BeginTransaction();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@Name", clinic.Name);
-                dynamicParameters.Add("@Address", clinic.Address);
-                dynamicParameters.Add("@Id", clinic.Id);
-                dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-                await connection.ExecuteAsync("sp_UpdateClinic", dynamicParameters, commandType: CommandType.StoredProcedure);
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Name", clinic.Name);
+            dynamicParameters.Add("@Address", clinic.Address);
+            dynamicParameters.Add("@Id", clinic.Id);
+            dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_UpdateClinic", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
-                int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
-                return updatedCounter;
-            }
+            int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
+            _transaction.Commit();
+            return updatedCounter;
         }
     }
 }

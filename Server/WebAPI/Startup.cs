@@ -46,6 +46,7 @@ namespace WebAPI
             services.AddTransient<IPaymentService, PaymentService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IDoctorService, DoctorService>();
+            services.AddTransient<IPrescriptionListService, PrescriptionListService>();
 
             services.AddSingleton(s => AutoMapperConfig.Instance);
 
@@ -231,6 +232,14 @@ namespace WebAPI
                     new Appointment { CabinetId=3, Date=DateTime.Now, Description="appointment details 4", DoctorId=1, PatientId=2, PrescriptionId=4, Status=4 }
                 };
 
+                List<PrescriptionList> prescriptionLists = new List<PrescriptionList>
+                {
+                    new PrescriptionList { ProcedureId = 1, DrugId = 1, PrescriptionId = 1},
+                    new PrescriptionList { ProcedureId = 2, DrugId = 3, PrescriptionId = 2},
+                    new PrescriptionList { ProcedureId = 3, DrugId = 4, PrescriptionId = 3},
+                    new PrescriptionList { ProcedureId = 4, DrugId = 5, PrescriptionId = 1},
+                    new PrescriptionList { ProcedureId = 5, DrugId = 2, PrescriptionId = 2},
+                };
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
                 context.Database.Migrate();
@@ -312,7 +321,12 @@ namespace WebAPI
                     context.Appointments.AddRange(appointments);
                     context.SaveChanges();
                 }
-                
+
+                if (!context.PrescriptionLists.Any())
+                {
+                    context.PrescriptionLists.AddRange(prescriptionLists);
+                    context.SaveChanges();
+                }
             }
         }
     }

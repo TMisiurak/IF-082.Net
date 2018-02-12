@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/Prescription")]
+    [Route("api/[controller]")]
     public class PrescriptionController : Controller
     {
         private readonly IMapper _iMapper;
@@ -42,6 +42,14 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> CreatePrescription([FromBody]PrescriptionDTO prescriptionDTO)
         {
             int result = await _servPrescription.Create(prescriptionDTO);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin, doctor")]
+        [HttpPut]
+        public async Task<IActionResult> UpdatePrescription([FromBody]PrescriptionDTO prescriptionDTO)
+        {
+            int result = await _servPrescription.Update(prescriptionDTO);
             return Ok(result);
         }
 

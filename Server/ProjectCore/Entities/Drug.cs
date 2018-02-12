@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectCore.Entities
 {
@@ -8,5 +9,7 @@ namespace ProjectCore.Entities
         public int Id { get; set; }
         [Required, Range(2, 200)]
         public string DrugName { get; set; }
+
+        public IList<PrescriptionList> PrescriptionLists { get; set; }
     }
 }

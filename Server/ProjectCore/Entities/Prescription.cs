@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,5 +24,7 @@ namespace ProjectCore.Entities
         public Diagnosis Diagnosis { get; set; }
 
         public virtual Payment Payment { get; set; }
+
+        public IList<PrescriptionList> PrescriptionLists { get; set; }
     }
 }

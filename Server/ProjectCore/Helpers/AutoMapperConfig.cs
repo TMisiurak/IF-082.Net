@@ -39,6 +39,7 @@ namespace ProjectCore.Helpers
                 config.AddProfile<PaymentDTOProfile>();
                 config.AddProfile<DoctorDTOProfile>();
                 config.AddProfile<AppointmentDTOProfile>();
+                config.AddProfile<PrescriptionListDTOProfile>();
             });
 
             _instance = autoMapperConfig.CreateMapper();

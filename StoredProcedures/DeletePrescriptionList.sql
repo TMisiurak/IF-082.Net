@@ -1,0 +1,26 @@
+﻿USE [ClinicDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_DeletePrescriptionList]
+GO
+
+CREATE PROCEDURE [dbo].[sp_DeletePrescriptionList]
+	@Id int
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+	
+	DELETE FROM PrescriptionLists WHERE Id = @Id
+
+	RETURN @@ROWCOUNT
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO

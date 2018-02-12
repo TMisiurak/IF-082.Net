@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -9,6 +9,8 @@ import { CoreModule } from './core/core.module';
 import { GuestModule } from './guest/guest.module';
 
 import { AppComponent } from './app.component';
+
+import { LoginGuard } from './_guards/login.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -22,9 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
 
     AppRoutingModule
   ],
-  providers: [],
+  providers: [LoginGuard],
   bootstrap: [AppComponent],
-  exports: [AppComponent],
-  entryComponents: [AppComponent]
 })
 export class AppModule { }

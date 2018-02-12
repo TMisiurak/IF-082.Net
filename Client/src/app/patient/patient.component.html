@@ -1,1 +1,7 @@
-patient
+<div *ngIf="done">
+    {{patientInfo.fullName}}<br />
+    {{patientInfo.address}}<br />
+    {{patientInfo.email}}<br />
+    {{patientInfo.phoneNumber}}
+</div>
+<button (click)="signOut()">Sign Out</button>

@@ -7,7 +7,8 @@ import { LoginGuard } from './_guards/login.guard';
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '', loadChildren: './guest/guest.module#GuestModule' },
-    { path: 'patient', loadChildren: './patient/patient.module#PatientModule'/* , canActivate: [LoginGuard] */ },
+    { path: 'patient', loadChildren: './patient/patient.module#PatientModule', canActivate: [LoginGuard] },
+    { path: 'registry', loadChildren: './registry/registry.module#RegistryModule', canActivate: [LoginGuard] },
     { path: '**', component: NotFoundComponent }
 ];
 

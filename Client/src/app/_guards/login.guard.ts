@@ -7,7 +7,8 @@ export class LoginGuard implements CanActivate {
 	constructor( private router: Router ){ }
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-		if(localStorage.getItem('token') && JSON.parse(localStorage.getItem('token')).access_token){
+		if(localStorage.getItem('admin') || localStorage.getItem('patient') ||
+				localStorage.getItem('doctor') || localStorage.getItem('accountant')){
 			return true;
 		}
 		this.router.navigate(['/login']);

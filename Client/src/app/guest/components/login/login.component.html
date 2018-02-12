@@ -1,1 +1,18 @@
-login
+<div id="loginForm">
+	<h1>Welcome</h1>	
+	<form action="#">
+		<div class="buttons btn-group btn-group-justified" role="group" aria-label="...">
+			<div class="btn-group" role="group">
+				<button type="button" class="btn btn-primary">Sign In</button>
+			</div>
+			<div class="btn-group" role="group">
+				<button type="button" class="btn btn-default" routerLink="/register">Registration</button>
+			</div>
+		</div>		
+		<input type="text" name="email" placeholder="Email" [(ngModel)]="userCredentials.email" /><br />
+		<input type="password" name="pass" placeholder="Password" [(ngModel)]="userCredentials.password" /><br />
+		<div class="confirmation">
+			<button type="button" class="btn btn-primary" (click)="signIn(credentials(userCredentials))">Sign In</button>
+		</div>
+	</form>
+</div>

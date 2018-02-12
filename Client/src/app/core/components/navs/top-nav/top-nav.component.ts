@@ -6,11 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top-nav.component.scss']
 })
 export class TopNavComponent implements OnInit {
-  menuItems = [
-    'Heroes',
-    'Villains',
-    'Other'
-  ]
 
   constructor() { }
 

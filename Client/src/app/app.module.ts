@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { CoreModule } from './core/core.module';
-import { GuestModule } from './guest/guest.module';
 
 import { AppComponent } from './app.component';
 
@@ -20,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule, CommonModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule,
-    CoreModule, GuestModule,
+    CoreModule,
 
     AppRoutingModule
   ],

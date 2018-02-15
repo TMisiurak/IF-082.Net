@@ -31,5 +31,17 @@ namespace DAL.EF
               .HasAlternateKey(c => c.Email)
               .HasName("AlternateKey_Email");
         }
+
+        //private readonly string _connString;
+
+        //public ClinicContext(string connString)
+        //{
+        //    _connString = connString;
+        //}
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(_connString);
+        //}
     }
 }

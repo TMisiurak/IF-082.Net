@@ -5,7 +5,7 @@ import { NotFoundComponent } from './core/components/info-pages/errors/not-found
 import { LoginGuard } from './_guards/login.guard';
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '', redirectTo: 'guest', pathMatch: 'full' },
     { path: '', loadChildren: './guest/guest.module#GuestModule' },
     { path: 'patient', loadChildren: './patient/patient.module#PatientModule', canActivate: [LoginGuard] },
     { path: 'registry', loadChildren: './registry/registry.module#RegistryModule', canActivate: [LoginGuard] },

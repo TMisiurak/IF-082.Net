@@ -22,17 +22,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 		private checkTokenService: CheckTokenService ){ }
 
 	ngOnInit(){
-		if(localStorage.getItem('admin')){
-			this.router.navigate(['/registry']);		
-		}else if(localStorage.getItem('patient')){
-			this.router.navigate(['/patient']);	
-		}else if(localStorage.getItem('doctor')){
-			this.router.navigate(['/doctor']);	
-		}else if(localStorage.getItem('accountant')){
-			this.router.navigate(['/accountant']);	
-		}else{
-			this.router.navigate(['/login']);	
-		}
 	}
 
 	credentials(userCredentials: UserCredentials): string{

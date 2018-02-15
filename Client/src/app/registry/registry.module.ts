@@ -8,6 +8,7 @@ import { RegistryRoutingModule } from './registry-routing.module';
 @NgModule({
   imports: [
     CommonModule,
+    
     RegistryRoutingModule
   ],
   declarations: [RegistryComponent]

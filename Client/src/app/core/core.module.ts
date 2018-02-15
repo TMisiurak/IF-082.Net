@@ -12,6 +12,7 @@ import { FooterNavComponent } from './components/navs/footer-nav/footer-nav.comp
 import { JwtDecoderService } from './_services/jwt-decoder.service';
 import { GetUserService } from './_services/get-user.service';
 import { CheckTokenService } from './_services/check-token.service';
+import { AssignTopNavService } from './_services/assign-top-nav.service';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
  
@@ -21,7 +22,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   ],
   exports: [HeaderComponent, FooterComponent, TopNavComponent, NotFoundComponent, FooterNavComponent],
   declarations: [HeaderComponent, FooterComponent, TopNavComponent, NotFoundComponent, FooterNavComponent],
-  providers: [JwtDecoderService, GetUserService, CheckTokenService]
+  providers: [JwtDecoderService, GetUserService, CheckTokenService, AssignTopNavService]
 })
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {

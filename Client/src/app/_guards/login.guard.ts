@@ -11,7 +11,7 @@ export class LoginGuard implements CanActivate {
 				localStorage.getItem('doctor') || localStorage.getItem('accountant')){
 			return true;
 		}
-		this.router.navigate(['/login']);
+		this.router.navigate(['/guest/login']);
         return false;
 	}
 }

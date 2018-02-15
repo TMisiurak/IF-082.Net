@@ -17,13 +17,12 @@
       </li>
       <li class="nav-item dropdown" *ngIf="topNav[2][0].profile != null">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <div *ngIf="topNav[2][0].profile">
-            {{topNav[2][0].profile}}
-          </div>
+          {{topNav[2][0].profile.email}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          df
-          <a class="nav-link" *ngFor="let i of topNav[1]" [routerLink]="[i.link1, i.link2]">{{i.name}}</a>
+          <a class="dropdown-item" *ngFor="let i of topNav[1]" [routerLink]="[i.link1, i.link2]">{{i.name}}</a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" (click)="signOut()">Sign Out</button>
         </div>
       </li>
     </ul>

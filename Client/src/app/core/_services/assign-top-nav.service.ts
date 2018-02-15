@@ -16,7 +16,7 @@ export class AssignTopNavService {
         {link1: "guest", link2: "register", name: "Sign Up"}
       ],
       [
-        {profile: 0, name: 0}
+        {profile: null, name: ""}
       ]
     ]
   );

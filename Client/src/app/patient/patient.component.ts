@@ -18,7 +18,6 @@ import { Patient } from './_shared/models/patient';
 export class PatientComponent implements OnInit, OnDestroy {
   private httpSubscription: Subscription;
   public patientInfo: any = [];
-  public nick: string = "";
   public done: boolean = false;
   private topNav: any = [
     [
@@ -43,9 +42,9 @@ export class PatientComponent implements OnInit, OnDestroy {
         data => {
             if(data){
                 this.patientInfo = data;
-                this.nick = this.patientInfo.fullName.slice(0, 2);
-                this.done = true;
+                this.topNav[2][0].profile = data;
                 this.newMenu();
+                this.done = true;
             }else{
                 this.done = false;
             }

@@ -6,10 +6,11 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 
-import { LoginGuard } from './_guards/login.guard';
+import { LoginGuard } from './core/_guards/login.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -19,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule, CommonModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule,
-    CoreModule,
+    CoreModule, SharedModule,
 
     AppRoutingModule
   ],

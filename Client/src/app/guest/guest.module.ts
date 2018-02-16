@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { SharedModule } from '../shared/shared.module';
  
 import { GuestComponent } from './guest.component';
 import { HomeComponent} from './components/home/home.component';
@@ -14,6 +16,7 @@ import { GuestRoutingModule } from './guest-routing.module';
 @NgModule({
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
+    SharedModule,
     
     GuestRoutingModule
   ],

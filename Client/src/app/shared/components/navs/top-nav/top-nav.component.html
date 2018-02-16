@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="[topNav[0][0].link1, topNav[0][0].link2]">Clinic</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" [routerLink]="[topNav[0][0].link1, topNav[0][0].link2]">{{topNav[0][0].name}} <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" *ngFor="let i of topNav[0]; index as k">
+        <a *ngIf="k > 0" class="nav-link" [routerLink]="[i.link1, i.link2]">{{i.name}}</a>
+      </li>
+      <li class="nav-item" *ngFor="let i of topNav[1]">
+        <a *ngIf="topNav[2][0].profile == null" class="nav-link" [routerLink]="[i.link1, i.link2]">{{i.name}}</a>
+      </li>
+      <li class="nav-item dropdown" *ngIf="topNav[2][0].profile != null">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{topNav[2][0].profile.email}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" *ngFor="let i of topNav[1]" [routerLink]="[i.link1, i.link2]">{{i.name}}</a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" (click)="signOut()">Sign Out</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

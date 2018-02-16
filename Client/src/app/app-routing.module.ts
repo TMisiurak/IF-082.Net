@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotFoundComponent } from './core/components/info-pages/errors/not-found/not-found.component';
-import { LoginGuard } from './_guards/login.guard';
+import { NotFoundComponent } from './shared/components/info-pages/errors/not-found/not-found.component';
+import { LoginGuard } from './core/_guards/login.guard';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'guest', pathMatch: 'full' },

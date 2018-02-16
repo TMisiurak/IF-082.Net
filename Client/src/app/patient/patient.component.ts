@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 import { NgModel } from '@angular/forms';
+
+import { Subscription } from 'rxjs/Subscription';
 
 import { GetUserService } from '../core/_services/get-user.service';
 import { CheckTokenService } from '../core/_services/check-token.service';

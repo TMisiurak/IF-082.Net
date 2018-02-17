@@ -1,18 +1,23 @@
-<div id="loginForm">
-	<h1>Welcome</h1>	
-	<form action="#" (keyup.enter)="signIn(credentials(userCredentials))">
-		<div class="buttons btn-group btn-group-justified" role="group" aria-label="...">
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-primary">Sign In</button>
+<div id="loginForm" class="row">
+		<form action="#" (keyup.enter)="signIn(credentials(userCredentials))">
+	
+			<div id="mainText">
+			  <h1 class="titleText">Sign In</h1>
 			</div>
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-default" routerLink="/register">Registration</button>
+	
+			<div class="inputFild col-xs-12 col-md-12">
+			  <label for="inputEmail">Your Email: </label>
+			  <input type="text" id="inputEmail" class="form" name="email" placeholder="Email" [(ngModel)]="userCredentials.email"/>
 			</div>
-		</div>		
-		<input type="text" name="email" placeholder="Email" [(ngModel)]="userCredentials.email" /><br />
-		<input type="password" name="pass" placeholder="Password" [(ngModel)]="userCredentials.password" /><br />
-		<div class="confirmation">
-			<button type="button" class="btn btn-primary" (click)="signIn(credentials(userCredentials))">Sign In</button>
-		</div>
-	</form>
-</div>
+	
+			<div class="inputFild col-xs-12 col-md-12">
+			  <label for="inputPassword">Your Password: </label>
+			  <input type="password" id="inputPassword" class="form" name="pass" placeholder="Password" [(ngModel)]="userCredentials.password"/>
+			</div>
+
+			<div class="click col-xs-12  col-sm-12  col-md-12  col-lg-12" >
+			  <button type="button" class="btn btn-primary mybtn" (click)="signIn(credentials(userCredentials))">Sign In</button>
+			</div>
+		</form>
+	</div>
+	

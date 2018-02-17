@@ -1,36 +1,49 @@
 #loginForm {
-	width: 271px;
+	width: 300px;
 	margin: 20px auto;
 	padding: 0px;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 }
 h1 {
-	padding: 10px;
-	font-size: 1.2rem;
-	color: white;
-	border-radius: 4px;	
-	background: linear-gradient(to top, #c6503B, #f6806B);
+  font-family: Helvetica;
+  padding: 10px;
+  font-size: 1.8rem;
+  color: black;
+  margin-bottom: 10px;
 }
+
 form {	
 	margin-top: 20px;
 	padding: 20px;
 	border-radius: 4px;
 	background-color: #F4F4F4;
 }
-[type="text"], [type="password"] {
-	box-sizing: border-box;
-	width: 100%;
-	height: 40px;
-	font-family: Arial, Helvetica, sans-serif;	
-	font-size: 0.9rem;
-	border-width: 0px 0px 1px;
-	border-color: #c1c1c1;
-	background-color: transparent;
+
+.inputFild {
+  margin-bottom: 5%;
+  text-align: left;
 }
-.buttons {
-	margin-bottom: 15px;
+
+#mainText {
+  margin-left: auto;
+  margin-right: auto;
 }
-.confirmation {
-	margin-top: 25px;
+
+.form{
+  width: 100%;
+  height: 25px;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+  border-width: 0px 0px 1px;
+  border-color: #c1c1c1;
+  background-color: transparent;
+}
+
+button {
+  width: 100%;
 }

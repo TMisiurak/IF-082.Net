@@ -23,7 +23,8 @@ namespace DAL.Repositories.DapperRepositories
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@UserId", patient.UserId);
             dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-            var result = await _connection.ExecuteAsync("sp_CreatePatient", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            await _connection.ExecuteAsync("sp_CreatePatient", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int createdId = dynamicParameters.Get<int>("@CreatedId");
             return createdId;

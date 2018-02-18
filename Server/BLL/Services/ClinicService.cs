@@ -23,7 +23,7 @@ namespace BLL.Services
         public async Task<int> Create(ClinicDTO clinicDTO)
         {
             int result = await DataBase.Clinics.Create(_mapper.Map<Clinic>(clinicDTO));
-            DataBase.Commit();
+            DataBase.Commit(result);
             return result;
         }
 

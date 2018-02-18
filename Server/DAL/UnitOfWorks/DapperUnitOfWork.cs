@@ -20,15 +20,16 @@ namespace DAL.UnitOfWorks
         private DiagnosisRepoDapper _diagnosisRepository;
         private RoomRepoDapper _roomRepository;
         private PrescriptionRepoDapper _prescriptionRepository;
+        private PrescriptionListRepoDapper _prescriptionListRepository;
         private DrugRepoDapper _drugRepository;
         private PatientRepoDapper _patientRepository;
         private PaymentRepoDapper _paymentRepository;
         private AppointmentRepoDapper _appointmentRepository;
         private DoctorRepoDapper _doctorRepository;
 
-        public DapperUnitOfWork(string connectionString)
+        public DapperUnitOfWork(SqlConnection connection)
         {
-            _connection = new SqlConnection(connectionString);
+            _connection = connection;
             _connection.Open();
             _transaction = _connection.BeginTransaction();
         }
@@ -73,6 +74,11 @@ namespace DAL.UnitOfWorks
             get { return _prescriptionRepository ?? (_prescriptionRepository = new PrescriptionRepoDapper(_transaction)); }
         }
 
+        public IRepository<PrescriptionList> PrescriptionLists
+        {
+            get { return _prescriptionListRepository ?? (_prescriptionListRepository = new PrescriptionListRepoDapper(_transaction)); }
+        }
+
         public IRepository<Drug> Drugs
         {
             get { return _drugRepository ?? (_drugRepository = new DrugRepoDapper(_transaction)); }
@@ -104,12 +110,19 @@ namespace DAL.UnitOfWorks
         {
             try
             {
-                _transaction.Commit();
+                if (result > 0)
+                {
+                    _transaction.Commit();
+                }
+                else
+                {
+                    throw new Exception("Bad Transaction Commit");
+                }
             }
             catch
             {
                 _transaction.Rollback();
-                throw;
+                //throw;
             }
             finally
             {

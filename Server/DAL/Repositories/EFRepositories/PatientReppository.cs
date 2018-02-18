@@ -11,7 +11,7 @@ namespace DAL.Repositories.EFRepositories
 {
     public class PatientRepository : IRepository<Patient>
     {
-        private ClinicContext _db;
+        private readonly ClinicContext _db;
 
         public PatientRepository(ClinicContext db)
         {
@@ -20,7 +20,7 @@ namespace DAL.Repositories.EFRepositories
 
         public async Task<int> Create(Patient patient)
         {
-            var param = new SqlParameter
+            var createdId = new SqlParameter
             {
                 ParameterName = "@CreatedId",
                 SqlDbType = SqlDbType.Int,
@@ -28,8 +28,8 @@ namespace DAL.Repositories.EFRepositories
             };
 
             string sql = $"exec @CreatedId = sp_CreatePatient @UserId = {patient.UserId}";
-            int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
-            return (int)param.Value;
+            await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
+            return (int)createdId.Value;
         }
 
         public async Task<IList<Patient>> GetAll()

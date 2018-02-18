@@ -22,7 +22,7 @@ namespace DAL.Repositories.DapperRepositories
         {
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Address", user.Address);
-            dynamicParameters.Add("@BirthDay", user.BirthDay.ToString("yyyy-MM-dd"));
+            dynamicParameters.Add("@BirthDay", user.BirthDay);
             dynamicParameters.Add("@Email", user.Email);
             dynamicParameters.Add("@FullName", user.FullName);
             dynamicParameters.Add("@Image", user.Image);
@@ -31,10 +31,10 @@ namespace DAL.Repositories.DapperRepositories
             dynamicParameters.Add("@Sex", user.Sex);
             dynamicParameters.Add("@RoleId", user.RoleId);
             dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-            var result = await _connection.ExecuteAsync("sp_CreateUser", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            await _connection.ExecuteAsync("sp_CreateUser", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int createdId = dynamicParameters.Get<int>("@CreatedId");
-            _transaction.Commit();
             return createdId;
         }
 
@@ -43,10 +43,10 @@ namespace DAL.Repositories.DapperRepositories
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", id);
             dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
             var result = await _connection.ExecuteAsync("sp_DeleteUser", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int resetId = dynamicParameters.Get<int>("@ResId");
-            _transaction.Commit();
             return resetId;
         }
 
@@ -60,21 +60,23 @@ namespace DAL.Repositories.DapperRepositories
         {
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Email", email);
-            return await _connection.QuerySingleOrDefaultAsync<User>("sp_GetUserByEmail", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            User user = await _connection.QuerySingleOrDefaultAsync<User>("sp_GetUserByEmail", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            return user;
         }
 
         public async Task<User> GetById(int id)
         {
             var dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("@id", id);
-            return await _connection.QuerySingleOrDefaultAsync<User>("sp_GetUserById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            dynamicParameters.Add("@Id", id);
+            User user = await _connection.QuerySingleOrDefaultAsync<User>("sp_GetUserById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            return user;
         }
 
         public async Task<int> Update(User user)
         {
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Address", user.Address);
-            dynamicParameters.Add("@BirthDay", user.BirthDay.ToString("yyyy-MM-dd"));
+            dynamicParameters.Add("@BirthDay", user.BirthDay);
             dynamicParameters.Add("@Email", user.Email);
             dynamicParameters.Add("@FullName", user.FullName);
             dynamicParameters.Add("@Image", user.Image);
@@ -84,10 +86,10 @@ namespace DAL.Repositories.DapperRepositories
             dynamicParameters.Add("@RoleId", user.RoleId);
             dynamicParameters.Add("@Id", user.Id);
             dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-            var result = await _connection.ExecuteAsync("sp_UpdateUser", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            await _connection.ExecuteAsync("sp_UpdateUser", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
-            _transaction.Commit();
             return updatedCounter;
         }
     }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data.SqlClient;
 
 namespace IdentityServer
 {
@@ -23,9 +24,17 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-            services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddScoped<IUnitOfWork>(provider =>
+            {
+                if (Configuration["MyORM"] == "EF")
+                {
+                    return new EFUnitOfWork(new ClinicContext(Configuration.GetConnectionString("DefaultConnection")));
+                }
+                else
+                {
+                    return new DapperUnitOfWork(new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
+                }
+            });
             services.AddTransient<IProfileService, UserProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, UserResourceOwnerPasswordValidator>();
             

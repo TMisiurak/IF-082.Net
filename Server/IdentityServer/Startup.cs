@@ -23,7 +23,8 @@ namespace IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IProfileService, UserProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, UserResourceOwnerPasswordValidator>();

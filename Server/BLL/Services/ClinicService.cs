@@ -3,6 +3,7 @@ using BLL.Interfaces;
 using DAL.Interfaces;
 using ProjectCore.DTO;
 using ProjectCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,6 +23,7 @@ namespace BLL.Services
         public async Task<int> Create(ClinicDTO clinicDTO)
         {
             int result = await DataBase.Clinics.Create(_mapper.Map<Clinic>(clinicDTO));
+            DataBase.Commit();
             return result;
         }
 

@@ -13,6 +13,18 @@ namespace DAL.UnitOfWorks
         private IDbTransaction _transaction;
 
         private ClinicRepoDapper _clinicRepository;
+        private UserRepoDapper _userRepository;
+        private RoleRepoDapper _roleRepository;
+        private DepartmentRepoDapper _departmentRepository;
+        private ProcedureRepoDapper _procedureRepository;
+        private DiagnosisRepoDapper _diagnosisRepository;
+        private RoomRepoDapper _roomRepository;
+        private PrescriptionRepoDapper _prescriptionRepository;
+        private DrugRepoDapper _drugRepository;
+        private PatientRepoDapper _patientRepository;
+        private PaymentRepoDapper _paymentRepository;
+        private AppointmentRepoDapper _appointmentRepository;
+        private DoctorRepoDapper _doctorRepository;
 
         public DapperUnitOfWork(string connectionString)
         {
@@ -26,29 +38,65 @@ namespace DAL.UnitOfWorks
             get { return _clinicRepository ?? (_clinicRepository = new ClinicRepoDapper(_transaction)); }
         }
 
-        public IRepository<Role> Roles => throw new NotImplementedException();
+        public IRepository<Role> Roles
+        {
+            get { return _roleRepository ?? (_roleRepository = new RoleRepoDapper(_transaction)); }
+        }
 
-        public IUserRepository Users => throw new NotImplementedException();
+        public IUserRepository Users
+        {
+            get { return _userRepository ?? (_userRepository = new UserRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Department> Departments => throw new NotImplementedException();
+        public IRepository<Department> Departments
+        {
+            get { return _departmentRepository ?? (_departmentRepository = new DepartmentRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Procedure> Procedures => throw new NotImplementedException();
+        public IRepository<Procedure> Procedures
+        {
+            get { return _procedureRepository ?? (_procedureRepository = new ProcedureRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Diagnosis> Diagnoses => throw new NotImplementedException();
+        public IRepository<Diagnosis> Diagnoses
+        {
+            get { return _diagnosisRepository ?? (_diagnosisRepository = new DiagnosisRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Room> Rooms => throw new NotImplementedException();
+        public IRepository<Room> Rooms
+        {
+            get { return _roomRepository ?? (_roomRepository = new RoomRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Prescription> Prescriptions => throw new NotImplementedException();
+        public IRepository<Prescription> Prescriptions
+        {
+            get { return _prescriptionRepository ?? (_prescriptionRepository = new PrescriptionRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Drug> Drugs => throw new NotImplementedException();
+        public IRepository<Drug> Drugs
+        {
+            get { return _drugRepository ?? (_drugRepository = new DrugRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Patient> Patients => throw new NotImplementedException();
+        public IRepository<Patient> Patients
+        {
+            get { return _patientRepository ?? (_patientRepository = new PatientRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Payment> Payments => throw new NotImplementedException();
+        public IRepository<Payment> Payments
+        {
+            get { return _paymentRepository ?? (_paymentRepository = new PaymentRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Appointment> Appointments => throw new NotImplementedException();
+        public IRepository<Appointment> Appointments
+        {
+            get { return _appointmentRepository ?? (_appointmentRepository = new AppointmentRepoDapper(_transaction)); }
+        }
 
-        public IRepository<Doctor> Doctors => throw new NotImplementedException();
+        public IRepository<Doctor> Doctors
+        {
+            get { return _doctorRepository ?? (_doctorRepository = new DoctorRepoDapper(_transaction)); }
+        }
 
         public void Commit()
         {

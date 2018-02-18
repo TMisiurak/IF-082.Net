@@ -21,9 +21,6 @@ namespace DAL.Repositories
             _db = db;
         }
 
-
-
-
         public async Task<int> Create(Payment payment)
         {
             var param = new SqlParameter

@@ -1,6 +1,7 @@
 ﻿using DAL.EF;
 using DAL.Interfaces;
 using DAL.Repositories.EFRepositories;
+using Microsoft.EntityFrameworkCore.Storage;
 using ProjectCore.Entities;
 
 namespace DAL.UnitOfWorks
@@ -8,6 +9,8 @@ namespace DAL.UnitOfWorks
 
     public class EFUnitOfWork : IUnitOfWork
     {
+        private IDbContextTransaction _transaction;
+
         private ClinicContext db;
         private RoleRepository roleRepository;
         private UserRepository userRepository;
@@ -26,7 +29,9 @@ namespace DAL.UnitOfWorks
         public EFUnitOfWork(ClinicContext context)
         {
             db = context;
+            _transaction = db.Database.BeginTransaction();
         }
+
         public IRepository<Role> Roles
         {
             get
@@ -154,6 +159,24 @@ namespace DAL.UnitOfWorks
                 if (doctorRepository == null)
                     doctorRepository = new DoctorRepository(db);
                 return doctorRepository;
+            }
+        }
+
+        public void Commit()
+        {
+            try
+            {
+                _transaction.Commit();
+            }
+            catch
+            {
+                _transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                _transaction.Dispose();
+                db.Dispose();
             }
         }
     }

@@ -8,20 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
 using ProjectCore.Entities;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DAL.Repositories.EFRepositories
 {
     public class PatientRepository : IRepository<Patient>
     {
-        private readonly ClinicContext _db;
+        private ClinicContext _db;
 
         public PatientRepository(ClinicContext db)
         {
             _db = db;
         }
-
-
-       
 
         public async Task<int> Create(Patient patient)
         {
@@ -36,8 +34,6 @@ namespace DAL.Repositories.EFRepositories
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
-
-
 
         public async Task<IList<Patient>> GetAll()
         {
@@ -58,7 +54,6 @@ namespace DAL.Repositories.EFRepositories
             int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
-
 
         public async Task<Patient> GetById(int id)
         {

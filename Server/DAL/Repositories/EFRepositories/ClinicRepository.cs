@@ -5,17 +5,18 @@ using System.Threading.Tasks;
 using DAL.EF;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using ProjectCore.Entities;
 
 namespace DAL.Repositories.EFRepositories
 {
     public class ClinicRepository : IRepository<Clinic>
     {
-        private readonly ClinicContext _db;
+        private ClinicContext _db;
 
-        public ClinicRepository(ClinicContext context)
+        public ClinicRepository(ClinicContext db)
         {
-            _db = context;
+            _db = db;
         }
 
         public async Task<int> Create(Clinic clinic)

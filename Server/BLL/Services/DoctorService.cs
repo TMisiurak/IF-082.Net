@@ -38,7 +38,6 @@ namespace BLL.Services
         {
             int result = await DataBase.Doctors.Create(_mapper.Map<Doctor>(doctorDTO));
             return result;
-
         }
 
         public async Task<int> Update(DoctorDTO doctorDTO)

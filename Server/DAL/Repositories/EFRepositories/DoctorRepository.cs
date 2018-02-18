@@ -18,7 +18,6 @@ namespace DAL.Repositories.EFRepositories
             _db = db;
         }
 
-
         public async Task<int> Create(Doctor doctor)
         {
             var param = new SqlParameter
@@ -34,7 +33,6 @@ namespace DAL.Repositories.EFRepositories
             return (int)param.Value;
         }
 
-
         public async Task<int> Delete(int id)
         {
             var delCounter = new SqlParameter
@@ -49,12 +47,10 @@ namespace DAL.Repositories.EFRepositories
             return (int)delCounter.Value;
         }
 
-
         public async Task<IList<Doctor>> GetAll()
         {
             return await _db.Doctors.FromSql("sp_GetAllDoctors").ToListAsync();
         }
-
 
         public async Task<Doctor> GetById(int id)
         {
@@ -62,7 +58,6 @@ namespace DAL.Repositories.EFRepositories
             Doctor doctor = await _db.Doctors.FromSql($"sp_GetDoctorById @Id", param).FirstOrDefaultAsync();
             return doctor;
         }
-
 
         public async Task<int> Update(Doctor doctor)
         {

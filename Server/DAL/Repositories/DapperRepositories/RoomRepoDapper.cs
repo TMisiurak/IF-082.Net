@@ -19,24 +19,40 @@ namespace DAL.Repositories.DapperRepositories
             _transaction = transaction;
         }
 
-        public Task<int> Create(Room item)
+        public async Task<int> Create(Room room)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Name", room.Name);
+            dynamicParameters.Add("@Number", room.Number);
+            dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_CreateRoom", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int createdId = dynamicParameters.Get<int>("@CreatedId");
+            return createdId;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Id", id);
+            dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_DeleteRoom", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int resetId = dynamicParameters.Get<int>("@ResId");
+            return resetId;
         }
 
-        public Task<IList<Room>> GetAll()
+        public async Task<IList<Room>> GetAll()
         {
-            throw new System.NotImplementedException();
+            var result = await _connection.QueryAsync<Room>("sp_GetAllRooms", 0, _transaction, commandType: CommandType.StoredProcedure);
+            return result.ToList();
         }
 
-        public Task<Room> GetById(int id)
+        public async Task<Room> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@id", id);
+            return await _connection.QuerySingleOrDefaultAsync<Room>("sp_GetRoomById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
         }
 
         public Task<int> Update(Room item)

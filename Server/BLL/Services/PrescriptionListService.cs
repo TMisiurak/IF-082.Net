@@ -23,12 +23,14 @@ namespace BLL.Services
         public async Task<int> Create(PrescriptionListDTO prescriptionListDTO)
         {
             int result = await _unitOfWork.PrescriptionLists.Create(_mapper.Map<PrescriptionList>(prescriptionListDTO));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
             int result = await _unitOfWork.PrescriptionLists.Delete(id);
+            _unitOfWork.Commit();
             return result;
         }
 
@@ -49,6 +51,7 @@ namespace BLL.Services
         public async Task<int> Update(PrescriptionListDTO prescriptionListDTO)
         {
             int result = await _unitOfWork.PrescriptionLists.Update(_mapper.Map<PrescriptionList>(prescriptionListDTO));
+            _unitOfWork.Commit();
             return result;
         }
     }

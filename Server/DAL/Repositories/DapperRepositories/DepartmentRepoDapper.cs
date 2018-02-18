@@ -19,29 +19,53 @@ namespace DAL.Repositories.DapperRepositories
             _transaction = transaction;
         }
 
-        public Task<int> Create(Department item)
+        public async Task<int> Create(Department department)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Name", department.Name);
+            dynamicParameters.Add("@ClinicId", department.ClinicId);
+            dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_CreateDepartment", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int createdId = dynamicParameters.Get<int>("@CreatedId");
+            return createdId;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Id", id);
+            dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_DeleteDepartment", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int resetId = dynamicParameters.Get<int>("@ResId");
+            return resetId;
         }
 
-        public Task<IList<Department>> GetAll()
+        public async Task<IList<Department>> GetAll()
         {
-            throw new System.NotImplementedException();
+            var result = await _connection.QueryAsync<Department>("sp_GetAllDepartments", 0, _transaction, commandType: CommandType.StoredProcedure);
+            return result.ToList();
         }
 
-        public Task<Department> GetById(int id)
+        public async Task<Department> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@id", id);
+            return await _connection.QuerySingleOrDefaultAsync<Department>("sp_GetDepartmentById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
         }
 
-        public Task<int> Update(Department item)
+        public async Task<int> Update(Department department)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Name", department.Name);
+            dynamicParameters.Add("@ClinicId", department.ClinicId);
+            dynamicParameters.Add("@Id", department.Id);
+            dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_UpdateDepartment", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
+            return updatedCounter;
         }
     }
 }

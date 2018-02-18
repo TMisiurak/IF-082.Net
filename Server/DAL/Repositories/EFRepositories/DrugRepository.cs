@@ -18,7 +18,6 @@ namespace DAL.Repositories.EFRepositories
             _db = context;
         }
 
-
         public async Task<int> Create(Drug drug)
         {
             var param = new SqlParameter

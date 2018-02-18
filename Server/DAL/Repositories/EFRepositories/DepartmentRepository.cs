@@ -18,7 +18,6 @@ namespace DAL.Repositories.EFRepositories
             _db = db;
         }
 
-
         public async Task<int> Create(Department department)
         {
             var param = new SqlParameter
@@ -33,8 +32,6 @@ namespace DAL.Repositories.EFRepositories
             return (int)param.Value;
            
         }
-
-
 
         public async Task<int> Delete(int id)
         {
@@ -51,14 +48,10 @@ namespace DAL.Repositories.EFRepositories
             return (int)param.Value;
         }
 
-
-
         public async Task<IList<Department>> GetAll()
         {
             return await _db.Departments.FromSql("sp_GetAllDepartments").ToListAsync();
         }
-
-
 
         public async Task<Department> GetById(int id)
         {

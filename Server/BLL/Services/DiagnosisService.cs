@@ -22,12 +22,14 @@ namespace BLL.Services
         public async Task<int> Create(DiagnosisDTO diagnosisDTO)
         {
             int result = await DataBase.Diagnoses.Create(_mapper.Map<Diagnosis>(diagnosisDTO));
+            DataBase.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
             int result = await DataBase.Diagnoses.Delete(id);
+            DataBase.Commit();
             return result;
         }
 
@@ -48,6 +50,7 @@ namespace BLL.Services
         public async Task<int> Update(DiagnosisDTO diagnosisDTO)
         {
             int result = await DataBase.Diagnoses.Update(_mapper.Map<Diagnosis>(diagnosisDTO));
+            DataBase.Commit();
             return result;
         }
     }

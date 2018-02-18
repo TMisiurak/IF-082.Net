@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DAL.EF;
 using DAL.Interfaces;
-
-using System.Threading.Tasks;
-using DAL.EF;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
-using System.Data;
 using ProjectCore.Entities;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
@@ -30,12 +27,10 @@ namespace DAL.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            string sql = $"exec @CreatedId = sp_CreatePayment @PatientId = {payment.PatientId}, @PaymentDate = '{payment.PaymentDate.ToString("yyyy-MM-dd")}', @PaymentType = '{payment.PaymentType}', @PrescriptionId = {payment.PrescriptionId}, @sum = {payment.sum}";
+            string sql = $"exec @CreatedId = sp_CreatePayment @PatientId = {payment.PatientId}, @PaymentDate = '{payment.PaymentDate.ToString("yyyy-MM-dd")}', @PaymentType = '{payment.PaymentType}', @PrescriptionId = {payment.PrescriptionId}, @Sum = {payment.sum}";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
-
-
 
         public async Task<IList<Payment>> GetAll()
         {
@@ -56,7 +51,6 @@ namespace DAL.Repositories
             int result1 = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
-
 
         public async Task<Payment> GetById(int id)
         {
@@ -79,10 +73,6 @@ namespace DAL.Repositories
             //string sql = $"exec @UpdateCounter = dbo.sp_UpdatePatient @UserId = {patient.UserId},  @Id = {patient.Id}";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
             return (int)updateCounter.Value;
-
-
         }
-
-
     }
 }

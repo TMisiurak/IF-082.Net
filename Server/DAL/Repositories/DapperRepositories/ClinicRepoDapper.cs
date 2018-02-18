@@ -38,7 +38,6 @@ namespace DAL.Repositories.DapperRepositories
             var result = await _connection.ExecuteAsync("sp_DeleteClinic", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int resetId = dynamicParameters.Get<int>("@ResId");
-            _transaction.Commit();
             return resetId;
         }
 
@@ -65,7 +64,6 @@ namespace DAL.Repositories.DapperRepositories
             var result = await _connection.ExecuteAsync("sp_UpdateClinic", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
-            _transaction.Commit();
             return updatedCounter;
         }
     }

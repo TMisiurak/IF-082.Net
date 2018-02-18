@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DAL.Interfaces;
 using System.Threading.Tasks;
 using DAL.EF;
@@ -8,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
 using ProjectCore.Entities;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DAL.Repositories.EFRepositories
 {
@@ -74,10 +71,6 @@ namespace DAL.Repositories.EFRepositories
             string sql = $"exec @UpdateCounter = dbo.sp_UpdatePatient @UserId = {patient.UserId},  @Id = {patient.Id}";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
             return (int)updateCounter.Value;
-            
-
         }
-
-        
     }
 }

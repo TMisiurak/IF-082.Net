@@ -23,6 +23,7 @@ namespace BLL.Services
         public async Task<int> Create(DepartmentDTO departmentDTO)
         {
             int result = await Database.Departments.Create(_mapper.Map<Department>(departmentDTO));
+            Database.Commit();
             return result;
         }
 
@@ -59,6 +60,7 @@ namespace BLL.Services
             
 
             int result = await Database.Departments.Update(_mapper.Map<Department>(departmentDTO));
+            Database.Commit();
             return result;
         }
     }

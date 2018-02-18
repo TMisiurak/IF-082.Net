@@ -24,7 +24,8 @@ namespace DAL.Repositories.DapperRepositories
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Name", role.Name);
             dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-            var result = await _connection.ExecuteAsync("sp_CreateRole", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            await _connection.ExecuteAsync("sp_CreateRole", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int createdId = dynamicParameters.Get<int>("@CreatedId");
             return createdId;
@@ -35,10 +36,10 @@ namespace DAL.Repositories.DapperRepositories
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", id);
             dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-            var result = await _connection.ExecuteAsync("sp_DeleteRole", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            await _connection.ExecuteAsync("sp_DeleteRole", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int resetId = dynamicParameters.Get<int>("@ResId");
-            _transaction.Commit();
             return resetId;
         }
 
@@ -51,8 +52,9 @@ namespace DAL.Repositories.DapperRepositories
         public async Task<Role> GetById(int id)
         {
             var dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("@id", id);
-            return await _connection.QuerySingleOrDefaultAsync<Role>("sp_GetRoleById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            dynamicParameters.Add("@Id", id);
+            Role role = await _connection.QuerySingleOrDefaultAsync<Role>("sp_GetRoleById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            return role;
         }
 
         public async Task<int> Update(Role role)
@@ -61,10 +63,10 @@ namespace DAL.Repositories.DapperRepositories
             dynamicParameters.Add("@Name", role.Name);
             dynamicParameters.Add("@Id", role.Id);
             dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-            var result = await _connection.ExecuteAsync("sp_UpdateRole", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            await _connection.ExecuteAsync("sp_UpdateRole", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
             int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
-            _transaction.Commit();
             return updatedCounter;
         }
     }

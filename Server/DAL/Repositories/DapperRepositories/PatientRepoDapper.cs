@@ -18,27 +18,34 @@ namespace DAL.Repositories.DapperRepositories
             _transaction = transaction;
         }
 
-        public Task<int> Create(Patient item)
+        public async Task<int> Create(Patient patient)
+        {
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@UserId", patient.UserId);
+            dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+            await _connection.ExecuteAsync("sp_CreatePatient", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int createdId = dynamicParameters.Get<int>("@CreatedId");
+            return createdId;
+        }
+
+        public async Task<int> Delete(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> Delete(int id)
+        public async Task<IList<Patient>> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<Patient>> GetAll()
+        public async Task<Patient> GetById(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Patient> GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<int> Update(Patient item)
+        public async Task<int> Update(Patient item)
         {
             throw new System.NotImplementedException();
         }

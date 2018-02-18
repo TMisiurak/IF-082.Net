@@ -27,7 +27,7 @@ namespace BLL.Services
         public async Task<int> Create(PatientDTO patientDTO)
         {
             int result = await Database.Patients.Create(_mapper.Map<Patient>(patientDTO));
-            Database.Commit();
+            Database.Commit(result);
             return result;
         }
 

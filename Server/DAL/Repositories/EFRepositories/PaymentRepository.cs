@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 using System.Data;
 using ProjectCore.Entities;
 
-namespace DAL.Repositories
+namespace DAL.Repositories.EFRepositories
 {
     public class PaymentRepository : IRepository<Payment>
     {

@@ -44,7 +44,9 @@ namespace BLL.Services
         public async Task<int> Create(UserDTO userDTO)
         {
             userDTO.Password = HashService.HashPassword(userDTO.Password);
-            int result = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
+            int userId = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
+            int result = await DataBase.Patients.Create(new Patient() { UserId = userId });
+            DataBase.Commit(result);
             return result;
         }
 

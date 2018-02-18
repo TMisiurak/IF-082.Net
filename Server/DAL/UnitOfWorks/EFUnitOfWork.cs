@@ -3,15 +3,16 @@ using DAL.Interfaces;
 using DAL.Repositories.EFRepositories;
 using Microsoft.EntityFrameworkCore.Storage;
 using ProjectCore.Entities;
+using System;
 
 namespace DAL.UnitOfWorks
 {
 
     public class EFUnitOfWork : IUnitOfWork
     {
+        private ClinicContext db;
         private IDbContextTransaction _transaction;
 
-        private ClinicContext db;
         private RoleRepository roleRepository;
         private UserRepository userRepository;
         private ClinicRepository clinicRepository;
@@ -22,7 +23,7 @@ namespace DAL.UnitOfWorks
         private PrescriptionRepository prescriptionRepository;
         private DrugRepository drugRepository;
         private PatientRepository patientRepository;
-        private DAL.Repositories.PaymentRepository paymentRepository;
+        private PaymentRepository paymentRepository;
         private AppointmentRepository appointmentRepository;
         private DoctorRepository doctorRepository;
         private PrescriptionListRepository prescriptionListRepository;
@@ -138,7 +139,7 @@ namespace DAL.UnitOfWorks
             get
             {
                 if (paymentRepository == null)
-                    paymentRepository = new DAL.Repositories.PaymentRepository(db);
+                    paymentRepository = new PaymentRepository(db);
                 return paymentRepository;
             }
         }
@@ -173,21 +174,27 @@ namespace DAL.UnitOfWorks
             }
         }
 
-        public void Commit()
+        public void Commit(int result)
         {
             try
             {
-                _transaction.Commit();
+                if (result > 0)
+                {
+                    _transaction.Commit();
+                }
+                else
+                {
+                    throw new Exception("Bad Transaction Commit");
+                }
             }
             catch
             {
                 _transaction.Rollback();
-                throw;
+                //throw;
             }
             finally
             {
                 _transaction.Dispose();
-                db.Dispose();
             }
         }
     }

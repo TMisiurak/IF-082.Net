@@ -5,6 +5,8 @@ namespace DAL.EF
 {
     public class ClinicContext : DbContext
     {
+        private readonly string _connectionString;
+
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -19,10 +21,15 @@ namespace DAL.EF
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<PrescriptionList> PrescriptionLists { get; set; }
-        
-        public ClinicContext(DbContextOptions<ClinicContext> options)
-            : base(options)
+
+        public ClinicContext(string connectionString)
         {
+            _connectionString = connectionString;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,17 +38,5 @@ namespace DAL.EF
               .HasAlternateKey(c => c.Email)
               .HasName("AlternateKey_Email");
         }
-
-        //private readonly string _connString;
-
-        //public ClinicContext(string connString)
-        //{
-        //    _connString = connString;
-        //}
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(_connString);
-        //}
     }
 }

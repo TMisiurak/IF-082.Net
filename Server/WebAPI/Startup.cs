@@ -15,6 +15,7 @@ using ProjectCore.MappingDTOs;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using WebAPI.Swagger;
 
@@ -31,18 +32,17 @@ namespace WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-            //services.AddTransient<IUnitOfWork, DapperUnitOfWork>(provider => new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddTransient<IUnitOfWork>(provider => {
-            //    if (Configuration["DapperEf"] == "EF")
-            //    {
-            //        return new EFUnitOfWork(new ClinicContext(Configuration.GetConnectionString("DefaultConnection")));
-            //    }
-            //    else
-            //    {
-            //        return new DapperUnitOfWork(Configuration.GetConnectionString("DefaultConnection"));
-            //    }
-            //});
+            services.AddScoped<IUnitOfWork>(provider =>
+            {
+                if (Configuration["MyORM"] == "EF")
+                {
+                    return new EFUnitOfWork(new ClinicContext(Configuration.GetConnectionString("DefaultConnection")));
+                }
+                else
+                {
+                    return new DapperUnitOfWork(new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
+                }
+            });
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IDepartmentService, DepartmentService>();

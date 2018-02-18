@@ -27,14 +27,14 @@ namespace BLL.Services
         public async Task<int> Create(PaymentDTO paymentDTO)
         {
             int result = await Database.Payments.Create(_mapper.Map<Payment>(paymentDTO));
-            Database.Commit();
+            Database.Commit(result);
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
             int result = await Database.Payments.Delete(id);
-            Database.Commit();
+            Database.Commit(result);
             return result;
         }
 
@@ -54,7 +54,7 @@ namespace BLL.Services
         public async Task<int> Update(PaymentDTO paymentDTO)
         {
             int result = await Database.Payments.Update(_mapper.Map<Payment>(paymentDTO));
-            Database.Commit();
+            Database.Commit(result);
             return result;
         }
     }

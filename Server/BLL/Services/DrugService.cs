@@ -36,22 +36,21 @@ namespace BLL.Services
         public async Task<int> Create(DrugDTO drugDTO)
         {
             int result = await DataBase.Drugs.Create(_mapper.Map<Drug>(drugDTO));
-            DataBase.Commit();
+            DataBase.Commit(result);
             return result;
         }
 
         public async Task<int> Update(DrugDTO drugDTO)
         {
             int result = await DataBase.Drugs.Update(_mapper.Map<Drug>(drugDTO));
-            DataBase.Commit();
+            DataBase.Commit(result);
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-
             int result = await DataBase.Drugs.Delete(id);
-            DataBase.Commit();
+            DataBase.Commit(result);
             return result;
         }
 

@@ -104,9 +104,7 @@ namespace DAL.UnitOfWorks
             get { return _doctorRepository ?? (_doctorRepository = new DoctorRepoDapper(_transaction)); }
         }
 
-        public IRepository<PrescriptionList> PrescriptionLists => throw new NotImplementedException();
-
-        public void Commit()
+        public void Commit(int result)
         {
             try
             {

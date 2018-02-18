@@ -19,29 +19,55 @@ namespace DAL.Repositories.DapperRepositories
             _transaction = transaction;
         }
 
-        public Task<IList<PrescriptionList>> GetAll()
+        public async Task<IList<PrescriptionList>> GetAll()
         {
-            throw new System.NotImplementedException();
+            var result = await _connection.QueryAsync<PrescriptionList>("sp_GetAllPrescriptionLists", 0, _transaction, commandType: CommandType.StoredProcedure);
+            return result.ToList();
         }
 
-        public Task<PrescriptionList> GetById(int id)
+        public async Task<PrescriptionList> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@id", id);
+            return await _connection.QuerySingleOrDefaultAsync<PrescriptionList>("sp_GetPrescriptionListById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
         }
 
-        public Task<int> Create(PrescriptionList item)
+        public async Task<int> Create(PrescriptionList prescriptionList)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@ProcedureId", prescriptionList.ProcedureId);
+            dynamicParameters.Add("@DrugId", prescriptionList.DrugId);
+            dynamicParameters.Add("@PrescriptionId", prescriptionList.PrescriptionId);
+            dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_CreatePrescriptionList", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int createdId = dynamicParameters.Get<int>("@CreatedId");
+            return createdId;
         }
 
-        public Task<int> Update(PrescriptionList item)
+        public async Task<int> Update(PrescriptionList prescriptionList)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@ProcedureId", prescriptionList.ProcedureId);
+            dynamicParameters.Add("@DrugId", prescriptionList.DrugId);
+            dynamicParameters.Add("@PrescriptionId", prescriptionList.PrescriptionId);
+            dynamicParameters.Add("@Id", prescriptionList.Id);
+            dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_UpdatePrescriptionList", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
+            return updatedCounter;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Id", id);
+            dynamicParameters.Add("@ResId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            var result = await _connection.ExecuteAsync("sp_DeletePrescriptionList", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+
+            int resetId = dynamicParameters.Get<int>("@ResId");
+            return resetId;
         }
     }
 }

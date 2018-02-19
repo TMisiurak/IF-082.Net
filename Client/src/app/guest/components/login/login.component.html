@@ -1,23 +1,24 @@
-<div id="loginForm" class="row">
-		<form action="#" (keyup.enter)="signIn(credentials(userCredentials))">
-	
-			<div id="mainText">
-			  <h1 class="titleText">Sign In</h1>
+<div class="container">
+  <div class="signIn">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	<h2 class="panel-title">Please Sign In</h2>
 			</div>
-	
-			<div class="inputFild col-xs-12 col-md-12">
-			  <label for="inputEmail">Your Email: </label>
-			  <input type="text" id="inputEmail" class="form" name="email" placeholder="Email" [(ngModel)]="userCredentials.email"/>
+		  <div class="panel-body">
+			  <form accept-charset="UTF-8" role="form">
+          <fieldset>
+						<div class="text"> Email: </div>
+						<div class="form-group">
+							<input class="form-control" placeholder="E-mail" name="email" type="text" [(ngModel)]="userCredentials.email">
+						</div>
+						<div class="text"> Password: </div>
+						<div class="form-group">
+							<input class="form-control" placeholder="Password" name="password" type="password" value="" [(ngModel)]="userCredentials.password">
+						</div>
+			    	<button type="button" class="btn btn-primary mybtn" (click)="signIn(credentials(userCredentials))">Sign In</button>
+			    </fieldset>
+			  </form>
 			</div>
-	
-			<div class="inputFild col-xs-12 col-md-12">
-			  <label for="inputPassword">Your Password: </label>
-			  <input type="password" id="inputPassword" class="form" name="pass" placeholder="Password" [(ngModel)]="userCredentials.password"/>
-			</div>
-
-			<div class="click col-xs-12  col-sm-12  col-md-12  col-lg-12" >
-			  <button type="button" class="btn btn-primary mybtn" (click)="signIn(credentials(userCredentials))">Sign In</button>
-			</div>
-		</form>
+		</div>
 	</div>
-	
+</div>

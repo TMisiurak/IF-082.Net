@@ -174,18 +174,11 @@ namespace DAL.UnitOfWorks
             }
         }
 
-        public void Commit(int result)
+        public void Commit()
         {
             try
             {
-                if (result > 0)
-                {
-                    _transaction.Commit();
-                }
-                else
-                {
-                    throw new Exception("Bad Transaction Commit");
-                }
+                _transaction.Commit();
             }
             catch
             {

@@ -8,6 +8,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class GetUserService {
+    
   constructor(private http: Http){ }
 
   getUser(id: number, token: string){        

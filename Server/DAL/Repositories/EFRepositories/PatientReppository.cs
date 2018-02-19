@@ -31,8 +31,17 @@ namespace DAL.Repositories.EFRepositories
             };
 
             string sql = $"exec @CreatedId = sp_CreatePatient @UserId = {patient.UserId}";
-            await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
-            return (int)createdId.Value;
+
+            try
+            {
+                await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
+                return (int)createdId.Value;
+            }
+            catch
+            {
+                return -1;
+                throw;
+            }            
         }
 
         public async Task<IList<Patient>> GetAll()

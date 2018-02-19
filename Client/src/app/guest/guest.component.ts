@@ -12,10 +12,6 @@ import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
 })
 
 export class GuestComponent implements OnInit, OnDestroy {
-  private httpSubscription: Subscription;
-  public patientInfo: any = [];
-  public nick: string = "";
-  public done: boolean = false;
   private topNav: any = [
     [
       {link1: "guest", link2: "home", name: "Home"},
@@ -34,14 +30,10 @@ export class GuestComponent implements OnInit, OnDestroy {
   constructor(private assignTopNavService: AssignTopNavService, private router: Router) { }
 
   ngOnInit() {
-    this.newMenu();
-  }
-
-  newMenu() {
     this.assignTopNavService.changeMenu(this.topNav)
   }
 
   ngOnDestroy(){
-
+    
   }
 }

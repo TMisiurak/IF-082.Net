@@ -104,18 +104,11 @@ namespace DAL.UnitOfWorks
             get { return _doctorRepository ?? (_doctorRepository = new DoctorRepoDapper(_transaction)); }
         }
 
-        public void Commit(int result)
+        public void Commit()
         {
             try
             {
-                if (result > 0)
-                {
-                    _transaction.Commit();
-                }
-                else
-                {
-                    throw new Exception("Bad Transaction Commit");
-                }
+                _transaction.Commit();
             }
             catch
             {

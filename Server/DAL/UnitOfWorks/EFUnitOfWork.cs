@@ -27,6 +27,7 @@ namespace DAL.UnitOfWorks
         private AppointmentRepository appointmentRepository;
         private DoctorRepository doctorRepository;
         private PrescriptionListRepository prescriptionListRepository;
+        private ScheduleRepository scheduleRepository;
 
         public EFUnitOfWork(ClinicContext context)
         {
@@ -174,18 +175,21 @@ namespace DAL.UnitOfWorks
             }
         }
 
-        public void Commit(int result)
+        public IRepository<Schedule> Schedules
+        {
+            get
+            {
+                if (scheduleRepository == null)
+                    scheduleRepository = new ScheduleRepository(db);
+                return scheduleRepository;
+            }
+        }
+
+        public void Commit()
         {
             try
             {
-                if (result > 0)
-                {
-                    _transaction.Commit();
-                }
-                else
-                {
-                    throw new Exception("Bad Transaction Commit");
-                }
+                _transaction.Commit();
             }
             catch
             {

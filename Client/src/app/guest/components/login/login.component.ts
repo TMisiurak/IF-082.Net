@@ -33,23 +33,26 @@ export class LoginComponent implements OnInit, OnDestroy {
 			data => {
 				if(data.access_token){
 					let role = this.jwtDecoder.getJwtPayload(JSON.stringify(data)).role;
-					localStorage.setItem(role, JSON.stringify(data));
 					if(role === 'admin'){
+						localStorage.setItem('registry', JSON.stringify(data));
 						this.router.navigate(['/registry']);
-					}else if(role === 'patient'){
-						this.router.navigate(['/patient']);
-					}else if(role === 'doctor'){
-						this.router.navigate(['/doctor']);
-					}else if(role === 'accountant'){
-						this.router.navigate(['/accountant']);
 					}else{
-						this.router.navigate(['/**']);
+						localStorage.setItem(role, JSON.stringify(data));
+						if(role === 'patient'){
+							this.router.navigate(['/patient']);
+						}else if(role === 'doctor'){
+							this.router.navigate(['/doctor']);
+						}else if(role === 'accountant'){
+							this.router.navigate(['/accountant']);
+						}else{
+							this.router.navigate(['/**']);
+						}
 					}
 				}
 			},
 			err => {
 				if( err === 400 ){
-					
+					this.router.navigate(['/**']);
 				}
 			});
 	}

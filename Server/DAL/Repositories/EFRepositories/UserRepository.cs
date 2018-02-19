@@ -47,8 +47,16 @@ namespace DAL.Repositories.EFRepositories
             };
 
             string sql = $"exec @CreatedId = dbo.sp_CreateUser @BirthDay = '{user.BirthDay.ToString("yyyy-MM-dd")}', @Email = '{user.Email}', @FullName = '{user.FullName}', @Password = '{user.Password}', @RoleId = {user.RoleId}, @Address = '{user.Address}', @Image = '{user.Image}', @PhoneNumber = '{user.PhoneNumber}', @Sex = '{user.Sex}'";
-            await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
-            return (int)createdId.Value;
+            try
+            {
+                await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
+                return (int)createdId.Value;
+            }
+            catch
+            {
+                return -1;
+                throw;
+            }
         }
 
         public async Task<int> Update(User user)

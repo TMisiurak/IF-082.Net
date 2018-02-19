@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    if(localStorage.getItem('admin')){
+    if(localStorage.getItem('registry')){
 			this.router.navigate(['/registry']);		
 		}else if(localStorage.getItem('patient')){
 			this.router.navigate(['/patient']);	

@@ -1,32 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { NgModel } from '@angular/forms';
 
+import { Subscription } from 'rxjs/Subscription';
+
+import { GetUserService } from '../core/_services/get-user.service';
+import { CheckTokenService } from '../core/_services/check-token.service';
+import { JwtDecoderService } from '../core/_services/jwt-decoder.service';
 import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
+
+import { registryTopNav } from '../shared/_shared/menu/top-nav';
 
 @Component({
   selector: 'app-registry',
   templateUrl: './registry.component.html',
   styleUrls: ['./registry.component.scss']
 })
-export class RegistryComponent implements OnInit {
-  private topNav: any = [
-    {link1: "registry", link2: "registry1", name: "Registry1"},
-    {link1: "registry", link2: "registry2", name: "Registry2"},
-    {link1: "registry", link2: "registry3", name: "Registry3"}
-  ];
+export class RegistryComponent implements OnInit, OnDestroy {
+  private httpSubscription: Subscription;
+  public registryInfo: any = [];
+  public done: boolean = false;
 
-  constructor(private assignTopNavService: AssignTopNavService, private router: Router) { }
+  constructor(private assignTopNavService: AssignTopNavService, private router: Router,
+    private getUserService: GetUserService, private checkTokenService: CheckTokenService,
+    private jwtDecodeService: JwtDecoderService) { }
 
   ngOnInit() {
-    this.newMenu();
-  }
-
-  newMenu() {
-    this.assignTopNavService.changeMenu(this.topNav)
+    if(this.checkTokenService.checkToken('registry')){
+      this.httpSubscription = this.getUserService
+        .getUser(this.jwtDecodeService.getJwtPayload(this.checkTokenService.jwtLocal).sub,
+          this.checkTokenService.authorizationToken)
+        .subscribe(
+          data => {
+            if(data){
+                this.registryInfo = data;
+                registryTopNav[2][0].profile = data;
+                this.assignTopNavService.changeMenu(registryTopNav)
+                this.done = true;
+            }else{
+                this.done = false;
+            }
+          },
+          err => {
+            if(err === 401){
+                localStorage.removeItem('registry');
+                this.router.navigate(['/guest/login']);
+            }
+          });
+    }else{
+      localStorage.removeItem('registry');
+      this.router.navigate(['/guest/login']);
+    }
   }
 
   signOut(){
-    localStorage.removeItem('admin');
+    localStorage.removeItem('registry');
     this.router.navigate(['/guest/home']);
+  }
+
+  ngOnDestroy(){
+    if(this.httpSubscription){
+      this.httpSubscription.unsubscribe();
+    }
   }
 }

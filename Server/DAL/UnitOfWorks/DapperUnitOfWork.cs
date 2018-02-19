@@ -26,6 +26,7 @@ namespace DAL.UnitOfWorks
         private PaymentRepoDapper _paymentRepository;
         private AppointmentRepoDapper _appointmentRepository;
         private DoctorRepoDapper _doctorRepository;
+        private ScheduleRepoDapper _scheduleRepository;
 
         public DapperUnitOfWork(SqlConnection connection)
         {
@@ -104,18 +105,16 @@ namespace DAL.UnitOfWorks
             get { return _doctorRepository ?? (_doctorRepository = new DoctorRepoDapper(_transaction)); }
         }
 
-        public void Commit(int result)
+        public IRepository<Schedule> Schedules
+        {
+            get { return _scheduleRepository ?? (_scheduleRepository = new ScheduleRepoDapper(_transaction)); }
+        }
+
+        public void Commit()
         {
             try
             {
-                if (result > 0)
-                {
-                    _transaction.Commit();
-                }
-                else
-                {
-                    throw new Exception("Bad Transaction Commit");
-                }
+                _transaction.Commit();
             }
             catch
             {

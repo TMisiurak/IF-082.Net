@@ -2,24 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { guestTopNav } from '../../shared/_shared/menu/top-nav';
+
 @Injectable()
 export class AssignTopNavService {
-  private menuSource = new BehaviorSubject<any>(
-    [
-      [
-        {link1: "guest", link2: "home", name: "Home"},
-        {link1: "guest", link2: "guest1", name: "Guest1"},
-        {link1: "guest", link2: "guest2", name: "Guest2"}
-      ],
-      [
-        {link1: "guest", link2: "login", name: "Sign In"},
-        {link1: "guest", link2: "register", name: "Sign Up"}
-      ],
-      [
-        {profile: null, name: ""}
-      ]
-    ]
-  );
+  private menuSource = new BehaviorSubject<any>(guestTopNav);
   currentMenu = this.menuSource.asObservable();
 
   constructor() { }

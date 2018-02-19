@@ -6,13 +6,16 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+import { apiUrl } from '../../shared/_shared/settings/Urls';
+
 @Injectable()
 export class GetUserService {
+    
   constructor(private http: Http){ }
 
   getUser(id: number, token: string){        
       let headers = new Headers({ 'Authorization': token });
-      return this.http.get('http://localhost:5001/api/user/' + id, { headers: headers })
+      return this.http.get(apiUrl + '/api/user/' + id, { headers: headers })
                       .map((resp:Response) => resp.json())
                       .catch((error:any) => {
                           if(error.status === 401){

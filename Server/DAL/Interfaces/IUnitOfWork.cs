@@ -18,7 +18,8 @@ namespace DAL.Interfaces
         IRepository<Appointment> Appointments { get; }
         IRepository<Doctor> Doctors { get; }
         IRepository<PrescriptionList> PrescriptionLists { get; }
+        IRepository<Schedule> Schedules { get; }
 
-        void Commit(int result);
+        void Commit();
     }
 }

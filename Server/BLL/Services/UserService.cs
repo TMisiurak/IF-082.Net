@@ -46,7 +46,7 @@ namespace BLL.Services
             userDTO.Password = HashService.HashPassword(userDTO.Password);
             int userId = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
             int result = await DataBase.Patients.Create(new Patient() { UserId = userId });
-            DataBase.Commit(result);
+            DataBase.Commit();
             return result;
         }
 

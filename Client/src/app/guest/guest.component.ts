@@ -5,6 +5,8 @@ import { NgModel } from '@angular/forms';
 
 import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
 
+import { guestTopNav } from '../shared/_shared/menu/top-nav';
+
 @Component({
   selector: 'app-guest',
   templateUrl: './guest.component.html',
@@ -12,36 +14,14 @@ import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
 })
 
 export class GuestComponent implements OnInit, OnDestroy {
-  private httpSubscription: Subscription;
-  public patientInfo: any = [];
-  public nick: string = "";
-  public done: boolean = false;
-  private topNav: any = [
-    [
-      {link1: "guest", link2: "home", name: "Home"},
-      {link1: "guest", link2: "guest1", name: "Guest1"},
-      {link1: "guest", link2: "guest2", name: "Guest2"}
-    ],
-    [
-      {link1: "guest", link2: "login", name: "Sign In"},
-      {link1: "guest", link2: "register", name: "Sign Up"}
-    ],
-    [
-      {profile: null, name: ""}
-    ]
-  ];
 
   constructor(private assignTopNavService: AssignTopNavService, private router: Router) { }
 
   ngOnInit() {
-    this.newMenu();
-  }
-
-  newMenu() {
-    this.assignTopNavService.changeMenu(this.topNav)
+    this.assignTopNavService.changeMenu(guestTopNav)
   }
 
   ngOnDestroy(){
-
+    
   }
 }

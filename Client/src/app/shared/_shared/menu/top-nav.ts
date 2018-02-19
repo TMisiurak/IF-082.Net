@@ -1,4 +1,4 @@
-export const guestTopNav =
+export let guestTopNav: any =
   [
     [
       {link1: "guest", link2: "home", name: "Home"},
@@ -6,15 +6,14 @@ export const guestTopNav =
       {link1: "guest", link2: "guest2", name: "Guest2"}
     ],
     [
-      {link1: "guest", link2: "login", name: "Sign In"},
-      {link1: "guest", link2: "register", name: "Sign Up"}
+      {link1: "guest", link2: "login", name: "Sign In"}
     ],
     [
       {profile: null, name: ""}
     ]
   ];
 
-  export const registryTopNav =
+  export let registryTopNav: any =
     [
       [
         {link1: "registry", link2: "home", name: "Home"},
@@ -29,7 +28,7 @@ export const guestTopNav =
       ]
     ];
 
-  export const patientTopNav =
+  export let patientTopNav: any =
     [
       [
         {link1: "patient", link2: "home", name: "Home"},
@@ -43,7 +42,7 @@ export const guestTopNav =
         {profile: this.patientInfo, name: "Patient Info"}
       ]
     ];
-  export const doctorTopNav =
+  export let doctorTopNav: any =
     [
       [
         {link1: "doctor", link2: "home", name: "Home"},
@@ -58,7 +57,7 @@ export const guestTopNav =
       ]
     ];
 
-  export const accountantTopNav =
+  export let accountantTopNav: any =
     [
       [
         {link1: "accountant", link2: "home", name: "Home"},

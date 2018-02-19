@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { UserCredentials } from '../_shared/models/UserCredentials';
+import { tokenUrl } from '../../shared/_shared/settings/Urls';
 
 @Injectable()
 export class HttpLoginService {
@@ -15,7 +15,7 @@ export class HttpLoginService {
 
     login(credentials: string){
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8' });         
-        return this.http.post('http://localhost:5000/connect/token', credentials, { headers: headers })
+        return this.http.post(tokenUrl + '/connect/token', credentials, { headers: headers })
                         .map((resp:Response) => {
                             if(resp.status === 200){
                                 return resp.json();

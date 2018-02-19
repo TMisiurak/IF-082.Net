@@ -9,7 +9,6 @@ import { CheckTokenService } from '../core/_services/check-token.service';
 import { JwtDecoderService } from '../core/_services/jwt-decoder.service';
 import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
 
-import { Patient } from './_shared/models/patient';
 import { patientTopNav } from '../shared/_shared/menu/top-nav';
 
 @Component({
@@ -35,7 +34,7 @@ export class PatientComponent implements OnInit, OnDestroy {
           data => {
             if(data){
                 this.patientInfo = data;
-                patientTopNav[2][0]. = data;
+                patientTopNav[2][0].profile = data;
                 this.assignTopNavService.changeMenu(patientTopNav)
                 this.done = true;
             }else{

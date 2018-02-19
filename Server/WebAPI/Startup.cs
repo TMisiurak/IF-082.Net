@@ -57,12 +57,10 @@ namespace WebAPI
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IDoctorService, DoctorService>();
             services.AddTransient<IPrescriptionListService, PrescriptionListService>();
+            services.AddTransient<IScheduleService, ScheduleService>();
 
             services.AddSingleton(s => AutoMapperConfig.Instance);
-
-            services.AddDbContext<ClinicContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });

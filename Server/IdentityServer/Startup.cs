@@ -38,8 +38,6 @@ namespace IdentityServer
             services.AddTransient<IProfileService, UserProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, UserResourceOwnerPasswordValidator>();
             
-            services.AddDbContext<ClinicContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
 
             // configure identity server with in-memory stores, keys, clients and scopes

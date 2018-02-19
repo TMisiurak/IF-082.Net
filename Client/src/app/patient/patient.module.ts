@@ -11,19 +11,14 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PatientRoutingModule } from './patient-routing.module';
 
 @NgModule({
-	declarations: [ PatientComponent, HomeComponent, ProfileComponent, 
-	],
 	imports: [
 		CommonModule, FormsModule, ReactiveFormsModule,
 		SharedModule,
 		
 	    PatientRoutingModule
 	],
-	entryComponents: [
-    	
-  	],
-	providers: [
-
+	declarations: [
+		PatientComponent, HomeComponent, ProfileComponent, 
 	]
 })
 

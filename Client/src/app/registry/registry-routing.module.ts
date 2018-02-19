@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RegistryComponent } from './registry.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { NotFoundComponent } from '../shared/components/info-pages/errors/not-found/not-found.component';
 
 const childrenRoutes: Routes = [
-    //{ path: 'chat', component: MessageListComponent },
+    { path: '', redirectTo: '/registry/home', pathMatch: 'full' },
+	{ path: 'home', component: HomeComponent },
+	{ path: 'profile', component: ProfileComponent },
+	{ path: '**', component: NotFoundComponent }
 ];
 const registryRoutes: Routes = [
-    { path: '', component: RegistryComponent },
-	{ path: '', component: RegistryComponent, children: childrenRoutes }
+    { path: '', component: RegistryComponent, children: childrenRoutes }
 ];
 
 @NgModule({

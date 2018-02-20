@@ -12,15 +12,16 @@ import { RegisterComponent} from './components/register/register.component';
 import { HttpLoginService } from './_services/http-login.service';
 
 import { GuestRoutingModule } from './guest-routing.module';
+import { CarouselComponent } from './components/carousel/carousel.component';
  
 @NgModule({
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
-    SharedModule,
+    SharedModule, 
     
     GuestRoutingModule
   ],
-  declarations: [GuestComponent, HomeComponent, LoginComponent, RegisterComponent,],
+  declarations: [GuestComponent, HomeComponent, LoginComponent, RegisterComponent, CarouselComponent,],
   providers: [HttpLoginService]
 })
 export class GuestModule { }

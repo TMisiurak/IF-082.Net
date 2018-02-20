@@ -20,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule, CommonModule, FormsModule, ReactiveFormsModule, HttpModule, RouterModule,
-    CoreModule, SharedModule,
+    CoreModule, SharedModule, 
 
     AppRoutingModule
   ],

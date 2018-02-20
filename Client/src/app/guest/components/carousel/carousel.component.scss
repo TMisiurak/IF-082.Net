@@ -1,0 +1,25 @@
+.image {
+    min-width: 100%;
+    filter: brightness(56.1%);
+}
+.hero {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    font-family: Arial, sans-serif;
+    font-size: 150%;
+    font-weight: bold;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+      -webkit-transform: translate3d(-50%,-50%,0);
+         -moz-transform: translate3d(-50%,-50%,0);
+          -ms-transform: translate3d(-50%,-50%,0);
+           -o-transform: translate3d(-50%,-50%,0);
+              transform: translate3d(-50%,-50%,0);
+    .headers {
+        font-size: 10em;
+    }
+}

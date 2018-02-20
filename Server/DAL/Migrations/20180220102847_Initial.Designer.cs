@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ClinicContext))]
-    [Migration("20180209135745_revert")]
-    partial class revert
+    [Migration("20180220102847_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,6 +206,28 @@ namespace DAL.Migrations
                     b.ToTable("Prescriptions");
                 });
 
+            modelBuilder.Entity("ProjectCore.Entities.PrescriptionList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DrugId");
+
+                    b.Property<int>("PrescriptionId");
+
+                    b.Property<int>("ProcedureId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DrugId");
+
+                    b.HasIndex("PrescriptionId");
+
+                    b.HasIndex("ProcedureId");
+
+                    b.ToTable("PrescriptionLists");
+                });
+
             modelBuilder.Entity("ProjectCore.Entities.Procedure", b =>
                 {
                     b.Property<int>("Id")
@@ -249,6 +271,36 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BreakDuration");
+
+                    b.Property<DateTime>("BreakStart")
+                        .HasColumnType("time(0)");
+
+                    b.Property<int>("DoctorId");
+
+                    b.Property<int>("SlotDuration");
+
+                    b.Property<int>("TimeSlotCount");
+
+                    b.Property<int>("ValidityPeriod");
+
+                    b.Property<int>("Weekday");
+
+                    b.Property<DateTime>("WorkStart")
+                        .HasColumnType("time(0)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("ProjectCore.Entities.User", b =>
@@ -344,6 +396,32 @@ namespace DAL.Migrations
                     b.HasOne("ProjectCore.Entities.Diagnosis", "Diagnosis")
                         .WithMany("Prescriptions")
                         .HasForeignKey("DiagnosisId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.PrescriptionList", b =>
+                {
+                    b.HasOne("ProjectCore.Entities.Drug", "Drug")
+                        .WithMany("PrescriptionLists")
+                        .HasForeignKey("DrugId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.Prescription", "Prescription")
+                        .WithMany("PrescriptionLists")
+                        .HasForeignKey("PrescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectCore.Entities.Procedure", "Procedure")
+                        .WithMany("PrescriptionLists")
+                        .HasForeignKey("ProcedureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Schedule", b =>
+                {
+                    b.HasOne("ProjectCore.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

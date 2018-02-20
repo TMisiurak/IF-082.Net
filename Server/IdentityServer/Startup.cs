@@ -15,29 +15,30 @@ namespace IdentityServer
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork>(provider =>
+            if (Configuration["MyORM"] == "EF")
             {
-                if (Configuration["MyORM"] == "EF")
-                {
-                    return new EFUnitOfWork(new ClinicContext(Configuration.GetConnectionString("DefaultConnection")));
-                }
-                else
-                {
-                    return new DapperUnitOfWork(new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
-                }
-            });
+                services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            }
+            else
+            {
+                services.AddScoped<IUnitOfWork, DapperUnitOfWork>(provider =>
+                    new DapperUnitOfWork(new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))));
+            }
             services.AddTransient<IProfileService, UserProfileService>();
             services.AddTransient<IResourceOwnerPasswordValidator, UserResourceOwnerPasswordValidator>();
-            
+
+            services.AddDbContext<ClinicContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddMvc();
 
             // configure identity server with in-memory stores, keys, clients and scopes

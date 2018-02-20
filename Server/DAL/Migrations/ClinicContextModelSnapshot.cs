@@ -272,6 +272,36 @@ namespace DAL.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("ProjectCore.Entities.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BreakDuration");
+
+                    b.Property<DateTime>("BreakStart")
+                        .HasColumnType("time(0)");
+
+                    b.Property<int>("DoctorId");
+
+                    b.Property<int>("SlotDuration");
+
+                    b.Property<int>("TimeSlotCount");
+
+                    b.Property<int>("ValidityPeriod");
+
+                    b.Property<int>("Weekday");
+
+                    b.Property<DateTime>("WorkStart")
+                        .HasColumnType("time(0)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("Schedules");
+                });
+
             modelBuilder.Entity("ProjectCore.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -383,6 +413,14 @@ namespace DAL.Migrations
                     b.HasOne("ProjectCore.Entities.Procedure", "Procedure")
                         .WithMany("PrescriptionLists")
                         .HasForeignKey("ProcedureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ProjectCore.Entities.Schedule", b =>
+                {
+                    b.HasOne("ProjectCore.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

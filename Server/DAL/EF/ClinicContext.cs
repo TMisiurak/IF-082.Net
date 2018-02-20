@@ -5,8 +5,6 @@ namespace DAL.EF
 {
     public class ClinicContext : DbContext
     {
-        private readonly string _connectionString;
-
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -23,14 +21,9 @@ namespace DAL.EF
         public DbSet<PrescriptionList> PrescriptionLists { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
 
-        public ClinicContext(string connectionString)
+        public ClinicContext(DbContextOptions<ClinicContext> options)
+            : base(options)
         {
-            _connectionString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

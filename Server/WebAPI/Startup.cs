@@ -234,10 +234,10 @@ namespace WebAPI
 
                 List<Appointment> appointments = new List<Appointment>
                 {
-                    new Appointment { CabinetId=1, Date=DateTime.Now, Description="appointment details 1", DoctorId=1, PatientId=2, PrescriptionId=1, Status=1 },
-                    new Appointment { CabinetId=2, Date=DateTime.Now, Description="appointment details 2", DoctorId=2, PatientId=2, PrescriptionId=2, Status=2 },
-                    new Appointment { CabinetId=4, Date=DateTime.Now, Description="appointment details 3", DoctorId=2, PatientId=2, PrescriptionId=3, Status=3 },
-                    new Appointment { CabinetId=3, Date=DateTime.Now, Description="appointment details 4", DoctorId=1, PatientId=2, PrescriptionId=4, Status=4 }
+                    new Appointment { Date=DateTime.Now, Description="appointment details 1", DoctorId=1, PatientId=2, Status=1 },
+                    new Appointment { Date=DateTime.Now, Description="appointment details 2", DoctorId=2, PatientId=2, Status=2 },
+                    new Appointment { Date=DateTime.Now, Description="appointment details 3", DoctorId=2, PatientId=2, Status=3 },
+                    new Appointment { Date=DateTime.Now, Description="appointment details 4", DoctorId=1, PatientId=2, Status=4 }
                 };
 
                 List<PrescriptionList> prescriptionLists = new List<PrescriptionList>

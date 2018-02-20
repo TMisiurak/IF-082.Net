@@ -23,6 +23,11 @@ namespace ProjectCore.Entities
         public int DiagnosisId { get; set; }
         public Diagnosis Diagnosis { get; set; }
 
+        [Required]
+        public int AppointmentId { get; set; }
+
+        public Appointment Appointment { get; set; }
+
         public virtual Payment Payment { get; set; }
 
         public IList<PrescriptionList> PrescriptionLists { get; set; }

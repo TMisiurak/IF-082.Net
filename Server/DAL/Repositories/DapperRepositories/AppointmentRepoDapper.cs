@@ -26,8 +26,6 @@ namespace DAL.Repositories.DapperRepositories
             dynamicParameters.Add("@Description", appointment.Description);
             dynamicParameters.Add("@Date", appointment.Date);
             dynamicParameters.Add("@Status", appointment.Status);
-            dynamicParameters.Add("@CabinetId", appointment.CabinetId);
-            dynamicParameters.Add("@PrescriptionId", appointment.PrescriptionId);
             dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
             var result = await _connection.ExecuteAsync("sp_CreateAppointment", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
 
@@ -67,8 +65,6 @@ namespace DAL.Repositories.DapperRepositories
             dynamicParameters.Add("@Description", appointment.Description);
             dynamicParameters.Add("@Date", appointment.Date);
             dynamicParameters.Add("@Status", appointment.Status);
-            dynamicParameters.Add("@CabinetId", appointment.CabinetId);
-            dynamicParameters.Add("@PrescriptionId", appointment.PrescriptionId);
             dynamicParameters.Add("@Id", appointment.Id);
             dynamicParameters.Add("@UpdatedCounter", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
             var result = await _connection.ExecuteAsync("sp_UpdateAppointment", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);

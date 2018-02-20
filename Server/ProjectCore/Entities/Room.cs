@@ -12,6 +12,5 @@ namespace ProjectCore.Entities
         public int Number { get; set; }
 
         public Doctor Doctor { get; set; }
-
     }
 }

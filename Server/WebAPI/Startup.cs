@@ -23,26 +23,24 @@ namespace WebAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork>(provider =>
+            if (Configuration["MyORM"] == "EF")
             {
-                if (Configuration["MyORM"] == "EF")
-                {
-                    return new EFUnitOfWork(new ClinicContext(Configuration.GetConnectionString("DefaultConnection")));
-                }
-                else
-                {
-                    return new DapperUnitOfWork(new SqlConnection(Configuration.GetConnectionString("DefaultConnection")));
-                }
-            });
+                services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            }
+            else
+            {
+                services.AddScoped<IUnitOfWork, DapperUnitOfWork>(provider =>
+                    new DapperUnitOfWork(new SqlConnection(Configuration.GetConnectionString("DefaultConnection"))));
+            }
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
@@ -60,7 +58,10 @@ namespace WebAPI
             services.AddTransient<IScheduleService, ScheduleService>();
 
             services.AddSingleton(s => AutoMapperConfig.Instance);
-            
+
+            services.AddDbContext<ClinicContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -154,11 +155,15 @@ namespace WebAPI
                         PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 4" },
 
                     new User{ Email = "email5@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
-                        RoleId = 3, FullName = "Full Name 5", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
-                        PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 5" },
+                        RoleId = 3, FullName = "Full Name 5", Address = "Address 5", BirthDay = new DateTime(1995, 5, 5),
+                        PhoneNumber = "0123456785", Sex = "mal", Image = "imagesrc 5" },
                     new User{ Email = "email6@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
-                        RoleId = 3, FullName = "Full Name 6", Address = "Address 4", BirthDay = new DateTime(1995, 4, 4),
-                        PhoneNumber = "0123456784", Sex = "mal", Image = "imagesrc 6" },
+                        RoleId = 3, FullName = "Full Name 6", Address = "Address 6", BirthDay = new DateTime(1995, 6, 6),
+                        PhoneNumber = "0123456786", Sex = "mal", Image = "imagesrc 6" },
+
+                    new User{ Email = "email7@e.com", Password = "fNOLDzjY9ITa8f7/a1hbE9aHeiE07xzdsCH4PKirJ9E=",
+                        RoleId = 2, FullName = "Full Name 7", Address = "Address 7", BirthDay = new DateTime(1995, 7, 7),
+                        PhoneNumber = "0123456787", Sex = "mal", Image = "imagesrc 7" },
                 };
 
                 List<Drug> drugs = new List<Drug>
@@ -221,7 +226,7 @@ namespace WebAPI
                 List<Patient> patients = new List<Patient>
                 {
                     new Patient {UserId=2 },
-                    new Patient {UserId=1 },
+                    new Patient {UserId=7 },
                 };
 
 
@@ -247,6 +252,14 @@ namespace WebAPI
                     new PrescriptionList { ProcedureId = 3, DrugId = 4, PrescriptionId = 3},
                     new PrescriptionList { ProcedureId = 4, DrugId = 5, PrescriptionId = 1},
                     new PrescriptionList { ProcedureId = 5, DrugId = 2, PrescriptionId = 2},
+                };
+
+                List<Schedule> schedules = new List<Schedule>
+                {
+                    new Schedule{ WorkStart = new DateTime(2018,1,1,8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new DateTime(2018,1,1,12,0,0), BreakDuration = 60, Weekday = 0,
+                        ValidityPeriod = 30, DoctorId = 1 },
+                    
                 };
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();
@@ -333,6 +346,12 @@ namespace WebAPI
                 if (!context.PrescriptionLists.Any())
                 {
                     context.PrescriptionLists.AddRange(prescriptionLists);
+                    context.SaveChanges();
+                }
+
+                if (!context.Schedules.Any())
+                {
+                    context.Schedules.AddRange(schedules);
                     context.SaveChanges();
                 }
             }

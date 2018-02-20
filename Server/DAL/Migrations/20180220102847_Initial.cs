@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class AppointmentsAdded : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -183,6 +183,39 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PrescriptionLists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DrugId = table.Column<int>(nullable: false),
+                    PrescriptionId = table.Column<int>(nullable: false),
+                    ProcedureId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrescriptionLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PrescriptionLists_Drugs_DrugId",
+                        column: x => x.DrugId,
+                        principalTable: "Drugs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrescriptionLists_Prescriptions_PrescriptionId",
+                        column: x => x.PrescriptionId,
+                        principalTable: "Prescriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrescriptionLists_Procedures_ProcedureId",
+                        column: x => x.ProcedureId,
+                        principalTable: "Procedures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
                 {
@@ -232,6 +265,32 @@ namespace DAL.Migrations
                         name: "FK_Patients_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BreakDuration = table.Column<int>(nullable: false),
+                    BreakStart = table.Column<DateTime>(type: "time(0)", nullable: false),
+                    DoctorId = table.Column<int>(nullable: false),
+                    SlotDuration = table.Column<int>(nullable: false),
+                    TimeSlotCount = table.Column<int>(nullable: false),
+                    ValidityPeriod = table.Column<int>(nullable: false),
+                    Weekday = table.Column<int>(nullable: false),
+                    WorkStart = table.Column<DateTime>(type: "time(0)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Schedules_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -306,9 +365,29 @@ namespace DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PrescriptionLists_DrugId",
+                table: "PrescriptionLists",
+                column: "DrugId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrescriptionLists_PrescriptionId",
+                table: "PrescriptionLists",
+                column: "PrescriptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrescriptionLists_ProcedureId",
+                table: "PrescriptionLists",
+                column: "ProcedureId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_DiagnosisId",
                 table: "Prescriptions",
                 column: "DiagnosisId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_DoctorId",
+                table: "Schedules",
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
@@ -322,16 +401,31 @@ namespace DAL.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "PrescriptionLists");
+
+            migrationBuilder.DropTable(
+                name: "Schedules");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Drugs");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "Prescriptions");
 
             migrationBuilder.DropTable(
                 name: "Procedures");
+
+            migrationBuilder.DropTable(
+                name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Diagnoses");
 
             migrationBuilder.DropTable(
                 name: "Departments");
@@ -340,19 +434,10 @@ namespace DAL.Migrations
                 name: "Rooms");
 
             migrationBuilder.DropTable(
-                name: "Patients");
-
-            migrationBuilder.DropTable(
-                name: "Prescriptions");
-
-            migrationBuilder.DropTable(
-                name: "Clinics");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Diagnoses");
+                name: "Clinics");
 
             migrationBuilder.DropTable(
                 name: "Roles");

@@ -22,14 +22,14 @@ namespace BLL.Services
         public async Task<int> Create(ProcedureDTO procedureDTO)
         {
             int result = await DataBase.Procedures.Create(_mapper.Map<Procedure>(procedureDTO));
-            DataBase.Commit(result);
+            DataBase.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
             int result = await DataBase.Procedures.Delete(id);
-            DataBase.Commit(result);
+            DataBase.Commit();
             return result;
         }
 
@@ -50,7 +50,7 @@ namespace BLL.Services
         public async Task<int> Update(ProcedureDTO procedureDTO)
         {
             int result = await DataBase.Procedures.Update(_mapper.Map<Procedure>(procedureDTO));
-            DataBase.Commit(result);
+            DataBase.Commit();
             return result;
         }
     }

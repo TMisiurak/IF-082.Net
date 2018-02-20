@@ -54,14 +54,14 @@ namespace BLL.Services
         {
             userDTO.Password = HashService.HashPassword(userDTO.Password);
             int result = await DataBase.Users.Update(_mapper.Map<User>(userDTO));
-            DataBase.Commit(result);
+            DataBase.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
             int result = await DataBase.Users.Delete(id);
-            DataBase.Commit(result);
+            DataBase.Commit();
             return result;
         }
     }

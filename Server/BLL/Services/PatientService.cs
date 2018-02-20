@@ -34,7 +34,7 @@ namespace BLL.Services
         public async Task<int> DeleteById(int id)
         {
             int result = await Database.Patients.Delete(id);
-            Database.Commit(result);
+            Database.Commit();
             return result;
         }
 
@@ -54,7 +54,7 @@ namespace BLL.Services
         public async Task<int> Update(PatientDTO patientDTO)
         {
             int result = await Database.Patients.Update(_mapper.Map<Patient>(patientDTO));
-            Database.Commit(result);
+            Database.Commit();
             return result;
         }
     }

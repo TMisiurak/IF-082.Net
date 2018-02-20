@@ -25,7 +25,6 @@ namespace ProjectCore.Entities
 
         [Required]
         public int AppointmentId { get; set; }
-
         public Appointment Appointment { get; set; }
 
         public virtual Payment Payment { get; set; }

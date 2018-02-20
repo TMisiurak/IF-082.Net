@@ -199,13 +199,13 @@ namespace WebAPI
                 List<Prescription> prescriptions = new List<Prescription>
                 {
                     new Prescription{ DoctorId = 1, PatientId = 1, Description = "tablets",
-                    Date = DateTime.Now, DiagnosisId = 1},
+                    Date = DateTime.Now, DiagnosisId = 1, AppointmentId = 1},
                     new Prescription{ DoctorId = 1, PatientId = 1, Description = "tea",
-                    Date = DateTime.Now, DiagnosisId = 2},
+                    Date = DateTime.Now, DiagnosisId = 2, AppointmentId = 2},
                     new Prescription{ DoctorId = 1, PatientId = 1, Description = "nimesil",
-                    Date = DateTime.Now, DiagnosisId = 3},
+                    Date = DateTime.Now, DiagnosisId = 3, AppointmentId = 3},
                     new Prescription{ DoctorId = 1, PatientId = 1, Description = "analgin",
-                    Date = DateTime.Now, DiagnosisId = 1},
+                    Date = DateTime.Now, DiagnosisId = 1, AppointmentId = 4},
                 };
 
                 List<Doctor> doctors = new List<Doctor>
@@ -325,11 +325,11 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Payments.Any())
-                {
-                    context.Payments.AddRange(payments);
-                    context.SaveChanges();
-                }
+                //if (!context.Payments.Any())
+                //{
+                //    context.Payments.AddRange(payments);
+                //    context.SaveChanges();
+                //}
 
                 if (!context.Doctors.Any())
                 {
@@ -343,11 +343,11 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.PrescriptionLists.Any())
-                {
-                    context.PrescriptionLists.AddRange(prescriptionLists);
-                    context.SaveChanges();
-                }
+                //if (!context.PrescriptionLists.Any())
+                //{
+                //    context.PrescriptionLists.AddRange(prescriptionLists);
+                //    context.SaveChanges();
+                //}
 
                 if (!context.Schedules.Any())
                 {

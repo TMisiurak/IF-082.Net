@@ -16,7 +16,8 @@ CREATE PROCEDURE [dbo].[sp_UpdatePrescription]
 	@Description nvarchar(4000),
 	@DiagnosisId int,
 	@DoctorId int,
-	@PatientId int
+	@PatientId int,
+	@AppointmentId int
 AS
 
 IF NOT EXISTS (SELECT 1 FROM Prescriptions WHERE Id=@Id)
@@ -29,7 +30,7 @@ BEGIN TRY
 
     UPDATE [dbo].Prescriptions
 		SET	[Date] = @Date, [Description] = @Description, [DiagnosisId] = @DiagnosisId,
-			DoctorId = @DoctorId, [PatientId] = @PatientId
+			DoctorId = @DoctorId, [PatientId] = @PatientId, [AppointmentId] = @AppointmentId 
 		WHERE Id = @Id
 
 	RETURN @@ROWCOUNT

@@ -20,6 +20,6 @@ namespace ProjectCore.Entities
         [Required]
         public int Status { get; set; }
 
-        public Prescription Prescription { get; set; }
+        public virtual Prescription Prescription { get; set; }
     }
 }

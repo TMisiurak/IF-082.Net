@@ -17,8 +17,7 @@ CREATE PROCEDURE [dbo].[sp_UpdateAppointment]
 	, @Description nvarchar(4000)
 	, @Date datetime
 	, @Status int
-	, @CabinetId int
-	, @PrescriptionId int
+
 	
 AS
 
@@ -36,8 +35,6 @@ BEGIN TRY
 		, [Description] = @Description
 		, [Date] = @Date
 		, [Status] = @Status
-		, [CabinetId] = @CabinetId
-		, [PrescriptionId] = @PrescriptionId
 		WHERE Id = @Id
 
 	RETURN @@ROWCOUNT

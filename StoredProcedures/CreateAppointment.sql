@@ -16,15 +16,13 @@ CREATE PROCEDURE [dbo].[sp_CreateAppointment]
 	, @Description nvarchar(4000)
 	, @Date datetime
 	, @Status int
-	, @CabinetId int
-	, @PrescriptionId int
     
 AS
 BEGIN TRY
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Appointments] (PatientId, DoctorId, Description, Date, Status, CabinetId, PrescriptionId)
-    VALUES (@PatientId, @DoctorId, @Description, @Date, @Status, @CabinetId, @PrescriptionId)
+	INSERT INTO [dbo].[Appointments] (PatientId, DoctorId, Description, Date, Status)
+    VALUES (@PatientId, @DoctorId, @Description, @Date, @Status)
 
 	RETURN @@IDENTITY
 END TRY

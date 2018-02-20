@@ -15,13 +15,14 @@ CREATE PROCEDURE [dbo].[sp_CreatePrescription]
 	@Description nvarchar(4000),
 	@DiagnosisId int,
 	@DoctorId int,
-	@PatientId int
+	@PatientId int,
+	@AppointmentId int
 AS
 BEGIN TRY
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].Prescriptions ([Date], [Description], DiagnosisId, DoctorId, PatientId)
-    VALUES (@Date, @Description, @DiagnosisId, @DoctorId, @PatientId)
+	INSERT INTO [dbo].Prescriptions ([Date], [Description], DiagnosisId, DoctorId, PatientId, AppointmentId)
+    VALUES (@Date, @Description, @DiagnosisId, @DoctorId, @PatientId, @AppointmentId)
 
 	RETURN @@IDENTITY
 END TRY

@@ -1,3 +1,6 @@
+USE [ClinicDB]
+GO
+
 SET ANSI_NULLS ON
 GO
 

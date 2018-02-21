@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { Http, Response, Headers, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
 import { AppointmentCredentials } from '../_shared/models/AppointmentCredentials';
 import {apiUrl} from '../../shared/_shared/settings/Urls';
 
 @Injectable()
 export class AppointmentService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: Http) { }
+
     getAppointments() {
-        return this.http.get(apiUrl + "/api/appointment");
-    }
-    createAppointment(credentials: AppointmentCredentials) {
-        return this.http.post(apiUrl + "/api/appointment", credentials);
-    }
-
-    updateAppointment(credentials: AppointmentCredentials) {
-        return this.http.put(apiUrl + "/api/appointment", credentials);
-    }
-
-    deleteAppointment(id: number) {
-        return this.http.delete(apiUrl + "/api/appointment/" + id);
+        return this.http.get(apiUrl + 'api/appointment')
+        .map((resp: Response) => resp.json())
+        .catch((error: any) => {
+            if (error.status === 401) {
+                return Observable.throw(401);
+            }
+            return Observable.throw(error);
+        });
     }
 }
 

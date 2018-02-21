@@ -5,8 +5,7 @@ import { AppointmentCredentials } from '../../_shared/models/AppointmentCredenti
 @Component({
     selector: 'app-appointment',
     templateUrl: './appointment.component.html',
-    styleUrls: ['./appointment.component.scss'],
-    providers: [AppointmentService]
+    styleUrls: ['./appointment.component.scss']
   })
 
 export class AppointmentsComponent implements OnInit {
@@ -14,12 +13,12 @@ export class AppointmentsComponent implements OnInit {
     appointments: AppointmentCredentials[];
     tableMode: boolean = true;
 
-    constructor(private appoService: AppointmentService) { }
+    /*constructor(private appoService: AppointmentService) { }*/
 
     ngOnInit() {
-        this.loadAppointments();
+       // this.loadAppointments();
     }
-
+/*
     loadAppointments() {
         this.appoService.getAppointments()
             .subscribe((data: AppointmentCredentials[]) => this.appointments = data);
@@ -49,5 +48,5 @@ export class AppointmentsComponent implements OnInit {
     add() {
         this.cancel();
         this.tableMode = false;
-    }
+    }*/
 }

@@ -1,0 +1,77 @@
+<h1>Appointments</h1>
+<input type="button" value="Make Appointment" class="btn btn-default" (click)="add()" />
+<table *ngif="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Patient</td>
+            <td>Doctor</td>
+            <td>Description</td>
+            <td>Date</td>
+            <td>Status</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngfor="let appo of appointments">
+            <ng-template [ngIf]="appointment?.id != appo.id" [ngElse]="edit">
+                <td>{{appo.patientId}}</td>
+                <td>{{appo.doctorId}}</td>
+                <td>{{appo.description}}</td>
+                <td>{{appo.date}}</td>
+                <td>{{appo.status}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editAppointment(appo)">Edit</button>
+                    <button class="btn btn-sm btn-danger"(click)="deleteAppointment(appo)">Delete</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="appointment.patientId" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="appointment.doctorId" class="form-control" />
+    </td>
+    <td>
+        <input type="text-area" [(ngModel)]="appointment.description" class="form-control" />
+    </td>
+    <td>
+        <input type="date" [(ngModel)]="appointment.date" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="appointment.status" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-success" />
+        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+
+<ng-template #create>
+    <div class="form-group">
+        <label>Patient</label>
+        <input type="text" [(ngModel)]="appointment.patientId" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Doctor</label>
+        <input type="text" [(ngModel)]="appointment.doctorId" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <input type="text-area" [(ngModel)]="appointment.description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Date</label>
+        <input type="date" [(ngModel)]="appointment.date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Status</label>
+        <input type="text" [(ngModel)]="appointment.status" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Make Appointment" (click)="save()" class="btn btn-success" />
+        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>

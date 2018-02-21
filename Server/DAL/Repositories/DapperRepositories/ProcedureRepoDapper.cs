@@ -24,7 +24,7 @@ namespace DAL.Repositories.DapperRepositories
         {
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Name", procedure.Name);
-            dynamicParameters.Add("@Price", procedure.Price);
+            dynamicParameters.Add("@Price", procedure.Price.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
             dynamicParameters.Add("@Room", procedure.Room);
             dynamicParameters.Add("@CreatedId", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
             var result = await _connection.ExecuteAsync("sp_CreateProcedure", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);

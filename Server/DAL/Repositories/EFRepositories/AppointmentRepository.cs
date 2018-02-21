@@ -28,7 +28,7 @@ namespace DAL.Repositories.EFRepositories
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Output
             };
-            string sql = $"exec @CreatedId = sp_CreateAppointment @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}', @CabinetId = '{appointment.CabinetId}', @PrescriptionId = '{appointment.PrescriptionId}'";
+            string sql = $"exec @CreatedId = sp_CreateAppointment @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}'";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }
@@ -67,7 +67,7 @@ namespace DAL.Repositories.EFRepositories
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Output
             };
-            string sql = $"exec @UpdateCounter = dbo.sp_UpdateAppointment @Id = '{appointment.Id}', @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}', @CabinetId = '{appointment.CabinetId}', @PrescriptionId = '{appointment.PrescriptionId}'";
+            string sql = $"exec @UpdateCounter = dbo.sp_UpdateAppointment @Id = '{appointment.Id}', @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}'";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
             return (int)updateCounter.Value;
         }

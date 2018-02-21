@@ -32,7 +32,7 @@ namespace DAL.Repositories.EFRepositories
                         $"@DiagnosisId = '{item.DiagnosisId}'" +
                         $"@DoctorId = '{item.DoctorId}'" +
                         $"@PatientId = '{item.PatientId}'";*/
-                string sql = $"exec @CreatedId = dbo.sp_CreatePrescription @Date = '{item.Date.ToString("yyyy-MM-dd")}', @Description = '{item.Description}', @DiagnosisId = {item.DiagnosisId}, @DoctorId = '{item.DoctorId}', @PatientId = '{item.PatientId}'";
+                string sql = $"exec @CreatedId = dbo.sp_CreatePrescription @Date = '{item.Date.ToString("yyyy-MM-dd")}', @Description = '{item.Description}', @DiagnosisId = {item.DiagnosisId}, @DoctorId = '{item.DoctorId}', @PatientId = '{item.PatientId}', @AppointmentId = '{item.AppointmentId}'";
             
                 await _db.Database.ExecuteSqlCommandAsync(sql, createdId);
                 return (int)createdId.Value;
@@ -73,7 +73,8 @@ namespace DAL.Repositories.EFRepositories
                                 $"@Description = '{item.Description}', " +
                                 $"@DiagnosisId = '{item.DiagnosisId}', " +
                                 $"@DoctorId = '{item.DoctorId}', " +
-                                $"@PatientId = '{item.PatientId}'";
+                                $"@PatientId = '{item.PatientId}'," +
+                                $"@AppointmentId = '{item.AppointmentId}'";
                 int result = await _db.Database.ExecuteSqlCommandAsync(sql);
                 return result;
             }

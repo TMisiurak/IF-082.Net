@@ -19,9 +19,7 @@ namespace ProjectCore.Entities
         public System.DateTime Date { get; set; }
         [Required]
         public int Status { get; set; }
-        [Required]
-        public int CabinetId { get; set; }
-        [Required]
-        public int PrescriptionId { get; set; }
+
+        public virtual Prescription Prescription { get; set; }
     }
 }

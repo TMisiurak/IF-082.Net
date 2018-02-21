@@ -9,6 +9,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 import { RegistryRoutingModule } from './registry-routing.module';
+import { AppointmentService } from './_services/appointment.service';
+import { AppointmentsComponent } from './components/appointment/appointment.component';
 
 @NgModule({
   imports: [
@@ -18,8 +20,9 @@ import { RegistryRoutingModule } from './registry-routing.module';
     RegistryRoutingModule
   ],
   declarations: [
-    RegistryComponent, HomeComponent, ProfileComponent,
-  ]
+    RegistryComponent, HomeComponent, ProfileComponent, AppointmentsComponent
+  ],
+  providers: [AppointmentService]
 })
 
 export class RegistryModule { }

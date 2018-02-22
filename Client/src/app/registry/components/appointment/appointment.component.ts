@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AppointmentService} from '../../_services/appointment.service';
-import { AppointmentCredentials } from '../../_shared/models/AppointmentCredentials';
+import { AppointmentService } from '../../services/appointment.service';
+import { Appointment } from '../../shared/Appointment';
+import { CheckTokenService } from '../../../core/services/check-token.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-appointment',
@@ -9,12 +11,35 @@ import { AppointmentCredentials } from '../../_shared/models/AppointmentCredenti
   })
 
 export class AppointmentsComponent implements OnInit {
-    appointment: AppointmentCredentials = new AppointmentCredentials();
-    appointments: AppointmentCredentials[];
+    appointment: Appointment = new Appointment();
+    appointments: Appointment[];
+    tableMode = true;
 
-    constructor(private appoService: AppointmentService) { }
+    constructor(private appoService: AppointmentService, private router: Router
+        , private checkTokenService: CheckTokenService) { }
 
     ngOnInit() {
+        this.getAppointments();
     }
 
+    getAppointments() {
+        this.appoService.getAppointments(this.checkTokenService.authorizationToken)
+            .subscribe((data: Appointment[]) => this.appointments = data);
+    }
+
+    save() {
+        this.appoService.makeAppointment(this.checkTokenService.authorizationToken, this.appointment)
+        .subscribe((data: Appointment) => this.appointments.push(data));
+        this.cancel();
+    }
+
+    cancel() {
+        this.appointment = new Appointment();
+        this.tableMode = true;
+    }
+
+    add() {
+        this.cancel();
+        this.tableMode = false;
+    }
 }

@@ -4,7 +4,9 @@ using DAL.Interfaces;
 using ProjectCore.DTO;
 using ProjectCore.Entities;
 using ProjectCore.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -32,6 +34,39 @@ namespace BLL.Services
             Schedule schedule = await DataBase.Schedules.GetById(id);
             ScheduleDTO result = _mapper.Map<ScheduleDTO>(schedule);
             return result;
+        }
+
+        public async Task<IList<FreeTimeSlotsDTO>> GetByDoctorId(int id)
+        {
+            IList<Appointment> appointments = await DataBase.Appointments.GetByDoctorId(id);
+            IList<Schedule> schedule = await DataBase.Schedules.GetByDoctorId(id);
+
+            var freeTimeSlots = new List<FreeTimeSlotsDTO>();
+
+            var currentDay = DateTime.Now.Date;
+
+            for (int i = 0; i < schedule.FirstOrDefault().ValidityPeriod; i++)
+            {
+                var daySchedule = schedule.Where(ds => ds.Weekday == (int)currentDay.DayOfWeek).FirstOrDefault();
+                var dayAppointments = appointments.Where(da => da.Date.Day == currentDay.Day);
+                if (daySchedule != null)
+                {
+                    currentDay = currentDay.Add(daySchedule.WorkStart);
+                    for (int j = 1; j < daySchedule.TimeSlotCount + 1; j++)
+                    {
+                        freeTimeSlots.Add(new FreeTimeSlotsDTO { TimeSlot = currentDay, IsRegistered = false });
+                        if (dayAppointments != null && dayAppointments.Where(a => a.Date == freeTimeSlots.LastOrDefault().TimeSlot).FirstOrDefault() != null)
+                        {
+                            freeTimeSlots.LastOrDefault().IsRegistered = true;
+                        }
+                        currentDay = currentDay.AddMinutes(daySchedule.SlotDuration);
+                    }
+                }
+                currentDay = DateTime.Now.Date;
+                currentDay = currentDay.AddDays(i + 1);
+            }
+
+            return freeTimeSlots;
         }
 
         public async Task<int> Create(ScheduleDTO scheduleDTO)

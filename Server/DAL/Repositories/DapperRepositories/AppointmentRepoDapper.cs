@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.DapperRepositories
 {
-    public class AppointmentRepoDapper : IRepository<Appointment>
+    public class AppointmentRepoDapper : IAppointmentRepository
     {
         private IDbTransaction _transaction;
         private IDbConnection _connection { get { return _transaction.Connection; } }
@@ -55,6 +55,14 @@ namespace DAL.Repositories.DapperRepositories
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@id", id);
             return await _connection.QuerySingleOrDefaultAsync<Appointment>("sp_GetAppointmentById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IList<Appointment>> GetByDoctorId(int id)
+        {
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@DoctorId", id);
+            var appointments = await _connection.QueryAsync<Appointment>("sp_GetAppointmentByDoctorId", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            return appointments.ToList();
         }
 
         public async Task<int> Update(Appointment appointment)

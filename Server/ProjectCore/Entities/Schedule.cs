@@ -10,13 +10,13 @@ namespace ProjectCore.Entities
         [Key]
         public int Id { get; set; }
         [Required, Column(TypeName = "time(0)")]
-        public DateTime WorkStart { get; set; }
+        public TimeSpan WorkStart { get; set; }
         [Required]
         public int TimeSlotCount { get; set; }
         [Required]
         public int SlotDuration { get; set; }
         [Required, Column(TypeName = "time(0)")]
-        public DateTime BreakStart { get; set; }
+        public TimeSpan BreakStart { get; set; }
         [Required]
         public int BreakDuration { get; set; }
         [Required]

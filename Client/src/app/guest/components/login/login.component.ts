@@ -4,10 +4,10 @@ import { NgModel, FormControl, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { UserCredentials } from '../../_shared/models/UserCredentials';
-import { HttpLoginService } from '../../_services/http-login.service';
-import { JwtDecoderService } from '../../../core/_services/jwt-decoder.service';
-import { CheckTokenService } from '../../../core/_services/check-token.service';
+import { UserCredentials } from '../../shared/models/UserCredentials';
+import { HttpLoginService } from '../../services/http-login.service';
+import { JwtDecoderService } from '../../../core/services/jwt-decoder.service';
+import { CheckTokenService } from '../../../core/services/check-token.service';
 
 @Component({
   selector: 'app-login',

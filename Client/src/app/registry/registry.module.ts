@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 import { RegistryRoutingModule } from './registry-routing.module';
-import { AppointmentService } from './_services/appointment.service';
+import { AppointmentService } from './services/appointment.service';
 import { AppointmentsComponent } from './components/appointment/appointment.component';
 
 @NgModule({

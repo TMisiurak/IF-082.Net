@@ -10,6 +10,7 @@ namespace BLL.Interfaces
         Task<DoctorDTO> GetById(int id);
         Task<int> Create(DoctorDTO doctorDTO);
         Task<int> Update(DoctorDTO doctorDTO);
+        Task<IList<DoctorUserDTO>> SearchDotor(string fullName);
         Task<int> DeleteById(int id);
     }
 }

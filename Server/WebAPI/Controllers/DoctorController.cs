@@ -26,15 +26,12 @@ namespace WebAPI.Controllers
             return Ok(doctors);
         }
 
-
-        //[Authorize(Roles = "admin, patient, doctor, accountant")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDoctorById(int? id)
+        [HttpGet("{fullName}")]
+        public async Task<IActionResult> Get(string fullName)
         {
-            var doctor = await _doctorService.GetById(id.Value);
+            var doctor = await _doctorService.SearchDotor(fullName);
             return Ok(doctor);
         }
-
 
         //[Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpPost]

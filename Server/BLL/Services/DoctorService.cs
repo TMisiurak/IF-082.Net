@@ -5,6 +5,7 @@ using ProjectCore.DTO;
 using ProjectCore.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,6 +54,24 @@ namespace BLL.Services
             int result = await DataBase.Doctors.Delete(id);
             DataBase.Commit();
             return result;
+        }
+
+        public async Task<IList<DoctorUserDTO>> SearchDotor(string fullName)
+        {
+            var doctorUser = new List<DoctorUserDTO>();
+            IList<User> users = await DataBase.Users.SearchUsers(fullName);
+
+
+            foreach (var user in users)
+            {
+                Doctor doctor = await DataBase.Doctors.GetByUserId(user.Id);
+                if (doctor != null)
+                {
+                    doctorUser.Add(new DoctorUserDTO() { FullName = user.FullName, DoctorId = doctor.Id, Speciality = doctor.Speciality });
+                }
+            }
+
+            return doctorUser;
         }
     }
 }

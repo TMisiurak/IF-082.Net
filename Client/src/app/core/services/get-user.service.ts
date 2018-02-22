@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { apiUrl } from '../../shared/_shared/settings/Urls';
+import { apiUrl } from '../../shared/helpers/settings/Urls';
 
 @Injectable()
 export class GetUserService {

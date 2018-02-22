@@ -86,5 +86,12 @@ namespace DAL.Repositories.EFRepositories
             await _db.Database.ExecuteSqlCommandAsync(sql, delCounter);
             return (int)delCounter.Value;
         }
+
+        public async Task<IList<User>> SearchUsers(string fullName)
+        {
+            var param = new SqlParameter("@FullName", fullName);
+            IList<User> user = await _db.Users.FromSql($"sp_SearchUsers @FullName", param).ToListAsync();
+            return user;
+        }
     }
 }

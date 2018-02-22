@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.EFRepositories
 {
-    public class DoctorRepository : IRepository<Doctor>
+    public class DoctorRepository : IDoctorRepository
     {
         private readonly ClinicContext _db;
 
@@ -56,6 +56,13 @@ namespace DAL.Repositories.EFRepositories
         {
             var param = new SqlParameter("@Id", id);
             Doctor doctor = await _db.Doctors.FromSql($"sp_GetDoctorById @Id", param).FirstOrDefaultAsync();
+            return doctor;
+        }
+
+        public async Task<Doctor> GetByUserId(int id)
+        {
+            var param = new SqlParameter("@UserId", id);
+            Doctor doctor = await _db.Doctors.FromSql($"sp_GetByUserId @UserId", param).FirstOrDefaultAsync();
             return doctor;
         }
 

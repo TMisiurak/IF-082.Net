@@ -1,2 +1,58 @@
 <h1>Appointments</h1>
-<input type="button" value="Make Appointment" class="btn btn-default" (click)="add()" />
+<br>
+<input type="button" value="Make Appointment" class="btn btn-default" (click)="add()"/>
+<br><br>
+<div class="container">
+    <table *ngIf="tableMode; else create" class="table table-striped">
+        <thead>
+            <tr>
+                <td>Patient</td>
+                <td>Doctor</td>
+                <td>Description</td>
+                <td>Date</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let app of appointments" >
+                <td>{{app.patientId}}</td>
+                <td>{{app.doctorId}}</td>
+                <td>{{app.description}}</td>
+                <td>{{app.date}}</td>
+                <td>{{app.status}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<ng-template #create>
+    <div>
+        <h1 class="text-center header">Creating Appointment</h1>
+        <br>
+    </div>
+    <div class="container">
+        <div class="form-group">
+            <label>Patient</label>
+            <input type="text" [(ngModel)]="appointment.patientId" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Doctor</label>
+            <input type="text" [(ngModel)]="appointment.doctorId" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" [(ngModel)]="appointment.description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+                <label>Date</label>
+                <input type="date" [(ngModel)]="appointment.date" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input type="text" [(ngModel)]="appointment.status" class="form-control" />
+            </div>
+        <div>
+            <input type="button" value="Make" (click)="save()" class="btn btn-success" />
+            <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
+        </div>
+    </div>
+</ng-template>

@@ -1,4 +1,4 @@
-export class AppointmentCredentials {
+export class Appointment {
     constructor(
     public id?: number,
     public patientId?: number,

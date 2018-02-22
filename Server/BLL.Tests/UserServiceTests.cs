@@ -46,6 +46,7 @@ namespace BLL.Tests
             Assert.NotNull(user1);
             Assert.Null(user2);
             Assert.Equal(2, user1.Id);
+            Assert.Equal("email2@e.com", user1.Email);
         }
     }
 }

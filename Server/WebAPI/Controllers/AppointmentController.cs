@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment([FromForm] AppointmentDTO appointemtDTO)
+        public async Task<IActionResult> CreateAppointment([FromBody] AppointmentDTO appointemtDTO)
         {
             int result = await _appointmService.Create(appointemtDTO);
             return Ok(result);

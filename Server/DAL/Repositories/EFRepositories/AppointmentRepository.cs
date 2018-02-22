@@ -36,7 +36,7 @@ namespace DAL.Repositories.EFRepositories
                 SqlDbType = SqlDbType.Int,
                 Direction = ParameterDirection.Output
             };
-            string sql = $"exec @CreatedId = sp_CreateAppointment @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date}', @Status = '{appointment.Status}'";
+            string sql = $"exec @CreatedId = sp_CreateAppointment @PatientId = '{appointment.PatientId}', @DoctorId = '{appointment.DoctorId}', @Description = '{appointment.Description}', @Date = '{appointment.Date.ToString("yyyy-MM-dd")}', @Status = '{appointment.Status}'";
             int result = await _db.Database.ExecuteSqlCommandAsync(sql, param);
             return (int)param.Value;
         }

@@ -18,23 +18,3 @@ input::-ms-reveal {
 	display: none;
 } */
 
-/*
-body{
-	background: url(background1.jpg) no-repeat;
-	-moz-background-size: 100%;
-    -webkit-background-size: 100%; 
-    -o-background-size: 100%;
-    background-size: 100%;
-}
-*/
-
-@media only screen and (max-width: 3840px) and (min-width: 320px)  {
-	body{
-		background: url(./background/backgroundGorizontal.jpg) no-repeat;
-		
-		-moz-background-size: 100%; /* Firefox 3.6+ */
-		-webkit-background-size: 100%; /* Safari 3.1+ vs Chrome 4.0+ */
-		-o-background-size: 100%; /* Opera 9.6+ */
-		background-size: 100%; /* another */
-	}
-}

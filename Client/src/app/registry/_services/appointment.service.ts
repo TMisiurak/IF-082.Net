@@ -13,8 +13,9 @@ import {apiUrl} from '../../shared/_shared/settings/Urls';
 export class AppointmentService {
     constructor(private http: Http) { }
 
-    getAppointments() {
-        return this.http.get(apiUrl + 'api/appointment')
+    getAppointments(token: string) {
+        const headers = new Headers({ 'Authorization': token });
+        return this.http.get(apiUrl + '/api/appointment/', { headers: headers })
         .map((resp: Response) => resp.json())
         .catch((error: any) => {
             if (error.status === 401) {
@@ -22,6 +23,34 @@ export class AppointmentService {
             }
             return Observable.throw(error);
         });
+    }
+
+    getDoctor(token: string, id: number) {
+        const headers = new Headers({ 'Authorization': token });
+        return this.http.get(apiUrl + '/api/doctor/' + id, { headers: headers })
+        .map((resp: Response) => resp.json())
+        .catch((error: any) => {
+            if (error.status === 401) {
+                return Observable.throw(401);
+            }
+            return Observable.throw(error);
+        });
+    }
+
+    makeAppointment(token: string, credentials: AppointmentCredentials) {
+        const headers = new Headers({ 'Authorization': token });
+        return this.http.post(apiUrl + '/api/appointment/', credentials, { headers: headers })
+                        .map((resp: Response) => {
+                            if (resp.status === 200) {
+                                return resp.json();
+                            }
+                        })
+                        .catch((error: any) => {
+                            if (error.status === 400) {
+                                return Observable.throw(400);
+                            }
+                            return Observable.throw(error);
+                        });
     }
 }
 

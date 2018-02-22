@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.DapperRepositories
 {
-    public class AppointmentRepoDapper : IRepository<Appointment>
+    public class AppointmentRepoDapper : IAppointmentRepository
     {
         private IDbTransaction _transaction;
         private IDbConnection _connection { get { return _transaction.Connection; } }
@@ -71,6 +71,11 @@ namespace DAL.Repositories.DapperRepositories
 
             int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
             return updatedCounter;
+        }
+
+        public Task<IList<Appointment>> GetByDoctorId(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

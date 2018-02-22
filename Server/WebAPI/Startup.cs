@@ -256,8 +256,8 @@ namespace WebAPI
 
                 List<Schedule> schedules = new List<Schedule>
                 {
-                    new Schedule{ WorkStart = new DateTime(2018,1,1,8,0,0), TimeSlotCount = 12,
-                        SlotDuration = 15, BreakStart = new DateTime(2018,1,1,12,0,0), BreakDuration = 60, Weekday = 0,
+                    new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 0,
                         ValidityPeriod = 30, DoctorId = 1 },
                     
                 };

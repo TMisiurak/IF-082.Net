@@ -5,11 +5,12 @@ using ProjectCore.Entities;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.EFRepositories
 {
-    public class ScheduleRepository : IRepository<Schedule>
+    public class ScheduleRepository : IScheduleRepository
     {
         private readonly ClinicContext _db;
 
@@ -25,9 +26,15 @@ namespace DAL.Repositories.EFRepositories
 
         public async Task<Schedule> GetById(int id)
         {
-            var param = new SqlParameter("@Id", id);
-            Schedule user = await _db.Schedules.FromSql($"sp_GetScheduleById @Id", param).FirstOrDefaultAsync();
-            return user;
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IList<Schedule>> GetByDoctorId(int id)
+        {
+            var doctorId = new SqlParameter("@DoctorId", id);
+            var schedules = await _db.Schedules.FromSql($"sp_GetScheduleByDoctorId @DoctorId", doctorId).ToListAsync();
+
+            return schedules;
         }
 
         public async Task<int> Create(Schedule schedule)

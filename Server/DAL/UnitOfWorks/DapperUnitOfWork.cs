@@ -95,7 +95,7 @@ namespace DAL.UnitOfWorks
             get { return _paymentRepository ?? (_paymentRepository = new PaymentRepoDapper(_transaction)); }
         }
 
-        public IRepository<Appointment> Appointments
+        public IAppointmentRepository Appointments
         {
             get { return _appointmentRepository ?? (_appointmentRepository = new AppointmentRepoDapper(_transaction)); }
         }
@@ -105,7 +105,7 @@ namespace DAL.UnitOfWorks
             get { return _doctorRepository ?? (_doctorRepository = new DoctorRepoDapper(_transaction)); }
         }
 
-        public IRepository<Schedule> Schedules
+        public IScheduleRepository Schedules
         {
             get { return _scheduleRepository ?? (_scheduleRepository = new ScheduleRepoDapper(_transaction)); }
         }

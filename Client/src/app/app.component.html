@@ -4,8 +4,16 @@
             <app-header></app-header>
         </div>
     </div>
-    <div class="row test">
-        <div class="col">
+    <div class="row test" *ngIf="topNav[2][0].profile != null;else guest-output">
+        <div class="col-2 side-nav">
+            <app-side-nav></app-side-nav>
+        </div>
+        <div class="col-10">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div id="guest-output" class="row">
+        <div class="col-12">
             <router-outlet></router-outlet>
         </div>
     </div>

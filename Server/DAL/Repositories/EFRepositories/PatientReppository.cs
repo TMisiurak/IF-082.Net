@@ -9,7 +9,7 @@ using ProjectCore.Entities;
 
 namespace DAL.Repositories.EFRepositories
 {
-    public class PatientRepository : IRepository<Patient>
+    public class PatientRepository : IPatientRepository
     {
         private readonly ClinicContext _db;
 
@@ -80,6 +80,13 @@ namespace DAL.Repositories.EFRepositories
             string sql = $"exec @UpdateCounter = dbo.sp_UpdatePatient @UserId = {patient.UserId},  @Id = {patient.Id}";
             await _db.Database.ExecuteSqlCommandAsync(sql, updateCounter);
             return (int)updateCounter.Value;
+        }
+
+        public async Task<Patient> GetByUserId(int id)
+        {
+            var param = new SqlParameter("@UserId", id);
+            Patient patient = await _db.Patients.FromSql($"sp_GetPatientByUserId @UserId", param).FirstOrDefaultAsync();
+            return patient;
         }
     }
 }

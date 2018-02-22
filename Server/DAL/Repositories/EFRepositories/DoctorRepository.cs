@@ -62,7 +62,7 @@ namespace DAL.Repositories.EFRepositories
         public async Task<Doctor> GetByUserId(int id)
         {
             var param = new SqlParameter("@UserId", id);
-            Doctor doctor = await _db.Doctors.FromSql($"sp_GetByUserId @UserId", param).FirstOrDefaultAsync();
+            Doctor doctor = await _db.Doctors.FromSql($"sp_GetDoctorByUserId @UserId", param).FirstOrDefaultAsync();
             return doctor;
         }
 

@@ -112,6 +112,8 @@ namespace DAL.UnitOfWorks
 
         IDoctorRepository IUnitOfWork.Doctors => throw new NotImplementedException();
 
+        IPatientRepository IUnitOfWork.Patients => throw new NotImplementedException();
+
         public void Commit()
         {
             try

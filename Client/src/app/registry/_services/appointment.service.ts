@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { AppointmentCredentials } from '../_shared/models/AppointmentCredentials';
+import { Appointment } from '../_shared/models/Appointment';
 import {apiUrl} from '../../shared/_shared/settings/Urls';
 
 @Injectable()
@@ -25,19 +25,7 @@ export class AppointmentService {
         });
     }
 
-    getDoctor(token: string, id: number) {
-        const headers = new Headers({ 'Authorization': token });
-        return this.http.get(apiUrl + '/api/doctor/' + id, { headers: headers })
-        .map((resp: Response) => resp.json())
-        .catch((error: any) => {
-            if (error.status === 401) {
-                return Observable.throw(401);
-            }
-            return Observable.throw(error);
-        });
-    }
-
-    makeAppointment(token: string, credentials: AppointmentCredentials) {
+    makeAppointment(token: string, credentials: Appointment) {
         const headers = new Headers({ 'Authorization': token });
         return this.http.post(apiUrl + '/api/appointment/', credentials, { headers: headers })
                         .map((resp: Response) => {

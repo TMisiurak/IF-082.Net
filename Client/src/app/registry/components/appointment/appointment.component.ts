@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AppointmentService} from '../../_services/appointment.service';
-import { AppointmentCredentials } from '../../_shared/models/AppointmentCredentials';
-import { DoctorCredentials } from '../../_shared/models/DoctorCredentials';
+import { Appointment } from '../../_shared/models/Appointment';
 import { Router } from '@angular/router';
 import { CheckTokenService } from '../../../core/_services/check-token.service';
 
@@ -12,10 +11,8 @@ import { CheckTokenService } from '../../../core/_services/check-token.service';
   })
 
 export class AppointmentsComponent implements OnInit {
-    appointment: AppointmentCredentials = new AppointmentCredentials();
-    appointments: AppointmentCredentials[];
-    doctor: DoctorCredentials = new DoctorCredentials;
-    doctors: DoctorCredentials[];
+    appointment: Appointment = new Appointment();
+    appointments: Appointment[];
     tableMode = true;
 
     constructor(private appoService: AppointmentService, private router: Router
@@ -27,22 +24,17 @@ export class AppointmentsComponent implements OnInit {
 
     getAppointments() {
         this.appoService.getAppointments(this.checkTokenService.authorizationToken)
-            .subscribe((data: AppointmentCredentials[]) => this.appointments = data);
-    }
-
-    getDoctors(id: number) {
-        this.appoService.getDoctor(this.checkTokenService.authorizationToken, id)
-            .subscribe((data: DoctorCredentials[]) => this.doctors = data);
+            .subscribe((data: Appointment[]) => this.appointments = data);
     }
 
     save() {
         this.appoService.makeAppointment(this.checkTokenService.authorizationToken, this.appointment)
-        .subscribe((data: AppointmentCredentials) => this.appointments.push(data));
+        .subscribe((data: Appointment) => this.appointments.push(data));
         this.cancel();
     }
 
     cancel() {
-        this.appointment = new AppointmentCredentials();
+        this.appointment = new Appointment();
         this.tableMode = true;
     }
 

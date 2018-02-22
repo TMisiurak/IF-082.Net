@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.EFRepositories
 {
-    public class ScheduleRepository : IRepository<Schedule>
+    public class ScheduleRepository : IScheduleRepository
     {
         private readonly ClinicContext _db;
 
@@ -26,18 +26,15 @@ namespace DAL.Repositories.EFRepositories
 
         public async Task<Schedule> GetById(int id)
         {
-            var param = new SqlParameter("@DoctorId", id);
-            var param1 = new SqlParameter("@Id", id);
-            var x = await _db.Schedules.FromSql($"sp_GetScheduleByDoctorId @DoctorId", param).ToListAsync();
-            var y = await _db.Appointments.FromSql($"sp_GetAppointmentById @Id", param1).ToListAsync();
-            var result = x.Join(y, xs => xs.Weekday, ys => (int)ys.Date.DayOfWeek, (xs, ys) => new { A = xs.SlotDuration, B = xs.Weekday });
-            foreach (var i in result)
-            {
-                System.Console.WriteLine("{0} - {1}", i.A, i.B);
-            }
+            throw new System.NotImplementedException();
+        }
 
-            //return user;
-            return new Schedule();
+        public async Task<IList<Schedule>> GetByDoctorId(int id)
+        {
+            var doctorId = new SqlParameter("@DoctorId", id);
+            var schedules = await _db.Schedules.FromSql($"sp_GetScheduleByDoctorId @DoctorId", doctorId).ToListAsync();
+
+            return schedules;
         }
 
         public async Task<int> Create(Schedule schedule)

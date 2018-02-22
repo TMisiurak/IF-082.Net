@@ -15,10 +15,10 @@ namespace DAL.Interfaces
         IRepository<Drug> Drugs { get; }
         IRepository<Patient> Patients { get; }
         IRepository<Payment> Payments { get; }
-        IRepository<Appointment> Appointments { get; }
+        IAppointmentRepository Appointments { get; }
         IRepository<Doctor> Doctors { get; }
         IRepository<PrescriptionList> PrescriptionLists { get; }
-        IRepository<Schedule> Schedules { get; }
+        IScheduleRepository Schedules { get; }
 
         void Commit();
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.DapperRepositories
 {
-    public class ScheduleRepoDapper : IRepository<Schedule>
+    public class ScheduleRepoDapper : IScheduleRepository
     {
         private IDbTransaction _transaction;
         private IDbConnection _connection { get { return _transaction.Connection; } }
@@ -39,6 +39,11 @@ namespace DAL.Repositories.DapperRepositories
         }
 
         public Task<int> Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IList<Schedule>> GetByDoctorId(int id)
         {
             throw new System.NotImplementedException();
         }

@@ -11,13 +11,21 @@ using ProjectCore.Entities;
 
 namespace DAL.Repositories.EFRepositories
 {
-    public class AppointmentRepository : IRepository<Appointment>
+    public class AppointmentRepository : IAppointmentRepository
     {
         private ClinicContext _db;
 
         public AppointmentRepository(ClinicContext clinicContext)
         {
             _db = clinicContext;
+        }
+
+        public async Task<IList<Appointment>> GetByDoctorId(int id)
+        {
+            var doctorId = new SqlParameter("@DoctorId", id);
+            var appointments = await _db.Appointments.FromSql($"sp_GetAppointmentByDoctorId @DoctorId", doctorId).ToListAsync();
+
+            return appointments;
         }
 
         public async Task<int> Create(Appointment appointment)

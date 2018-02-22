@@ -145,7 +145,7 @@ namespace DAL.UnitOfWorks
             }
         }
         
-        public IRepository<Appointment> Appointments
+        public IAppointmentRepository Appointments
         {
             get
             {
@@ -175,7 +175,7 @@ namespace DAL.UnitOfWorks
             }
         }
 
-        public IRepository<Schedule> Schedules
+        public IScheduleRepository Schedules
         {
             get
             {

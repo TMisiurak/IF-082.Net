@@ -25,8 +25,8 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-            ScheduleDTO schedule = await _scheduleService.GetById(id.Value);
-            if (schedule != null)
+            IList<ScheduleAppointmentDTO> schedule = await _scheduleService.GetByDoctorId(id.Value);
+            if (schedule != null && schedule.Count != 0)
             {
                 return Ok(schedule);
             }

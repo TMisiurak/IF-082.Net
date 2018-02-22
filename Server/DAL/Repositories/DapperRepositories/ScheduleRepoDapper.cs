@@ -18,32 +18,35 @@ namespace DAL.Repositories.DapperRepositories
             _transaction = transaction;
         }
 
-        public Task<IList<Schedule>> GetAll()
+        public async Task<IList<Schedule>> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Schedule> GetById(int id)
+        public async Task<Schedule> GetById(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> Create(Schedule item)
+        public async Task<IList<Schedule>> GetByDoctorId(int id)
+        {
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@DoctorId", id);
+            var schedule = await _connection.QueryAsync<Schedule>("sp_GetScheduleByDoctorId", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            return schedule.ToList();
+        }
+
+        public async Task<int> Create(Schedule item)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> Update(Schedule item)
+        public async Task<int> Update(Schedule item)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IList<Schedule>> GetByDoctorId(int id)
+        public async Task<int> Delete(int id)
         {
             throw new System.NotImplementedException();
         }

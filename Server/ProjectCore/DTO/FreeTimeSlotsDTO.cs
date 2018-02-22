@@ -2,7 +2,7 @@
 
 namespace ProjectCore.DTO
 {
-    public class ScheduleAppointmentDTO
+    public class FreeTimeSlotsDTO
     {
         public DateTime TimeSlot { get; set; }
         public bool IsRegistered { get; set; }

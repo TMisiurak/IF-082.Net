@@ -32,7 +32,7 @@ namespace DAL.Repositories.EFRepositories
         public async Task<IList<Schedule>> GetByDoctorId(int id)
         {
             var doctorId = new SqlParameter("@DoctorId", id);
-            var schedules = await _db.Schedules.FromSql($"sp_GetScheduleByDoctorId @DoctorId", doctorId).ToListAsync();
+            IList<Schedule> schedules = await _db.Schedules.FromSql($"sp_GetScheduleByDoctorId @DoctorId", doctorId).ToListAsync();
 
             return schedules;
         }

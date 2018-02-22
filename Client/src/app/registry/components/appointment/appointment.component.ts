@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AppointmentService} from '../../_services/appointment.service';
-import { Appointment } from '../../_shared/models/Appointment';
-import { Router } from '@angular/router';
-import { CheckTokenService } from '../../../core/_services/check-token.service';
+import { AppointmentService } from '../../services/appointment.service';
+import { AppointmentCredentials } from '../../shared/models/AppointmentCredentials';
 
 @Component({
     selector: 'app-appointment',

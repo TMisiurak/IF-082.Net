@@ -9,7 +9,7 @@ import { HomeComponent} from './components/home/home.component';
 import { LoginComponent} from './components/login/login.component';
 import { RegisterComponent} from './components/register/register.component';
 
-import { HttpLoginService } from './_services/http-login.service';
+import { HttpLoginService } from './services/http-login.service';
 
 import { GuestRoutingModule } from './guest-routing.module';
 import { CarouselComponent } from './components/carousel/carousel.component';

@@ -8,7 +8,7 @@ namespace BLL.Interfaces
     {
         Task<IList<ScheduleDTO>> GetAll();
         Task<ScheduleDTO> GetById(int id);
-        Task<IList<ScheduleAppointmentDTO>> GetByDoctorId(int id);
+        Task<IList<FreeTimeSlotsDTO>> GetByDoctorId(int id);
         Task<int> Create(ScheduleDTO item);
         Task<int> Update(ScheduleDTO item);
         Task<int> DeleteById(int id);

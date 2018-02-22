@@ -36,37 +36,37 @@ namespace BLL.Services
             return result;
         }
 
-        public async Task<IList<ScheduleAppointmentDTO>> GetByDoctorId(int id)
+        public async Task<IList<FreeTimeSlotsDTO>> GetByDoctorId(int id)
         {
             IList<Appointment> appointments = await DataBase.Appointments.GetByDoctorId(id);
             IList<Schedule> schedule = await DataBase.Schedules.GetByDoctorId(id);
 
-            var s = new List<ScheduleAppointmentDTO>();
+            var freeTimeSlots = new List<FreeTimeSlotsDTO>();
 
-            var x = DateTime.Now.Date;
+            var currentDay = DateTime.Now.Date;
 
             for (int i = 0; i < schedule.FirstOrDefault().ValidityPeriod; i++)
             {
-                var k = schedule.Where(l => l.Weekday == (int)x.DayOfWeek).FirstOrDefault();
-                var a = appointments.Where(m => m.Date.Day == x.Day);
-                if (k != null)
+                var daySchedule = schedule.Where(ds => ds.Weekday == (int)currentDay.DayOfWeek).FirstOrDefault();
+                var dayAppointments = appointments.Where(da => da.Date.Day == currentDay.Day);
+                if (daySchedule != null)
                 {
-                    x = x.Add(k.WorkStart);
-                    for (int j = 1; j < k.TimeSlotCount + 1; j++)
+                    currentDay = currentDay.Add(daySchedule.WorkStart);
+                    for (int j = 1; j < daySchedule.TimeSlotCount + 1; j++)
                     {
-                        s.Add(new ScheduleAppointmentDTO { TimeSlot = x, IsRegistered = false });
-                        if (a != null && a.Where(aj => aj.Date == s.LastOrDefault().TimeSlot).FirstOrDefault() != null)
+                        freeTimeSlots.Add(new FreeTimeSlotsDTO { TimeSlot = currentDay, IsRegistered = false });
+                        if (dayAppointments != null && dayAppointments.Where(a => a.Date == freeTimeSlots.LastOrDefault().TimeSlot).FirstOrDefault() != null)
                         {
-                            s.LastOrDefault().IsRegistered = true;
+                            freeTimeSlots.LastOrDefault().IsRegistered = true;
                         }
-                        x = x.AddMinutes(k.SlotDuration);
+                        currentDay = currentDay.AddMinutes(daySchedule.SlotDuration);
                     }
                 }
-                x = DateTime.Now.Date;
-                x = x.AddDays(i + 1);
+                currentDay = DateTime.Now.Date;
+                currentDay = currentDay.AddDays(i + 1);
             }
 
-            return s;
+            return freeTimeSlots;
         }
 
         public async Task<int> Create(ScheduleDTO scheduleDTO)

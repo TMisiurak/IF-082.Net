@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
  
-import { JwtDecoderService } from './_services/jwt-decoder.service';
-import { GetUserService } from './_services/get-user.service';
-import { CheckTokenService } from './_services/check-token.service';
-import { AssignTopNavService } from './_services/assign-top-nav.service';
+import { JwtDecoderService } from './services/jwt-decoder.service';
+import { GetUserService } from './services/get-user.service';
+import { CheckTokenService } from './services/check-token.service';
+import { AssignTopNavService } from './services/assign-top-nav.service';
+import { GetScheduleService } from './services/get-schedule.service';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
  
@@ -16,7 +17,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   ],
   declarations: [],
   exports: [],
-  providers: [JwtDecoderService, GetUserService, CheckTokenService, AssignTopNavService]
+  providers: [JwtDecoderService, GetUserService, CheckTokenService, AssignTopNavService, GetScheduleService]
 })
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {

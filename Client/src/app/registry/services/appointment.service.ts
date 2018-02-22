@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { AppointmentCredentials } from '../_shared/models/AppointmentCredentials';
-import {apiUrl} from '../../shared/_shared/settings/Urls';
+import { AppointmentCredentials } from '../shared/models/AppointmentCredentials';
+import {apiUrl} from '../../shared/helpers/settings/Urls';
 
 @Injectable()
 export class AppointmentService {

@@ -4,12 +4,12 @@ import { NgModel } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { GetUserService } from '../core/_services/get-user.service';
-import { CheckTokenService } from '../core/_services/check-token.service';
-import { JwtDecoderService } from '../core/_services/jwt-decoder.service';
-import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
+import { GetUserService } from '../core/services/get-user.service';
+import { CheckTokenService } from '../core/services/check-token.service';
+import { JwtDecoderService } from '../core/services/jwt-decoder.service';
+import { AssignTopNavService } from '../core/services/assign-top-nav.service';
 
-import { registryTopNav } from '../shared/_shared/menu/top-nav';
+import { registryTopNav } from '../shared/helpers/menu/top-nav';
 
 @Component({
   selector: 'app-registry',

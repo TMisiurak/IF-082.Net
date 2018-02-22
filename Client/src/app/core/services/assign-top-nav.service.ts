@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { guestTopNav } from '../../shared/_shared/menu/top-nav';
+import { guestTopNav } from '../../shared/helpers/menu/top-nav';
 
 @Injectable()
 export class AssignTopNavService {

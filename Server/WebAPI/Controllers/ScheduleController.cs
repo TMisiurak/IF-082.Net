@@ -17,18 +17,18 @@ namespace WebAPI.Controllers
             _scheduleService = scheduleService;
         }
         
-        [Authorize(Roles = "admin, patient, doctor, accountant")]
+        [Authorize(Roles = "admin, patient, doctor")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetScheduleById(int? id)
+        public async Task<IActionResult> Get(int? id)
         {
             if (!id.HasValue)
             {
                 return BadRequest();
             }
-            IList<ScheduleAppointmentDTO> schedule = await _scheduleService.GetByDoctorId(id.Value);
-            if (schedule != null && schedule.Count != 0)
+            IList<FreeTimeSlotsDTO> freeTimeSlots = await _scheduleService.GetByDoctorId(id.Value);
+            if (freeTimeSlots != null && freeTimeSlots.Count != 0)
             {
-                return Ok(schedule);
+                return Ok(freeTimeSlots);
             }
             else
             {

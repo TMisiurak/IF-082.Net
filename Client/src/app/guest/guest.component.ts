@@ -3,9 +3,9 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { NgModel } from '@angular/forms';
 
-import { AssignTopNavService } from '../core/_services/assign-top-nav.service';
+import { AssignTopNavService } from '../core/services/assign-top-nav.service';
 
-import { guestTopNav } from '../shared/_shared/menu/top-nav';
+import { guestTopNav } from '../shared/helpers/menu/top-nav';
 
 @Component({
   selector: 'app-guest',

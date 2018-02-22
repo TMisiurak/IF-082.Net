@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { AssignTopNavService } from '../../../../core/_services/assign-top-nav.service';
+import { AssignTopNavService } from '../../../../core/services/assign-top-nav.service';
 
 @Component({
   selector: 'app-top-nav',

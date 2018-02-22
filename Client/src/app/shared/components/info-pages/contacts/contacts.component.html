@@ -1,0 +1,48 @@
+<div class="container-fluid no-padding">
+  <div class="row no-gutters">
+    <div class="col-12">
+      <img class="img-fluid contact-image" src="../../../../assets/images/info-pages/contact_us_img.jpg">
+      <div class="inner-text">
+        <h3>Have any questions?</h3>
+        <p>Let us know</p>
+      </div>
+    </div>
+  </div>
+  <div class="row info-row no-gutters">
+    <div class="col-6">
+      <div class="info-block">
+        <h1>Contact with our experts</h1>
+        <h3>Get the most from our service</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut tristique et egestas quis.</p>
+        <h3>Get help 24/7</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut tristique et egestas quis.</p>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="contact-info">
+        <h1>Contact info</h1>
+        <h3>Email us</h3>
+        <p>{{email}}</p>
+        <h3>Call us</h3>
+        <ul *ngFor="let i of phoneNumbers;">
+          <p>{{i.name}}&nbsp;{{i.phone}}</p>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row address-row no-gutters">
+    <div class="col-4">
+      <div class="address-info">
+        <h3>Our Address</h3>
+        <ul *ngFor="let i of address;">
+          <p>{{i.line}}</p>
+        </ul>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="map-block">
+        <img src="../../../../assets/images/info-pages/map.png">
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,10 +4,10 @@
 }
 .hero {
     position: absolute;
-    top: 85%;
+    top: 30%;
     left: 50%;
     font-family: Arial, sans-serif;
-    font-size: 150%;
+    font-size: 3rem;
     font-weight: bold;
     z-index: 3;
     color: #fff;
@@ -22,4 +22,5 @@
     .headers {
         font-size: 10em;
     }
+    filter: brightness(95%);
 }

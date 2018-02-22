@@ -110,6 +110,8 @@ namespace DAL.UnitOfWorks
             get { return _scheduleRepository ?? (_scheduleRepository = new ScheduleRepoDapper(_transaction)); }
         }
 
+        IDoctorRepository IUnitOfWork.Doctors => throw new NotImplementedException();
+
         public void Commit()
         {
             try

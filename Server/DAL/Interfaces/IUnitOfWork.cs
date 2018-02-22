@@ -16,7 +16,7 @@ namespace DAL.Interfaces
         IRepository<Patient> Patients { get; }
         IRepository<Payment> Payments { get; }
         IAppointmentRepository Appointments { get; }
-        IRepository<Doctor> Doctors { get; }
+        IDoctorRepository Doctors { get; }
         IRepository<PrescriptionList> PrescriptionLists { get; }
         IScheduleRepository Schedules { get; }
 

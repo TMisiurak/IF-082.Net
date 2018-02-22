@@ -155,7 +155,7 @@ namespace DAL.UnitOfWorks
             }
         }
 
-        public IRepository<Doctor> Doctors
+        public IDoctorRepository Doctors
         {
             get
             {

@@ -92,5 +92,10 @@ namespace DAL.Repositories.DapperRepositories
             int updatedCounter = dynamicParameters.Get<int>("@UpdatedCounter");
             return updatedCounter;
         }
+
+        public Task<IList<User>> SearchUsers(string fullName)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

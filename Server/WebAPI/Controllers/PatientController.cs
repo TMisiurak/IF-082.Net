@@ -32,19 +32,11 @@ namespace WebAPI.Controllers
             return Ok(patients);
         }
 
-        //GET api/
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPatientById(int? id)
+        [HttpGet("{fullName}")]
+        public async Task<IActionResult> Get(string fullName)
         {
-            if (!id.HasValue)
-            {
-                return BadRequest();
-            }
-            var patient = await _servPatient.GetById(id.Value);
-            if (patient != null)
-            { return Ok(patient); }
-            else
-            { return NotFound(); }
+            var patient = await _servPatient.SearchPatient(fullName);
+            return Ok(patient);
         }
 
         [Authorize(Roles = "admin")]

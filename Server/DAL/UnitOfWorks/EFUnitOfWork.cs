@@ -125,7 +125,7 @@ namespace DAL.UnitOfWorks
             }
         }
 
-        public IRepository<Patient> Patients
+        public IPatientRepository Patients
         {
             get
             {

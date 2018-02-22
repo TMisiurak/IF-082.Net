@@ -307,11 +307,11 @@ namespace WebAPI
                     context.SaveChanges();
                 }
 
-                if (!context.Prescriptions.Any())
+                /*if (!context.Prescriptions.Any())
                 {
                     context.Prescriptions.AddRange(prescriptions);
                     context.SaveChanges();
-                }
+                }*/
 
                 if (!context.Procedures.Any())
                 {

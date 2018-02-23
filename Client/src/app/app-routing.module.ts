@@ -12,8 +12,8 @@ const appRoutes: Routes = [
     { path: 'patient', loadChildren: './patient/patient.module#PatientModule', canActivate: [LoginGuard] },
     { path: 'registry', loadChildren: './registry/registry.module#RegistryModule', canActivate: [LoginGuard] },
     { path: 'contacts', component: ContactsComponent },
-    { path: 'about', component: AboutComponent },
-    { path: '**', component: NotFoundComponent }
+    //{ path: 'about', component: AboutComponent },
+    //{ path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

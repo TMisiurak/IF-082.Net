@@ -6,6 +6,8 @@ import { NgModel } from '@angular/forms';
 import { AssignTopNavService } from '../core/services/assign-top-nav.service';
 
 import { guestTopNav } from '../shared/helpers/menu/top-nav';
+import { guestSideNav } from '../shared/helpers/menu/side-nav';
+import { AssignSideNavService } from '../core/services/assign-side-nav.service';
 
 @Component({
   selector: 'app-guest',
@@ -15,10 +17,12 @@ import { guestTopNav } from '../shared/helpers/menu/top-nav';
 
 export class GuestComponent implements OnInit, OnDestroy {
 
-  constructor(private assignTopNavService: AssignTopNavService, private router: Router) { }
+  constructor(private assignTopNavService: AssignTopNavService, private assignSideNavService: AssignSideNavService,
+    private router: Router) { }
 
   ngOnInit() {
     this.assignTopNavService.changeMenu(guestTopNav)
+    this.assignSideNavService.changeMenu(guestSideNav)
   }
 
   ngOnDestroy(){

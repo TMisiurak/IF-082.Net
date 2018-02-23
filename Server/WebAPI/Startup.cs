@@ -96,7 +96,7 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //InitializeDatabase(app);
+                InitializeDatabase(app);
             }
             app.UseCors("default");
 
@@ -239,10 +239,10 @@ namespace WebAPI
 
                 List<Appointment> appointments = new List<Appointment>
                 {
-                    new Appointment { Date=DateTime.Now, Description="appointment details 1", DoctorId=1, PatientId=2, Status=1 },
-                    new Appointment { Date=DateTime.Now, Description="appointment details 2", DoctorId=2, PatientId=2, Status=2 },
-                    new Appointment { Date=DateTime.Now, Description="appointment details 3", DoctorId=2, PatientId=2, Status=3 },
-                    new Appointment { Date=DateTime.Now, Description="appointment details 4", DoctorId=1, PatientId=2, Status=4 }
+                    new Appointment { Date=new DateTime(2018, 2, 23, 9, 30, 00), Description="appointment details 1", DoctorId=1, PatientId=2, Status=0 },
+                    new Appointment { Date=new DateTime(2018, 2, 23, 9, 00, 00), Description="appointment details 2", DoctorId=1, PatientId=7, Status=0 },
+                    new Appointment { Date=new DateTime(2018, 2, 28, 8, 30, 00), Description="appointment details 3", DoctorId=2, PatientId=2, Status=0 },
+                    new Appointment { Date=new DateTime(2018, 2, 28, 9, 45, 00), Description="appointment details 4", DoctorId=1, PatientId=2, Status=0 }
                 };
 
                 List<PrescriptionList> prescriptionLists = new List<PrescriptionList>
@@ -257,9 +257,36 @@ namespace WebAPI
                 List<Schedule> schedules = new List<Schedule>
                 {
                     new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
-                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 0,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 1,
                         ValidityPeriod = 30, DoctorId = 1 },
-                    
+                    new Schedule{ WorkStart = new TimeSpan(9,0,0), TimeSlotCount = 15,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 2,
+                        ValidityPeriod = 30, DoctorId = 1 },
+                    new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 3,
+                        ValidityPeriod = 30, DoctorId = 1 },
+                    new Schedule{ WorkStart = new TimeSpan(9,0,0), TimeSlotCount = 11,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 4,
+                        ValidityPeriod = 30, DoctorId = 1 },
+                    new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 5,
+                        ValidityPeriod = 30, DoctorId = 1 },
+
+                    new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 1,
+                        ValidityPeriod = 30, DoctorId = 2 },
+                    new Schedule{ WorkStart = new TimeSpan(9,0,0), TimeSlotCount = 15,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 2,
+                        ValidityPeriod = 30, DoctorId = 2 },
+                    new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 3,
+                        ValidityPeriod = 30, DoctorId = 2 },
+                    new Schedule{ WorkStart = new TimeSpan(9,0,0), TimeSlotCount = 11,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 4,
+                        ValidityPeriod = 30, DoctorId = 2 },
+                    new Schedule{ WorkStart = new TimeSpan(8,0,0), TimeSlotCount = 12,
+                        SlotDuration = 15, BreakStart = new TimeSpan(12,0,0), BreakDuration = 60, Weekday = 5,
+                        ValidityPeriod = 30, DoctorId = 2 },
                 };
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<ClinicContext>();

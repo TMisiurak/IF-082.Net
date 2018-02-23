@@ -8,8 +8,10 @@ import { GetUserService } from '../core/services/get-user.service';
 import { CheckTokenService } from '../core/services/check-token.service';
 import { JwtDecoderService } from '../core/services/jwt-decoder.service';
 import { AssignTopNavService } from '../core/services/assign-top-nav.service';
+import { AssignSideNavService } from '../core/services/assign-side-nav.service';
 
 import { patientTopNav } from '../shared/helpers/menu/top-nav';
+import { patientSideNav } from '../shared/helpers/menu/side-nav';
 
 @Component({
   selector: 'app-patient',
@@ -21,8 +23,8 @@ export class PatientComponent implements OnInit, OnDestroy {
   public patientInfo: any = [];
   public done: boolean = false;
 
-  constructor(private assignTopNavService: AssignTopNavService, private router: Router,
-    private getUserService: GetUserService, private checkTokenService: CheckTokenService,
+  constructor(private assignTopNavService: AssignTopNavService, private assignSideNavService: AssignSideNavService,
+    private router: Router, private getUserService: GetUserService, private checkTokenService: CheckTokenService,
     private jwtDecodeService: JwtDecoderService) { }
 
   ngOnInit() {
@@ -35,7 +37,9 @@ export class PatientComponent implements OnInit, OnDestroy {
             if(data){
                 this.patientInfo = data;
                 patientTopNav[2][0].profile = data;
-                this.assignTopNavService.changeMenu(patientTopNav)
+                patientSideNav[2][0].profile = data;
+                this.assignTopNavService.changeMenu(patientTopNav);
+                this.assignSideNavService.changeMenu(patientSideNav);
                 this.done = true;
             }else{
                 this.done = false;

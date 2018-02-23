@@ -8,8 +8,10 @@ import { GetUserService } from '../core/services/get-user.service';
 import { CheckTokenService } from '../core/services/check-token.service';
 import { JwtDecoderService } from '../core/services/jwt-decoder.service';
 import { AssignTopNavService } from '../core/services/assign-top-nav.service';
+import { AssignSideNavService } from '../core/services/assign-side-nav.service';
 
 import { registryTopNav } from '../shared/helpers/menu/top-nav';
+import { registrySideNav } from '../shared/helpers/menu/side-nav';
 
 @Component({
   selector: 'app-registry',
@@ -21,8 +23,8 @@ export class RegistryComponent implements OnInit, OnDestroy {
   public registryInfo: any = [];
   public done: boolean = false;
 
-  constructor(private assignTopNavService: AssignTopNavService, private router: Router,
-    private getUserService: GetUserService, private checkTokenService: CheckTokenService,
+  constructor(private assignTopNavService: AssignTopNavService, private assignSideNavService: AssignSideNavService,
+    private router: Router, private getUserService: GetUserService, private checkTokenService: CheckTokenService,
     private jwtDecodeService: JwtDecoderService) { }
 
   ngOnInit() {
@@ -35,7 +37,9 @@ export class RegistryComponent implements OnInit, OnDestroy {
             if(data){
                 this.registryInfo = data;
                 registryTopNav[2][0].profile = data;
-                this.assignTopNavService.changeMenu(registryTopNav)
+                registrySideNav[2][0].profile = data;
+                this.assignTopNavService.changeMenu(registryTopNav);
+                this.assignSideNavService.changeMenu(registrySideNav);
                 this.done = true;
             }else{
                 this.done = false;

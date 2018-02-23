@@ -17,8 +17,7 @@ import { SideNavComponent } from './components/navs/side-nav/side-nav.component'
     CommonModule, RouterModule, FormsModule
   ],
   declarations: [HeaderComponent, FooterComponent, TopNavComponent, NotFoundComponent, FooterNavComponent, ContactsComponent,
-    AboutComponent,
-    SideNavComponent],
+    AboutComponent, SideNavComponent],
   exports: [HeaderComponent, FooterComponent, TopNavComponent, NotFoundComponent, FooterNavComponent, ContactsComponent,
     AboutComponent, SideNavComponent],
 })

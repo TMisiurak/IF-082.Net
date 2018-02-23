@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { guestTopNav } from '../../shared/helpers/menu/top-nav';
+import { guestSideNav } from '../../shared/helpers/menu/side-nav';
 
 @Injectable()
 export class AssignSideNavService {
-  private menuSource = new BehaviorSubject<any>(guestTopNav);
+  private menuSource = new BehaviorSubject<any>(guestSideNav);
   currentMenu = this.menuSource.asObservable();
 
   constructor() { }

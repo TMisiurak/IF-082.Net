@@ -1,0 +1,149 @@
+USE [ClinicDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_CreateDiagnosis]
+GO
+
+CREATE PROCEDURE [dbo].[sp_CreateDiagnosis]
+	@DiagnosisName nvarchar(100)
+	, @Description nvarchar(4000)
+    
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[Diagnoses] (DiagnosisName, Description)
+    VALUES (@DiagnosisName, @Description)
+
+	RETURN @@IDENTITY
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_DeleteDiagnosis]
+GO
+
+CREATE PROCEDURE [dbo].[sp_DeleteDiagnosis]
+	@Id int
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+	
+	DELETE FROM Diagnoses WHERE Id = @Id
+
+	RETURN @@ROWCOUNT
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+
+
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_GetAllDiagnoses]
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetAllDiagnoses] AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	SELECT * FROM [dbo].[Diagnoses]
+
+	RETURN 0
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+
+
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_GetDiagnosisById]
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetDiagnosisById]
+	@Id int
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	SELECT * FROM [dbo].[Diagnoses] WHERE Id = @Id
+
+	RETURN 0
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+
+
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_UpdateDiagnosis]
+GO
+
+CREATE PROCEDURE [dbo].[sp_UpdateDiagnosis]
+	@Id int
+	, @DiagnosisName nvarchar(100)
+	, @Description nvarchar(4000)
+	
+AS
+
+IF NOT EXISTS (SELECT 1 FROM Diagnoses WHERE Id=@Id)
+BEGIN
+	RETURN -1
+END
+
+BEGIN TRY
+	SET NOCOUNT ON;
+
+    UPDATE [dbo].[Diagnoses]
+		SET	[DiagnosisName] = @DiagnosisName
+		, [Description] = @Description
+		WHERE Id = @Id
+
+	RETURN @@ROWCOUNT
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+
+
+

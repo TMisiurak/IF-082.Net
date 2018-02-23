@@ -7,6 +7,7 @@ import { JwtDecoderService } from './services/jwt-decoder.service';
 import { GetUserService } from './services/get-user.service';
 import { CheckTokenService } from './services/check-token.service';
 import { AssignTopNavService } from './services/assign-top-nav.service';
+import { AssignSideNavService } from './services/assign-side-nav.service';
 import { GetScheduleService } from './services/get-schedule.service';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
@@ -17,7 +18,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   ],
   declarations: [],
   exports: [],
-  providers: [JwtDecoderService, GetUserService, CheckTokenService, AssignTopNavService, GetScheduleService]
+  providers: [JwtDecoderService, GetUserService, CheckTokenService, AssignTopNavService, AssignSideNavService, GetScheduleService]
 })
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {

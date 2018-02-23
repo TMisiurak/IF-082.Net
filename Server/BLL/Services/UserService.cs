@@ -11,32 +11,32 @@ namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUnitOfWork DataBase;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public UserService(IUnitOfWork uow, IMapper mapper)
         {
-            DataBase = uow;
+            _unitOfWork = uow;
             _mapper = mapper;
         }
 
         public async Task<IList<UserDTO>> GetAll()
         {
-            IList<User> users = await DataBase.Users.GetAll();
+            IList<User> users = await _unitOfWork.Users.GetAll();
             IList<UserDTO> result = _mapper.Map<IList<UserDTO>>(users);
             return result;
         }
 
         public async Task<UserDTO> GetById(int id)
         {
-            User user = await DataBase.Users.GetById(id);
+            User user = await _unitOfWork.Users.GetById(id);
             UserDTO result = _mapper.Map<UserDTO>(user);
             return result;
         }
 
         public async Task<UserDTO> GetByEmail(string email)
         {
-            User user = await DataBase.Users.GetByEmail(email);
+            User user = await _unitOfWork.Users.GetByEmail(email);
             UserDTO result = _mapper.Map<UserDTO>(user);
             return result;
         }
@@ -44,24 +44,24 @@ namespace BLL.Services
         public async Task<int> Create(UserDTO userDTO)
         {
             userDTO.Password = HashService.HashPassword(userDTO.Password);
-            int userId = await DataBase.Users.Create(_mapper.Map<User>(userDTO));
-            int result = await DataBase.Patients.Create(new Patient() { UserId = userId });
-            DataBase.Commit();
+            int userId = await _unitOfWork.Users.Create(_mapper.Map<User>(userDTO));
+            int result = await _unitOfWork.Patients.Create(new Patient() { UserId = userId });
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> Update(UserDTO userDTO)
         {
             userDTO.Password = HashService.HashPassword(userDTO.Password);
-            int result = await DataBase.Users.Update(_mapper.Map<User>(userDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Users.Update(_mapper.Map<User>(userDTO));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Users.Delete(id);
-            DataBase.Commit();
+            int result = await _unitOfWork.Users.Delete(id);
+            _unitOfWork.Commit();
             return result;
         }
     }

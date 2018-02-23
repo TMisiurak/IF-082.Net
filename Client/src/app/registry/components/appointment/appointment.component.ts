@@ -39,6 +39,11 @@ export class AppointmentsComponent implements OnInit {
         this.tableMode = true;
     }
 
+    getSchedule() {
+        this.scheduleService.getSchedule(this.appointment.doctorId, this.checkTokenService.authorizationToken)
+        .subscribe();
+    }
+
     add() {
         this.cancel();
         this.tableMode = false;

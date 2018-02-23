@@ -10,58 +10,58 @@ namespace BLL.Services
 {
     public class DoctorService : IDoctorService
     {
-        private readonly IUnitOfWork DataBase;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public DoctorService(IUnitOfWork uow, IMapper mapper)
         {
-            DataBase = uow;
+            _unitOfWork = uow;
             _mapper = mapper;
         }
 
         public async Task<IList<DoctorDTO>> GetAll()
         {
-            IList<Doctor> doctors = await DataBase.Doctors.GetAll();
+            IList<Doctor> doctors = await _unitOfWork.Doctors.GetAll();
             var result = _mapper.Map<IList<DoctorDTO>>(doctors);
             return result;
         }
 
         public async Task<DoctorDTO> GetById(int id)
         {
-            Doctor doctor = await DataBase.Doctors.GetById(id);
+            Doctor doctor = await _unitOfWork.Doctors.GetById(id);
             return _mapper.Map<DoctorDTO>(doctor);
         }
 
         public async Task<int> Create(DoctorDTO doctorDTO)
         {
-            int result = await DataBase.Doctors.Create(_mapper.Map<Doctor>(doctorDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Doctors.Create(_mapper.Map<Doctor>(doctorDTO));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> Update(DoctorDTO doctorDTO)
         {
-            int result = await DataBase.Doctors.Update(_mapper.Map<Doctor>(doctorDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Doctors.Update(_mapper.Map<Doctor>(doctorDTO));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Doctors.Delete(id);
-            DataBase.Commit();
+            int result = await _unitOfWork.Doctors.Delete(id);
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<IList<DoctorUserDTO>> SearchDotor(string fullName)
         {
             var doctorUser = new List<DoctorUserDTO>();
-            IList<User> users = await DataBase.Users.SearchUsers(fullName);
+            IList<User> users = await _unitOfWork.Users.SearchUsers(fullName);
 
 
             foreach (var user in users)
             {
-                Doctor doctor = await DataBase.Doctors.GetByUserId(user.Id);
+                Doctor doctor = await _unitOfWork.Doctors.GetByUserId(user.Id);
                 if (doctor != null)
                 {
                     doctorUser.Add(new DoctorUserDTO() { FullName = user.FullName, DoctorId = doctor.Id, Speciality = doctor.Speciality });

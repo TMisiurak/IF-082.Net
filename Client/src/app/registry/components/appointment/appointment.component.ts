@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '../../services/appointment.service';
-import { Appointment } from '../../shared/Appointment';
+import { Appointment } from '../../shared/models/Appointment';
 import { CheckTokenService } from '../../../core/services/check-token.service';
 import { Router } from '@angular/router';
 

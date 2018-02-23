@@ -14,7 +14,7 @@ export class GetUserService {
   constructor(private http: Http){ }
 
   getUser(id: number, token: string){        
-      let headers = new Headers({ 'Authorization': token });
+      let headers = new Headers({ 'Authorization': token, 'Content-Type': 'application/json; charset=utf-8' });
       return this.http.get(apiUrl + '/api/user/' + id, { headers: headers })
                       .map((resp:Response) => resp.json())
                       .catch((error:any) => {

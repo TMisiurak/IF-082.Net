@@ -11,6 +11,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegistryRoutingModule } from './registry-routing.module';
 import { AppointmentService } from './services/appointment.service';
 import { AppointmentsComponent } from './components/appointment/appointment.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HttpRegisterService } from './services/http-register.service';
 
 @NgModule({
   imports: [
@@ -20,9 +22,10 @@ import { AppointmentsComponent } from './components/appointment/appointment.comp
     RegistryRoutingModule
   ],
   declarations: [
-    RegistryComponent, HomeComponent, ProfileComponent, AppointmentsComponent
+    RegistryComponent, HomeComponent, ProfileComponent, AppointmentsComponent,
+    RegisterComponent
   ],
-  providers: [AppointmentService]
+  providers: [AppointmentService, HttpRegisterService]
 })
 
 export class RegistryModule { }

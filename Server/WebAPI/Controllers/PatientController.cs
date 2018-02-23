@@ -41,20 +41,21 @@ namespace WebAPI.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> CreatePatient([FromBody]PatientDTO patientDTO)
+        public async Task<IActionResult> CreatePatient([FromBody]CreatePatientDTO createPatientDTO)
         {
-            if (patientDTO == null)
+            if (createPatientDTO == null || string.IsNullOrEmpty(createPatientDTO.Password))
             {
                 return BadRequest();
             }
-            int result = await _servPatient.Create(patientDTO);
+            int result = await _servPatient.Create(createPatientDTO);
             if (result > 0)
             {
+                //return CreatedAtRoute("GetDiagnosis", new { result = result });
                 return Ok(result);
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 

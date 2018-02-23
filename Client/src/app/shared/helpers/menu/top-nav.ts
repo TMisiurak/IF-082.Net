@@ -17,7 +17,7 @@ export let guestTopNav: any =
     [
       [
         {link1: "registry", link2: "home", name: "Home"},
-        {link1: "registry", link2: "registry2", name: "Registry2"},
+        {link1: "registry", link2: "register", name: "Patient Registration"},
         {link1: "registry", link2: "registry3", name: "Registry3"}
       ],
       [

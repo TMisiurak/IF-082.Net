@@ -29,7 +29,7 @@ namespace DAL.Tests
         [Fact]
         public void GetAll()
         {
-            var roleRepo = new Mock<IRepository<Role>>();
+            var roleRepo = new Mock<IRoleRepository>();
             roleRepo.Setup(x => x.GetAll()).Returns(GetTestRoles());
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -56,7 +56,7 @@ namespace DAL.Tests
                 new Role { Id=4, Name = "TestRole4"},
             };
 
-            var roleRepo = new Mock<IRepository<Role>>();
+            var roleRepo = new Mock<IRoleRepository>();
             roleRepo.Setup(m => m.GetById(2)).Returns(async () =>
             {
                 await Task.Yield();

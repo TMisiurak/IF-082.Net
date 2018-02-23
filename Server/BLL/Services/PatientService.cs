@@ -3,6 +3,7 @@ using BLL.Interfaces;
 using DAL.Interfaces;
 using ProjectCore.DTO;
 using ProjectCore.Entities;
+using ProjectCore.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,9 +20,30 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<int> Create(PatientDTO patientDTO)
+        public async Task<int> Create(CreatePatientDTO createPatientDTO)
         {
-            int result = await _unitOfWork.Patients.Create(_mapper.Map<Patient>(patientDTO));
+            createPatientDTO.Password = HashService.HashPassword(createPatientDTO.Password);
+            Role rolePatient = await _unitOfWork.Roles.GetByName("patient");
+            int userId = await _unitOfWork.Users.Create(
+                    new User
+                    {
+                        Address = createPatientDTO.Address,
+                        BirthDay = createPatientDTO.BirthDay,
+                        Email = createPatientDTO.Email,
+                        Password = createPatientDTO.Password,
+                        FullName = createPatientDTO.FullName,
+                        Image = createPatientDTO.Image,
+                        PhoneNumber = createPatientDTO.PhoneNumber,
+                        RoleId = rolePatient.Id,
+                        Sex = createPatientDTO.Sex
+                    }
+                );
+            int result = await _unitOfWork.Patients.Create(
+                    new Patient()
+                    {
+                        UserId = userId
+                    }
+                );
             _unitOfWork.Commit();
             return result;
         }

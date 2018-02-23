@@ -33,6 +33,7 @@
         <div class="form-group">
             <label>Patient</label>
             <input type="text" [(ngModel)]="appointment.patientId" class="form-control" />
+            
         </div>
         <div class="form-group">
             <label>Doctor</label>
@@ -43,13 +44,19 @@
             <textarea class="form-control" [(ngModel)]="appointment.description" rows="3"></textarea>
         </div>
         <div class="form-group">
+            <!--<div class="input-group">
                 <label>Date</label>
-                <input type="text" [(ngModel)]="appointment.date" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <input type="text" [(ngModel)]="appointment.status" class="form-control" />
-            </div>
+                <select class="custom-select form-control"[(ngModel)]="appointment.date">
+                    <option selected>Choose...</option>
+                </select>
+            </div>-->
+            <label>Date</label>
+            <input type="text" [(ngModel)]="appointment.date" class="form-control" />
+        </div>
+         <div class="form-group">
+            <label>Status</label>
+            <input type="text" [(ngModel)]="appointment.status" class="form-control" />
+        </div>
         <div>
             <input type="button" value="Make" (click)="save()" class="btn btn-success" />
             <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />

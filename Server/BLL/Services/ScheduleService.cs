@@ -13,33 +13,33 @@ namespace BLL.Services
 {
     public class ScheduleService : IScheduleService
     {
-        private readonly IUnitOfWork DataBase;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public ScheduleService(IUnitOfWork uow, IMapper mapper)
         {
-            DataBase = uow;
+            _unitOfWork = uow;
             _mapper = mapper;
         }
 
         public async Task<IList<ScheduleDTO>> GetAll()
         {
-            IList<Schedule> schedules = await DataBase.Schedules.GetAll();
+            IList<Schedule> schedules = await _unitOfWork.Schedules.GetAll();
             IList<ScheduleDTO> result = _mapper.Map<IList<ScheduleDTO>>(schedules);
             return result;
         }
 
         public async Task<ScheduleDTO> GetById(int id)
         {
-            Schedule schedule = await DataBase.Schedules.GetById(id);
+            Schedule schedule = await _unitOfWork.Schedules.GetById(id);
             ScheduleDTO result = _mapper.Map<ScheduleDTO>(schedule);
             return result;
         }
 
         public async Task<IList<FreeTimeSlotsDTO>> GetByDoctorId(int id)
         {
-            IList<Appointment> appointments = await DataBase.Appointments.GetByDoctorId(id);
-            IList<Schedule> schedule = await DataBase.Schedules.GetByDoctorId(id);
+            IList<Appointment> appointments = await _unitOfWork.Appointments.GetByDoctorId(id);
+            IList<Schedule> schedule = await _unitOfWork.Schedules.GetByDoctorId(id);
 
             var freeTimeSlots = new List<FreeTimeSlotsDTO>();
 
@@ -71,19 +71,19 @@ namespace BLL.Services
 
         public async Task<int> Create(ScheduleDTO scheduleDTO)
         {
-            int result = await DataBase.Schedules.Create(_mapper.Map<Schedule>(scheduleDTO));
+            int result = await _unitOfWork.Schedules.Create(_mapper.Map<Schedule>(scheduleDTO));
             return result;
         }
 
         public async Task<int> Update(ScheduleDTO scheduleDTO)
         {
-            int result = await DataBase.Schedules.Update(_mapper.Map<Schedule>(scheduleDTO));
+            int result = await _unitOfWork.Schedules.Update(_mapper.Map<Schedule>(scheduleDTO));
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Schedules.Delete(id);
+            int result = await _unitOfWork.Schedules.Delete(id);
             return result;
         }
     }

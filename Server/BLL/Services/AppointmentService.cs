@@ -10,47 +10,47 @@ namespace BLL.Services
 {
     public class AppointmentService : IAppointmentService
     {
-        private readonly IUnitOfWork DataBase;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public AppointmentService(IUnitOfWork uow, IMapper mapper)
         {
-            DataBase = uow;
+            _unitOfWork = uow;
             _mapper = mapper;
         }
 
         public async Task<int> Create(AppointmentDTO appointment)
         {
-            int result = await DataBase.Appointments.Create(_mapper.Map<Appointment>(appointment));
-            DataBase.Commit();
+            int result = await _unitOfWork.Appointments.Create(_mapper.Map<Appointment>(appointment));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Appointments.Delete(id);
-            DataBase.Commit();
+            int result = await _unitOfWork.Appointments.Delete(id);
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<IList<AppointmentDTO>> GetAll()
         {
-            IList<Appointment> appointment = await DataBase.Appointments.GetAll();
+            IList<Appointment> appointment = await _unitOfWork.Appointments.GetAll();
             var result = _mapper.Map<IList<AppointmentDTO>>(appointment);
             return result;
         }
 
         public async Task<AppointmentDTO> GetById(int id)
         {
-            Appointment appointment = await DataBase.Appointments.GetById(id);
+            Appointment appointment = await _unitOfWork.Appointments.GetById(id);
             AppointmentDTO result = _mapper.Map<AppointmentDTO>(appointment);
             return result;
         }
 
         public async Task<int> Update(AppointmentDTO appointment)
         {
-            int result = await DataBase.Appointments.Update(_mapper.Map<Appointment>(appointment));
-            DataBase.Commit();
+            int result = await _unitOfWork.Appointments.Update(_mapper.Map<Appointment>(appointment));
+            _unitOfWork.Commit();
             return result;
         }
     }

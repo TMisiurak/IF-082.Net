@@ -27,7 +27,7 @@ export class AppointmentService {
 
     makeAppointment(token: string, appointment: any) {
         const headers = new Headers({ 'Authorization': token, 'Content-Type': 'application/json; charset=utf-8'});
-        let jsonApp = JSON.stringify(appointment);
+        const jsonApp = JSON.stringify(appointment);
         return this.http.post(apiUrl + '/api/appointment/', jsonApp, { headers: headers })
                         .map((resp: Response) => {
                             if (resp.status === 200) {

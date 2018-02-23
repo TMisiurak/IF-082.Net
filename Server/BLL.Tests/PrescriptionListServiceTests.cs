@@ -18,8 +18,7 @@ namespace BLL.Tests
     {
         private Mock<IUnitOfWork> _uow;
         private PrescriptionListService _prescriptionListService;
-        private TransactionScope trans = null;
-
+        
         public PrescriptionListServiceTests()
         {
             IMapper mapper = AutoMapperConfig.Instance;

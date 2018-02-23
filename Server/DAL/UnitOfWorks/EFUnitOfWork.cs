@@ -35,7 +35,7 @@ namespace DAL.UnitOfWorks
             _transaction = db.Database.BeginTransaction();
         }
 
-        public IRepository<Role> Roles
+        public IRoleRepository Roles
         {
             get
             {

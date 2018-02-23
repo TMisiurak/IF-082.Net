@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.EFRepositories
 {
-    public class RoleRepository : IRepository<Role>
+    public class RoleRepository : IRoleRepository
     {
         private readonly ClinicContext _db;
 
@@ -56,8 +56,15 @@ namespace DAL.Repositories.EFRepositories
         public async Task<Role> GetById(int id)
         {
             var param = new SqlParameter("@id", id);
-            Role user = await _db.Roles.FromSql($"sp_GetRoleById @id", param).FirstOrDefaultAsync();
-            return user;
+            Role role = await _db.Roles.FromSql($"sp_GetRoleById @id", param).FirstOrDefaultAsync();
+            return role;
+        }
+
+        public async Task<Role> GetByName(string name)
+        {
+            var param = new SqlParameter("@Name", name);
+            Role role = await _db.Roles.FromSql($"sp_GetRoleByName @Name", param).FirstOrDefaultAsync();
+            return role;
         }
 
         public async Task<int> Update(Role role)

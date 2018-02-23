@@ -22,7 +22,6 @@ namespace ProjectCore.Entities
         public DateTime BirthDay { get; set; }
         [Required, Range(1, 300)]
         public string Address { get; set; }
-        [Required]
         public string Image { get; set; }
         [Required, Range(1, 15)]
         public string PhoneNumber { get; set; }

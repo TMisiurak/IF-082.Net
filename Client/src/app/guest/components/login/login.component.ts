@@ -14,11 +14,12 @@ import { CheckTokenService } from '../../../core/services/check-token.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit, OnDestroy {
   	public userCredentials: UserCredentials = new UserCredentials();
 	private httpSubscription: Subscription;
 
-	constructor( private httpLoginService: HttpLoginService, private jwtDecoder: JwtDecoderService, private router: Router,
+	constructor( private httpLoginService: HttpLoginService, private jwtDecoderService: JwtDecoderService, private router: Router,
 		private checkTokenService: CheckTokenService ){ }
 
 	ngOnInit(){
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.httpSubscription = this.httpLoginService.login(credentials).subscribe(
 			data => {
 				if(data.access_token){
-					let role = this.jwtDecoder.getJwtPayload(JSON.stringify(data)).role;
+					let role = this.jwtDecoderService.getJwtPayload(JSON.stringify(data)).role;
 					if(role === 'admin'){
 						localStorage.setItem('registry', JSON.stringify(data));
 						this.router.navigate(['/registry']);

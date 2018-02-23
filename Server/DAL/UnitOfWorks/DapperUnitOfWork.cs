@@ -40,7 +40,7 @@ namespace DAL.UnitOfWorks
             get { return _clinicRepository ?? (_clinicRepository = new ClinicRepoDapper(_transaction)); }
         }
 
-        public IRepository<Role> Roles
+        public IRoleRepository Roles
         {
             get { return _roleRepository ?? (_roleRepository = new RoleRepoDapper(_transaction)); }
         }
@@ -85,7 +85,7 @@ namespace DAL.UnitOfWorks
             get { return _drugRepository ?? (_drugRepository = new DrugRepoDapper(_transaction)); }
         }
 
-        public IRepository<Patient> Patients
+        public IPatientRepository Patients
         {
             get { return _patientRepository ?? (_patientRepository = new PatientRepoDapper(_transaction)); }
         }
@@ -111,8 +111,6 @@ namespace DAL.UnitOfWorks
         }
 
         IDoctorRepository IUnitOfWork.Doctors => throw new NotImplementedException();
-
-        IPatientRepository IUnitOfWork.Patients => throw new NotImplementedException();
 
         public void Commit()
         {

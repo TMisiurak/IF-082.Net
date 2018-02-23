@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.DapperRepositories
 {
-    public class RoleRepoDapper : IRepository<Role>
+    public class RoleRepoDapper : IRoleRepository
     {
         private IDbTransaction _transaction;
         private IDbConnection _connection { get { return _transaction.Connection; } }
@@ -54,6 +54,14 @@ namespace DAL.Repositories.DapperRepositories
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@Id", id);
             Role role = await _connection.QuerySingleOrDefaultAsync<Role>("sp_GetRoleById", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
+            return role;
+        }
+
+        public async Task<Role> GetByName(string name)
+        {
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@Name", name);
+            Role role = await _connection.QuerySingleOrDefaultAsync<Role>("sp_GetRoleByName", dynamicParameters, _transaction, commandType: CommandType.StoredProcedure);
             return role;
         }
 

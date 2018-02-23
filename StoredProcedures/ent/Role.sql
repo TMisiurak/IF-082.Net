@@ -50,6 +50,28 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+DROP PROCEDURE IF EXISTS [dbo].[sp_GetRoleByName]
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetRoleByName]
+	@Name nvarchar(50)
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT * FROM [dbo].Roles WHERE Name = @Name
+END
+GO
+----------------------------------------------------------
+USE [ClinicDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 DROP PROCEDURE IF EXISTS [dbo].[sp_CreateRole]
 GO
 

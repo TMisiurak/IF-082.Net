@@ -1,0 +1,86 @@
+USE [ClinicDB]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CreateProcedure]    Script Date: 01.02.2018 13:15:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_CreateProcedure]
+	 @Name nvarchar(120),
+	 @Price decimal,
+	 @Room int
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[Procedures] (Name, Price, Room)
+    VALUES (@Name, @Price, @Room)
+
+	RETURN @@IDENTITY
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[sp_DeleteProcedure]
+GO
+
+CREATE PROCEDURE [dbo].[sp_DeleteProcedure] 
+	@Id int
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	DELETE FROM Procedures WHERE Id = @Id
+
+	RETURN 0
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+DROP PROCEDURE IF EXISTS [[dbo].[sp_GetAllProcedures]
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetAllProcedures]
+AS
+BEGIN TRY
+	SET NOCOUNT ON;
+
+	SELECT * FROM Procedures
+END TRY
+BEGIN CATCH
+	RETURN -1
+END CATCH
+GO
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetProcedureById]
+	@id int
+AS
+
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT * FROM [dbo].Procedures WHERE Id = @id
+END
+GO

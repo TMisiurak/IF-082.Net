@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 import { GuestComponent } from './guest.component';
 import { HomeComponent} from './components/home/home.component';
 import { LoginComponent} from './components/login/login.component';
-import { RegisterComponent} from './components/register/register.component';
 
 import { HttpLoginService } from './services/http-login.service';
 
@@ -21,7 +20,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     
     GuestRoutingModule
   ],
-  declarations: [GuestComponent, HomeComponent, LoginComponent, RegisterComponent, CarouselComponent,],
+  declarations: [GuestComponent, HomeComponent, LoginComponent, CarouselComponent,],
   providers: [HttpLoginService]
 })
 export class GuestModule { }

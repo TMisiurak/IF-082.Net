@@ -1,0 +1,10 @@
+<div class="my-container">
+    <ul class="nav flex-column nav-pills">
+    <li class="nav-item" *ngFor="let i of topNav[0]; index as k">
+        <a *ngIf="k > 0" class="nav-link" [routerLink]="[i.link1, i.link2]" routerLinkActive="active">{{i.name}}</a>
+    </li>
+    <li class="nav-item" *ngFor="let i of topNav[1]">
+        <a *ngIf="topNav[2][0].profile == null" class="nav-link" [routerLink]="[i.link1, i.link2]" routerLinkActive="active">{{i.name}}</a>
+    </li>
+</ul>
+</div>

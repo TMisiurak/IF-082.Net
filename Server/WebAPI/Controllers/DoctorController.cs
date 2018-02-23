@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using ProjectCore.DTO;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -72,7 +69,6 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
         }
-
 
         //[Authorize(Roles = "admin, patient, doctor, accountant")]
         [HttpDelete("{id}")]

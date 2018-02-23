@@ -10,47 +10,47 @@ namespace BLL.Services
 {
     public class ProcedureService : IProcedureService
     {
-        private readonly IUnitOfWork DataBase;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public ProcedureService(IUnitOfWork uow, IMapper mapper)
         {
-            DataBase = uow;
+            _unitOfWork = uow;
             _mapper = mapper;
         }
 
         public async Task<int> Create(ProcedureDTO procedureDTO)
         {
-            int result = await DataBase.Procedures.Create(_mapper.Map<Procedure>(procedureDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Procedures.Create(_mapper.Map<Procedure>(procedureDTO));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Procedures.Delete(id);
-            DataBase.Commit();
+            int result = await _unitOfWork.Procedures.Delete(id);
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<IList<ProcedureDTO>> GetAll()
         {
-            IList<Procedure> procedures = await DataBase.Procedures.GetAll();
+            IList<Procedure> procedures = await _unitOfWork.Procedures.GetAll();
             var result = _mapper.Map<IList<ProcedureDTO>>(procedures);
             return result;
         }
 
         public async Task<ProcedureDTO> GetById(int id)
         {
-            Procedure procedure = await DataBase.Procedures.GetById(id);
+            Procedure procedure = await _unitOfWork.Procedures.GetById(id);
             ProcedureDTO result = _mapper.Map<ProcedureDTO>(procedure);
             return result;
         }
 
         public async Task<int> Update(ProcedureDTO procedureDTO)
         {
-            int result = await DataBase.Procedures.Update(_mapper.Map<Procedure>(procedureDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Procedures.Update(_mapper.Map<Procedure>(procedureDTO));
+            _unitOfWork.Commit();
             return result;
         }
     }

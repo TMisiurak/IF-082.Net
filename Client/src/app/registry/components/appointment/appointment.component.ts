@@ -3,6 +3,7 @@ import { AppointmentService } from '../../services/appointment.service';
 import { Appointment } from '../../shared/models/Appointment';
 import { CheckTokenService } from '../../../core/services/check-token.service';
 import { Router } from '@angular/router';
+import { GetScheduleService } from '../../../core/services/get-schedule.service';
 
 @Component({
     selector: 'app-appointment',
@@ -15,7 +16,7 @@ export class AppointmentsComponent implements OnInit {
     appointments: Appointment[];
     tableMode = true;
 
-    constructor(private appoService: AppointmentService, private router: Router
+    constructor(private appoService: AppointmentService, private scheduleService: GetScheduleService, private router: Router
         , private checkTokenService: CheckTokenService) { }
 
     ngOnInit() {
@@ -36,6 +37,11 @@ export class AppointmentsComponent implements OnInit {
     cancel() {
         this.appointment = new Appointment();
         this.tableMode = true;
+    }
+
+    getSchedule() {
+        this.scheduleService.getSchedule(this.appointment.doctorId, this.checkTokenService.authorizationToken)
+        .subscribe();
     }
 
     add() {

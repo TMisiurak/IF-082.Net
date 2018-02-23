@@ -10,47 +10,47 @@ namespace BLL.Services
 {
     public class DiagnosisService : IDiagnosisService
     {
-        private readonly IUnitOfWork DataBase;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public DiagnosisService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
-            DataBase = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Create(DiagnosisDTO diagnosisDTO)
         {
-            int result = await DataBase.Diagnoses.Create(_mapper.Map<Diagnosis>(diagnosisDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Diagnoses.Create(_mapper.Map<Diagnosis>(diagnosisDTO));
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<int> DeleteById(int id)
         {
-            int result = await DataBase.Diagnoses.Delete(id);
-            DataBase.Commit();
+            int result = await _unitOfWork.Diagnoses.Delete(id);
+            _unitOfWork.Commit();
             return result;
         }
 
         public async Task<IList<DiagnosisDTO>> GetAll()
         {
-            IList<Diagnosis> diagnoses = await DataBase.Diagnoses.GetAll();
+            IList<Diagnosis> diagnoses = await _unitOfWork.Diagnoses.GetAll();
             var result = _mapper.Map<IList<DiagnosisDTO>>(diagnoses);
             return result;
         }
 
         public async Task<DiagnosisDTO> GetById(int id)
         {
-            Diagnosis diagnosis = await DataBase.Diagnoses.GetById(id);
+            Diagnosis diagnosis = await _unitOfWork.Diagnoses.GetById(id);
             var result = _mapper.Map<DiagnosisDTO>(diagnosis);
             return result;
         }
 
         public async Task<int> Update(DiagnosisDTO diagnosisDTO)
         {
-            int result = await DataBase.Diagnoses.Update(_mapper.Map<Diagnosis>(diagnosisDTO));
-            DataBase.Commit();
+            int result = await _unitOfWork.Diagnoses.Update(_mapper.Map<Diagnosis>(diagnosisDTO));
+            _unitOfWork.Commit();
             return result;
         }
     }

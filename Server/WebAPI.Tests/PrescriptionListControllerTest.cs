@@ -35,5 +35,14 @@ namespace WebAPI.Tests
             await _prescriptionListController.GetPrescriptionLists();
             _prescriptionListService.Verify(p => p.GetAll(), Times.Once);
         }
+
+        // LaunchGetById
+        [Fact]
+        public async Task TestGetPrescriptionListById()
+        {
+
+            await _prescriptionListController.GetPrescriptionListById(1);
+            _prescriptionListService.Verify(c => c.GetById(It.IsAny<int>()), Times.Once);
+        }
     }
 }
